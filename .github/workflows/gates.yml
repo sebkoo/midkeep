@@ -1,0 +1,75 @@
+name: gates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gates:
+    # Pinned for the same reason as ci.yml: three of the five gates shell out
+    # to the toolchain, and an unpinned image moves it without a commit.
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # gate-hygiene resolves origin/main..HEAD for INV-8. A shallow clone
+          # would hand it a single commit on a pull request, so the gate would
+          # inspect one message and report on the branch.
+          fetch-depth: 0
+
+      - name: Install the hook path
+        run: scripts/dev/bootstrap.sh
+
+      # 0 clean, 1 findings on stdout, 2 no verdict with a reason on stderr.
+      # A no-verdict outranks a finding, and a missing gate is also 2.
+      - name: Gates
+        run: scripts/gates/all.sh
+
+      # The harness that proves each gate fails on a planted defect. It builds
+      # one worktree per case, so it is the slowest step here by a wide margin.
+      #
+      # It measured 42.2 seconds locally: warm, on Apple Silicon, with a
+      # populated build cache. That number is not a claim about this runner and
+      # has never been observed here. A cold macOS runner compiling the package
+      # from scratch in eight worktrees may take considerably longer, and
+      # whether this step is viable on every push is an open measurement rather
+      # than a settled question. Whoever first watches it time out should know
+      # it was never claimed to fit.
+      - name: Teeth
+        run: scripts/gates/teeth.sh
+
+  pull-request-body:
+    # INV-8 covers the pull request body as well as commit messages, and the
+    # commit-msg hook cannot see a body. No toolchain is needed, so this runs
+    # on the cheaper image.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: INV-8 over the pull request body
+        # Through the environment rather than interpolated into the script: a
+        # body is attacker-controlled text and must never become shell source.
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          family="$(sed -n "s/^family='\(.*\)'\$/\1/p" .githooks/commit-msg)"
+          if [ -z "$family" ]; then
+            echo "cannot run: no family list in .githooks/commit-msg" >&2
+            exit 2
+          fi
+
+          # Derived from the hook, never restated. ERE, not BRE: \| is a GNU
+          # extension and the gates job runs on a BSD grep.
+          pattern="^[[:space:]]*co-authored-by:.*(${family})"
+          pattern="$pattern|^[[:space:]]*claude-session:"
+          pattern="$pattern|generated with .*claude code"
+
+          if printf '%s\n' "$BODY" | grep -qiE "$pattern"; then
+            echo "INV-8: the pull request body carries an attribution trailer" >&2
+            exit 1
+          fi
+          echo "INV-8: pull request body carries no attribution trailer"

@@ -1,0 +1,44 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    # Pinned rather than macos-latest. The Swift version follows the runner
+    # image, so an unpinned image would change the toolchain under this
+    # repository without a commit — and INV-1 is a claim about which language
+    # mode the package is built in.
+    runs-on: macos-15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Recorded rather than assumed: every claim this repository makes about
+      # the build is a claim against a specific toolchain.
+      - name: Record the toolchain
+        run: |
+          swift --version
+          swift format --version
+
+      # CI runs bootstrap for the same reason a developer does, so that any
+      # commit a workflow makes passes through the commit-msg hook.
+      - name: Install the hook path
+        run: scripts/dev/bootstrap.sh
+
+      # -warnings-as-errors is the whole of INV-5. --build-tests is on the
+      # debug pass only: a release build of test targets is not a
+      # configuration anything ships.
+      - name: Build, debug
+        run: swift build -Xswiftc -warnings-as-errors
+
+      - name: Build, debug, with tests
+        run: swift build --build-tests -Xswiftc -warnings-as-errors
+
+      - name: Build, release
+        run: swift build -c release -Xswiftc -warnings-as-errors
+
+      - name: Test
+        run: swift test --parallel

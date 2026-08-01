@@ -18,9 +18,13 @@ GATES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" \
     || die_cannot_run "cannot reach the gates directory"
 
 # Cheapest first. gate-arch and gate-hygiene need only a checkout and git, so
-# on a host with no toolchain they still reach a verdict while the other three
+# on a host with no toolchain they still reach a verdict while the other four
 # report 2.
-GATES="gate-arch gate-hygiene gate-format gate-build gate-test"
+#
+# gate-workflow needs actionlint, which the Preconditions do not require. On a
+# host without it that gate returns 2 and so does this runner — the same shape
+# as a host with no Swift, and the contract working rather than failing.
+GATES="gate-arch gate-hygiene gate-workflow gate-format gate-build gate-test"
 
 saw_finding=0
 saw_no_verdict=0
