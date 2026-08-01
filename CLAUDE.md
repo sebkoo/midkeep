@@ -94,12 +94,30 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
 12. **INV-12** — Every commit message has a single-line subject under 72
     columns and a body wrapped at 72. (UNENFORCED — no gate reads message
     shape; INV-8's checks cover trailers only. Binds from Commit 2 onward.
-    Commit 1 is the root commit, predates the rule, and is exempt: amending it
-    would rewrite the hashes of every commit after it, and those hashes are
-    cited across `docs/prompts/01-repository-and-harness.md`.)
+    Commit 1 is the root commit and is exempt because it predates the rule,
+    which was adopted during Commit 2's amend. Its two over-72 lines, at 73 and
+    75 columns, are the only artifact in the tree recording that the rule
+    arrived mid-unit, and the `inv12.root.exempted` tripwire exists to keep
+    them: a whole-history sweep expects 2, not 0. An earlier version of this
+    note gave a different reason — that amending would invalidate cited hashes
+    — which unit 02 falsified by action. ROADMAP → Findings carries it.)
+
+13. **INV-13** — No paid GitHub usage. No workflow carries a `push:` trigger,
+    and `runs-on: macos-*` appears only in a job that needs a Swift or SwiftUI
+    build. (`gate-workflow`, PARTIAL — and not yet true. Those two clauses are
+    the part a gate can read. The spending limit lives in account settings that
+    nothing in this tree can reach, and the Actions timing API reports
+    `billable.MACOS.total_ms` of 0 against a non-zero `run_duration_ms`, so
+    consumption is not readable from here either. As the tree stands both
+    workflows carry `push: branches: [main]` and `gate-workflow` asserts
+    neither clause; the gate and the workflows are both ask-gated, so closing
+    it is a ratification stop. Named in ROADMAP → Known holes. Where the tool
+    is weaker than the rule, the mark is weakened and the rule is not.)
 
 INV-6, INV-10, INV-11 and INV-12 staying visibly unenforced is deliberate. Do
-not invent a gate to make the list look complete.
+not invent a gate to make the list look complete. INV-13 is different: its
+readable half is unenforced because the check is not written yet, and its
+unreadable half never will be.
 
 ## Commands
 
@@ -137,5 +155,22 @@ applies to any assertion added later.
 
 When a claim is disputed, measure it against the artifact rather than against a
 rendering of the artifact.
+
+A finding of absence is a claim and needs a positive control, exactly as a
+finding of presence does. An empty result is not evidence until the same pattern
+has been watched finding something it was supposed to find. `\b` is a literal
+`b` to `git grep`, which is how an empty sweep retracted a correct claim here.
+
+A sentence reporting what a command printed is a measurement: date it, keep it,
+and append what no longer holds. A sentence asserting a general fact is a claim:
+falsify it and record what falsified it. Deciding which kind a sentence is comes
+before deciding how to correct it.
+
+When quoting terminal output, quote the command and its output and never the
+prompt line. A shell prompt carries the account name and the hostname in one
+string, and this repository's method is to paste tool output verbatim, so the
+prompt is the likeliest way either reaches a public tree. No gate catches it: a
+prompt is not a `/Users/<name>/` path and, having no dot in the hostname, is not
+email-shaped either. A one-line rule closes it more cheaply than a fiddly check.
 
 When an approach is abandoned, record why.

@@ -48,11 +48,29 @@ See [the roadmap](docs/ROADMAP.md).
 
 ## Where this is right now
 
+One row per planned unit, in plain language: what someone who does not read code
+could do once that unit lands. Written by hand and maintained by hand — nothing
+here is derived from the tree, and it can go stale without anything noticing.
+Numbers belong in the generated block below, which claims to be derived; this
+ladder claims only to have been written.
+
+| Unit | What you could do once it lands | Status |
+|---|---|---|
+| 01 repository and harness | Nothing — there is no app to open. This unit built the checks that guard every row below, and watched each one fail on purpose. | landed |
+| 02 app shell | Install it on a phone and watch it launch. | in progress |
+| 03 the journal | Close the app in the middle of a job and open it again; the job carries on from where it stopped instead of starting over. | not started |
+| 04 streaming | Watch a step's answer arrive as it is written, rather than waiting for the whole thing to finish. | not started |
+| 05 on-device or server | Keep a job moving with no signal, because the work can run on the phone instead of being sent away. | not started |
+| 06 signals and evaluation | Nothing new to do. The app keeps a record of how jobs went, so a change can be checked against the runs that came before it. | not started |
+| 07 performance and memory | Nothing new to do. How long a job takes and how much memory it uses becomes something anyone can measure. | not started |
+| 08 feature flags | Get a fix or a change without waiting for an App Store update. | not started |
+| 09 entitlements | Paid features can be told apart from free ones. Until then everything is unlocked. | not started |
+
 <!-- status:begin -->
 | | |
 |---|---|
 | version | no tag yet |
-| commits | 11 |
+| commits | 12 |
 | last commit | 2026-08-01 |
 | gates | 6 |
 | teeth plant cases | 8 |

@@ -16,6 +16,7 @@ superseded by a new record, and the old one keeps its number and its text.
 | [0004](0004-ios-17-deployment-target.md) | iOS 17.0 as the deployment target | Accepted |
 | [0005](0005-gate-exit-code-contract.md) | The gate exit-code contract | Accepted |
 | [0006](0006-history-records-decisions-not-tools.md) | History records decisions, not tools | Accepted |
+| [0007](0007-the-server-executes-a-run.md) | The server executes a run; the device participates | Accepted |
 
 Two of these carry extended arguments. ADR-0002 is why a step is recorded
 before its effect is visible, which is the premise the product rests on.

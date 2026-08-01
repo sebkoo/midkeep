@@ -90,6 +90,21 @@ The same file sets `ask` on `Package.swift`, `docs/adr/**`, `scripts/gates/**`,
 `git push` and `git config core.hooksPath`. It denies `git commit --no-verify`
 and `git commit -n`.
 
+It also asks on the irreversible GitHub and history operations: `gh repo delete`,
+`gh repo create`, `gh repo edit`, `gh auth refresh`, `git filter-repo`,
+`git push --force`, `git push -f`, `git reset --hard`, `git branch -D`,
+`git reflog expire` and `git gc`. Until unit 02 those were absent, and a
+destructive block ran before the read-only pre-flight that was written to precede
+it — which is how the repository's About string and its seven topics were
+destroyed with no capture of either.
+
+That is insurance and not a guarantee, for the reason the next section gives: a
+rule stops an agent typing a command and does not stop a script file doing the
+same thing another way. The guarantee has to be a precondition check inside the
+block, asserted rather than written in a comment. The pre-flight that failed
+carried its ordering requirement as a comment reading "backups, before anything
+destructive" and had no check behind it.
+
 ## What the permission rules cannot do
 
 `.claude/` is a protected path. Writes to it prompt in every mode except
