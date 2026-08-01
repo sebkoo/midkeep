@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#
+# commit-msg — INV-8: no AI-attribution trailer in any commit message.
+#
+# Matches on family rather than on a specific model string, so that renaming a
+# model does not silently disarm the check.
+#
+# This hook is local configuration. Anyone can step around it for a single
+# command with `git -c core.hooksPath=/dev/null commit`, which is exactly what
+# scripts/gates/teeth/plant-ai-trailer.sh does on purpose. The hook keeps an
+# honest author honest; CI is the layer a contributor cannot switch off.
+
+set -u
+
+# A hook has only 0 and non-zero, so the case where nothing was inspected has to
+# land on reject. Exiting 0 here would say "fine" about a message never read.
+msg_file="${1:-}"
+[ -n "$msg_file" ] && [ -f "$msg_file" ] || {
+    printf 'commit-msg: cannot read the message file; refusing\n' >&2
+    exit 1
+}
+
+# Read the message as it stands. Git strips # lines only when the message is
+# opened in an editor; with -m or -F the cleanup mode is whitespace and those
+# lines survive into the recorded message. Stripping them here would discard
+# lines the hook exists to check, and that error is a false negative. The cost is
+# a false positive if an editor template ever carries a commented-out trailer.
+# That failure shouts and the other one passes.
+body="$(cat "$msg_file")"
+
+family='claude|anthropic|copilot|cursor|codex|openai|gemini'
+
+reject() {
+    printf 'commit-msg: INV-8 violation: %s\n' "$1" >&2
+    printf 'commit-msg: history records who can be asked why a change was made.\n' >&2
+    printf 'commit-msg: remove the trailer and commit again.\n' >&2
+    exit 1
+}
+
+if printf '%s\n' "$body" | grep -Eqi "^[[:space:]]*co-authored-by:.*(${family})"; then
+    reject 'Co-Authored-By naming an AI assistant'
+fi
+
+if printf '%s\n' "$body" | grep -Eqi '^[[:space:]]*claude-session:'; then
+    reject 'Claude-Session trailer'
+fi
+
+if printf '%s\n' "$body" | grep -Eqi 'generated with .*claude code'; then
+    reject 'Generated with Claude Code attribution'
+fi
+
+exit 0
