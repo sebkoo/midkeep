@@ -1,0 +1,129 @@
+# midkeep
+
+```
+  step 1   rename the photos    done
+  step 2   file them            done
+  step 3   write the index      done
+  step 4   summarise            working...
+           *** interrupted ***
+  relaunch
+  step 4   summarise            picks up here
+```
+
+Phones get interrupted. Apps remember finished work and discard unfinished
+work. This repository asks what changes when unfinished work is first-class
+data.
+
+[![Swift 6](https://img.shields.io/badge/Swift-6-orange)](Package.swift)
+[![iOS 17+](https://img.shields.io/badge/iOS-17%2B-blue)](docs/adr/0004-ios-17-deployment-target.md)
+[![MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+## What this does, for anyone
+
+Say you ask an assistant to tidy up two hundred holiday photos: give each one a
+name based on what is in it, sort them into folders by place, and then write a
+list of what ended up where. That is not one task, it is three, and the third
+depends on the first two. It takes a while.
+
+Now the phone rings. Or you walk into a tunnel. Or you switch to another app
+long enough that the system reclaims the memory. In most apps, what you come
+back to is a spinner that has stopped meaning anything, or a screen that has
+forgotten there was ever a job — and the two hundred photos are untouched, so
+you start again.
+
+The work was done. The first two steps had finished. Nothing had written them
+down anywhere that survives the app being taken away. This project is an
+attempt at the other thing: a job that knows which of its own steps are
+finished, so that coming back means continuing rather than restarting.
+
+<!-- demo:here -->
+
+## What this cannot do yet
+
+There is no app shell, so nothing runs on a device. There is no journal, so
+nothing resumes yet. What exists is the harness — the checks, and the proof
+that each one fails when it should.
+
+See [the roadmap](docs/ROADMAP.md).
+
+## Where this is right now
+
+<!-- status:begin -->
+<!-- status:end -->
+
+## The question
+
+An iOS client can lose a run in four distinct ways, and they are not variations
+on one problem. The system can suspend the app, which stops execution without
+warning it. The system can terminate the app outright to reclaim memory, so
+nothing in memory survives. The network can drop partway through a response, so
+a step is neither finished nor cleanly failed. And the person can cancel, which
+has to stop the work rather than merely stop showing it.
+
+The question this repository exists to answer is what an iOS client looks like
+if the unit of persistence is the half-finished run rather than the finished
+result. That means a partway state is something the software can name; a
+completed step is written down before its effect is visible, so it survives all
+four; stopping actually stops; and every run leaves a record of what was
+attempted and what landed. The argument for recording a step before its effect
+is [ADR-0002](docs/adr/0002-the-run-is-the-unit-of-persistence.md).
+
+## How it is built
+
+Three modules in one direction. `MidkeepKit` holds runs, the journal and the
+engine contracts, and imports no UI framework and nothing third-party.
+`MidkeepUI` may import SwiftUI and `MidkeepKit`, and nothing else. `MidkeepApp`
+is the composition root and nothing imports it. Swift Package Manager is the
+source of truth; there is no Xcode project yet, which is why nothing runs on a
+device.
+
+The rule the design rests on is that a step is recorded before its effect
+becomes visible outside the run. That permits a step recorded and not performed,
+which is recoverable because the record says it was attempted — and it prevents
+a step performed and not recorded, which is not, because nothing knows it
+happened.
+
+## Running it
+
+Xcode 26 or a Swift 6 toolchain.
+
+```
+git clone https://github.com/sebkoo/midkeep.git
+cd midkeep
+scripts/dev/bootstrap.sh
+swift build
+swift test
+scripts/gates/all.sh
+```
+
+## The harness
+
+Each check exits `0` if it ran and found nothing, `1` if it ran and found
+something, and `2` if it could not reach a verdict at all — a missing
+toolchain, an unreadable configuration. That third code exists because a check
+that could not run and a check that found nothing are different facts, and
+collapsing them is how a repository ends up with green that inspected nothing.
+
+Teeth-testing is the other half: for each check, plant the defect it claims to
+catch in a throwaway copy of the repository, and confirm it fails. A check
+nobody has watched fail is not a check. The contract is
+[ADR-0005](docs/adr/0005-gate-exit-code-contract.md).
+
+## What is measured and what is not
+
+No measurements yet — this commit contains no runtime.
+
+| | Will be filled by |
+|---|---|
+| Cold launch to first frame | not yet written; needs the app shell |
+| Resume after termination | not yet written; needs the journal |
+| Time to first token | not yet written; needs the streaming contract |
+| Peak memory during a run | not yet written; needs instrumentation |
+
+## Decisions
+
+[docs/adr/](docs/adr/README.md)
+
+## License
+
+MIT. See [LICENSE](LICENSE).
