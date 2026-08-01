@@ -92,15 +92,22 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
     yet"; unbuilt things are not listed. (UNENFORCED — reviewed by hand.)
 
 12. **INV-12** — Every commit message has a single-line subject under 72
-    columns and a body wrapped at 72. (UNENFORCED — no gate reads message
-    shape; INV-8's checks cover trailers only. Binds from Commit 2 onward.
-    Commit 1 is the root commit and is exempt because it predates the rule,
-    which was adopted during Commit 2's amend. Its two over-72 lines, at 73 and
-    75 columns, are the only artifact in the tree recording that the rule
-    arrived mid-unit, and the `inv12.root.exempted` tripwire exists to keep
-    them: a whole-history sweep expects 2, not 0. An earlier version of this
-    note gave a different reason — that amending would invalidate cited hashes
-    — which unit 02 falsified by action. ROADMAP → Findings carries it.)
+    bytes and a body wrapped at 72. Bytes, because bytes are what the checks
+    that have measured this rule count, and in UTF-8 a line inside a byte
+    limit is always inside the same character limit, never the reverse — the
+    byte reading is strictly the more conservative one. Bytes, characters
+    and display columns coincide today only because the tree holds no wide
+    characters; the first substantially non-ASCII line reopens the choice,
+    and ROADMAP → Findings states that trigger. (UNENFORCED — no gate reads
+    message shape; INV-8's checks cover trailers only. Binds from Commit 2
+    onward. Commit 1 is the root commit and is exempt because it predates
+    the rule, which was adopted during Commit 2's amend. Its two over-72
+    lines, at 73 and 75 bytes, are the only artifact in the tree recording
+    that the rule arrived mid-unit, and the `inv12.root.exempted` tripwire
+    exists to keep them: a whole-history sweep expects 2, not 0. An earlier
+    version of this note gave a different reason — that amending would
+    invalidate cited hashes — which unit 02 falsified by action. ROADMAP →
+    Findings carries it.)
 
 13. **INV-13** — No paid GitHub usage. No workflow carries a `push:` trigger,
     and `runs-on: macos-*` appears only in a job that needs a Swift or SwiftUI
@@ -137,7 +144,7 @@ findings, and never 1 for a tool that could not look. ADR-0005.
 ## Working agreements
 
 Conventional Commits, imperative mood, one concern per commit. Subject on one
-line under 72 columns, body wrapped at 72. No trailer of any kind.
+line under 72 bytes, body wrapped at 72. No trailer of any kind.
 
 Stage by path — `git add -- <paths>` — never `git add -A`.
 

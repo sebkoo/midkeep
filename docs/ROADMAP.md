@@ -577,6 +577,53 @@ remote-tracking refs — and was not done. With the reflog gone, holding the
 pre-redaction state in more than one place is an advantage; it only had to be
 stated accurately.
 
+**2026-08-01 — INV-12 said columns and its checks count bytes; measured,
+nothing sits between them.** Unit 02. A first measurement answered the wrong
+question — 912 counted every line in every file against 82, mixing code, JSON
+and URLs into one number. Redone, split by what each threshold governs:
+
+```
+A  INV-12, commit bodies over 72, all fourteen commits
+     1a132dd            bytes=2  chars=2   the root commit, the recorded
+                                           exemption
+     the other thirteen 0 / 0
+
+B  prose surface over 82
+     README.md 9/9   ROADMAP.md 4/4   adr/0004 2/2   adr/0007 1/1
+     adr/README 7/7  docs/prompts/01-… 842/842
+     totals  bytes 865   chars 865
+
+C  longest single line   bytes 379   chars 379
+```
+
+Each cell counts lines over the threshold, in bytes and in characters, at
+the tree as it stood when measured; this file has since grown by the entry
+recording it.
+
+Bytes and characters disagree nowhere — not on one commit body, not on one
+markdown file, at either threshold. The wording defect is real and has zero
+measurable consequence in today's tree.
+
+The fix is the wording, not the checks. In UTF-8 bytes are never fewer than
+characters, so a line passing a byte limit always passes the same character
+limit — a byte limit is strictly the more conservative reading and can never
+admit something a character limit would reject. INV-12 now says bytes. No
+enforcement changed, no verdict changed anywhere in fourteen commits, no
+ratification stop.
+
+The line rewrapped during this review measured 73 bytes and 71 characters, so
+it passed both limits before the rewrap. The rewrap was harmless and it was
+not the fix; the fix is the wording.
+
+**The condition for revisiting, stated so the decision is not re-litigated.**
+The three measures — bytes, characters, display columns — coincide today only
+because the tree contains no wide characters. The first line of Hangul or CJK
+breaks the coincidence: 82 bytes is roughly 27 Hangul characters and about 54
+display columns, far stricter than any of the three readings intends. The
+session that produced this entry was conducted in Korean, so a quoted line
+entering the record is a live possibility rather than a hypothetical. Trigger:
+the first substantially non-ASCII line in the tree.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
@@ -687,10 +734,22 @@ which is right when starting a unit and friction when making a one-line fix.
 **A gate that installs its own `EXIT` trap** would replace the one in
 `contract.sh` and leak a tally file. No gate does; nothing enforces it.
 
-**The teeth harness has run on one machine.** `scripts/gates/teeth.sh` takes
-about 42 seconds there, warm, on Apple Silicon. A GitHub macOS runner is a
-different machine with a cold cache. Whether it can run on every push is a
-measurement for whichever unit first pushes.
+**The teeth harness has run on one machine.** The figure is 42.249 seconds
+wall for nine cases, quoted from `time` output at
+`docs/prompts/01-repository-and-harness.md:1312` — taken locally on the
+development host, an Apple Silicon Mac. The host was warm — toolchain and
+OS file caches hot — but each case compiles from scratch in a fresh
+worktree by design (`:1315`), so the build cache itself was cold per case.
+Those are the baseline's conditions, stated because a figure names what it
+counted and a comparison names the conditions both figures were taken
+under. A GitHub runner performs the same from-scratch compile — the Teeth
+step sits in the `macos-15` job at `gates.yml:12`, so the toolchain is
+Apple's, hosted and virtualized, not Linux's — and what differs is the
+machine, the toolchain version, and runner setup overhead, not compile
+scope. The first CI timing is therefore a new baseline under new
+conditions, not a comparison against this one.
+Whether teeth can run on every push is a measurement for whichever unit
+first gets both workflow steps to execute.
 
 **Repository visibility.** `github.com/sebkoo/midkeep` is public. Three
 generations exist and the record distinguishes them by `created_at` and `id`,
