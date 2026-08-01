@@ -418,6 +418,31 @@ parked measurement: nine cases, macos-15, from-scratch compiles, the same
 compile scope as local. Its total wall time gets recorded beside the 42.249
 local figure as a new baseline under new conditions, not a comparison.
 
+**Measured, 2026-08-01, run 30724101184 — the run triggered by the push
+carrying those predictions.** All hold, one by its modulo clause and one with
+a surprise. The install verified the pinned hash on the runner —
+`/Users/runner/work/_temp/actionlint.tar.gz: OK` — and the `--version`
+tripwire printed 1.7.12 for darwin/arm64. `gate-workflow` reported
+`shell blocks NOT checked (no shellcheck)`: the runner has no shellcheck, so
+the modulo clause was load-bearing and the green covers the workflow schema
+and not the `run:` blocks. The Gates step passed — the first green on CI —
+and Teeth ran all nine cases: `plant cases 8, contract cases 1, failures 0`.
+
+Teeth's wall time by step timestamps was 30 seconds, 23:50:54 to 23:51:24
+UTC. The new baseline is faster than the 42.249 local figure, not slower as
+the cold-runner reasoning expected; the two build plants dominate on the
+runner as they do locally, plant-warning at about 17 of the 30 seconds and
+plant-skipped-test about 11. The numbers are two baselines under two
+conditions, and the surprise is recorded rather than explained — nothing
+here was measured about why.
+
+One prediction landed differently than worded. `gate-hygiene` on the runner
+read `INV-8 over HEAD, 16 commits (origin/main..HEAD resolved empty, fell
+back to all of HEAD)` — on a push to main the checkout's `origin/main`
+equals `HEAD`, so the range resolves empty regardless of how many commits
+the push carried. The `2 commits` reading happened exactly once, locally,
+before the push, where it was measured at gate-hygiene exit 0.
+
 **2026-08-01 — INV-13 added: no paid GitHub usage, and the tree does not meet
 it.** Unit 02. The invariant is that no workflow carries a `push:` trigger and
 that `runs-on: macos-*` appears only in a job needing a Swift or SwiftUI build.
@@ -770,6 +795,13 @@ scope. The first CI timing is therefore a new baseline under new
 conditions, not a comparison against this one.
 Whether teeth can run on every push is a measurement for whichever unit
 first gets both workflow steps to execute.
+
+**Discharged, 2026-08-01.** The paragraph above is kept as taken; the second
+machine arrived. Run 30724101184, triggered by the push installing pinned
+actionlint, executed Teeth on a `macos-15` runner: nine cases, `failures 0`,
+30 seconds by step timestamps — faster than the local 42.249, not slower.
+Both figures stand as baselines under their own conditions; Findings carries
+the full reading. Teeth can run on a push for this tree size, measured once.
 
 **Repository visibility.** `github.com/sebkoo/midkeep` is public. Three
 generations exist and the record distinguishes them by `created_at` and `id`,
