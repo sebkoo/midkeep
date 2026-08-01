@@ -1,0 +1,31 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": "",
+    "sessionUrl": false
+  },
+  "permissions": {
+    "defaultMode": "plan",
+    "ask": [
+      "Edit(Package.swift)",
+      "Write(Package.swift)",
+      "Edit(docs/adr/**)",
+      "Write(docs/adr/**)",
+      "Edit(scripts/gates/**)",
+      "Write(scripts/gates/**)",
+      "Edit(scripts/dev/**)",
+      "Write(scripts/dev/**)",
+      "Edit(.github/workflows/**)",
+      "Write(.github/workflows/**)",
+      "Edit(.githooks/**)",
+      "Write(.githooks/**)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git config core.hooksPath:*)"
+    ],
+    "deny": [
+      "Bash(git commit --no-verify:*)",
+      "Bash(git commit -n:*)"
+    ]
+  }
+}
