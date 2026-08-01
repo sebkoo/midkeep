@@ -398,6 +398,26 @@ run; so would ordering teeth ahead of `all.sh`, which trades one problem for
 another. Either is a workflow change, and `.github/workflows/**` is ask-gated, so
 it stops on its own.
 
+**2026-08-01, later the same day.** `gates.yml` now installs actionlint
+v1.7.12 — the version `gate-workflow` was verified against locally — pinned by
+version and sha256 from the upstream release's checksum file, the hash watched
+going both ways before pinning: the true value passes `shasum -c` and a
+corrupted control fails it. A pinned checksummed binary was chosen over a
+marketplace action or an unpinned installer because either of those is a
+dependency in all but name, and the install touches only the runner's `PATH`,
+so `gate-workflow`'s contract is unchanged — a clone without actionlint still
+gets 2 with the reason on stderr.
+
+Predictions, written before the run they predict. `gate-workflow` no longer
+returns 2 and reports 0 findings modulo shellcheck — actionlint 1.7.12 run by
+hand over the post-edit pair of workflows exits 0 on a machine without
+shellcheck integration, and whether the runner has shellcheck decides how much
+that 0 covers. `all.sh` returns 0 if that holds, the first green Gates step on
+CI. Teeth then runs for the first time on a cold runner, and that is the
+parked measurement: nine cases, macos-15, from-scratch compiles, the same
+compile scope as local. Its total wall time gets recorded beside the 42.249
+local figure as a new baseline under new conditions, not a comparison.
+
 **2026-08-01 — INV-13 added: no paid GitHub usage, and the tree does not meet
 it.** Unit 02. The invariant is that no workflow carries a `push:` trigger and
 that `runs-on: macos-*` appears only in a job needing a Swift or SwiftUI build.

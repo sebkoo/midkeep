@@ -22,6 +22,30 @@ jobs:
       - name: Install the hook path
         run: scripts/dev/bootstrap.sh
 
+      # Without actionlint, gate-workflow returns 2, all.sh returns 2, and a
+      # no-verdict fails this job before Teeth can run — measured on the first
+      # push. Installed pinned by version and checksum from the upstream
+      # release rather than from a marketplace action or an unpinned installer
+      # script: a third-party action is a dependency in all but name, and this
+      # uses only tools the job already trusts. v1.7.12 is the version
+      # gate-workflow was verified against locally. The gate's contract does
+      # not change: a clone without actionlint still gets 2 with the reason on
+      # stderr, and this step touches only this runner's PATH. The pinned
+      # artifact and the pinned image move together or not at all — the
+      # darwin_arm64 build matches macos-15, and the --version line below is
+      # the tripwire a future runner change trips (Exec format error).
+      - name: Install actionlint (pinned)
+        run: |
+          version=1.7.12
+          sha256=aba9ced2dee8d27fecca3dc7feb1a7f9a52caefa1eb46f3271ea66b6e0e6953f
+          curl -fsSL -o "$RUNNER_TEMP/actionlint.tar.gz" \
+            "https://github.com/rhysd/actionlint/releases/download/v${version}/actionlint_${version}_darwin_arm64.tar.gz"
+          echo "$sha256  $RUNNER_TEMP/actionlint.tar.gz" | shasum -a 256 -c -
+          mkdir -p "$RUNNER_TEMP/bin"
+          tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP/bin" actionlint
+          echo "$RUNNER_TEMP/bin" >> "$GITHUB_PATH"
+          "$RUNNER_TEMP/bin/actionlint" --version
+
       # 0 clean, 1 findings on stdout, 2 no verdict with a reason on stderr.
       # A no-verdict outranks a finding, and a missing gate is also 2.
       - name: Gates
@@ -30,13 +54,14 @@ jobs:
       # The harness that proves each gate fails on a planted defect. It builds
       # one worktree per case, so it is the slowest step here by a wide margin.
       #
-      # It measured 42.2 seconds locally: warm, on Apple Silicon, with a
-      # populated build cache. That number is not a claim about this runner and
-      # has never been observed here. A cold macOS runner compiling the package
-      # from scratch in eight worktrees may take considerably longer, and
-      # whether this step is viable on every push is an open measurement rather
-      # than a settled question. Whoever first watches it time out should know
-      # it was never claimed to fit.
+      # It measured 42.2 seconds locally: host caches warm, on Apple Silicon,
+      # with each case compiling from scratch in a fresh worktree — the build
+      # cache is cold per case by design. That number is not a claim about
+      # this runner and has never been observed here. This runner performs the
+      # same from-scratch compiles on a different machine with its own setup
+      # overhead, and whether this step is viable on every push is an open
+      # measurement rather than a settled question. Whoever first watches it
+      # time out should know it was never claimed to fit.
       - name: Teeth
         run: scripts/gates/teeth.sh
 
