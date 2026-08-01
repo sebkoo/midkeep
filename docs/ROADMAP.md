@@ -769,26 +769,80 @@ adds correlation signal and no record value.
 `/(Users|home)/<segment>/`, under the same exit contract as every other gate —
 0 none found, 1 found with `path:line:` on stdout, 2 could not look.
 
-**The placeholder forms must be exempt, and the gate's own specification is why.**
-Measured against the published tree, `/Users/` now appears four times and not one
-of them is a real path: `<redacted>` twice in
-`docs/prompts/01-repository-and-harness.md` at `:403` and `:1363`, and `<name>`
-twice — in `CLAUDE.md`'s prompt-line agreement and in this file's note about
-it — both of which exist *to describe this gate*. A `…` ellipsis form appears
-once
-more. So the exemption covers `<name>`, `<redacted>` and `…`, not `<redacted>`
-alone; allowing only the latter would make the gate go red on the document that
-defines it, on its first run against a clean tree.
+**Ship the segment class alone. Do not ship an exemption list.** The published
+tree carries six occurrences of the literal `/Users/`, in four distinct forms —
+counted as occurrences, not as forms or as files:
 
-That is the `.example` suffix catch again, and cheap for the same reason: found
-while the gate is still a specification rather than after it is wired into
-`all.sh`.
+```
+1  /Users/                        this file, in the sentence specifying the gate
+2  /Users/<name>/                 CLAUDE.md's prompt-line rule, and this file
+2  /Users/<redacted>/dev/midkeep  the prompt document, :403 and :1363
+1  /Users/…                       this file
+```
 
-A segment class of `[A-Za-z0-9._-]+` already excludes all three forms, since
-none of `<`, `>` or `…` is in it — so the exemption is a second line of defence
-rather than the mechanism. Which of the two is actually doing the work has to
-be watched both ways against these exact lines before the gate lands, or the
-gate will be trusted for a reason that is not the true one.
+Not one is a real path, and the segment class decides all six on its own.
+Measured against those forms plus a real-path control, the two candidate
+patterns differ by one character and disagree completely:
+
+```
+/(Users|home)/[A-Za-z0-9._-]+   matched the real-path control, none of the six
+/(Users|home)/[A-Za-z0-9._-]*   matched all six placeholders as well
+```
+
+`+` is the pattern; `*` is the defect, and it would go red on this very
+document.
+
+**The control is not reproduced here, and that is the point.** A real path
+written into this file would match the pattern being shipped, so the gate would
+fire on the paragraph proving the gate correct and `all.sh` would sit at 1
+permanently. Exempting it would be the string blocklist removed two paragraphs
+above, and a control the gate ignores demonstrates nothing about the gate's live
+behaviour.
+
+The control belongs in `scripts/gates/teeth/plant-hostpath.sh`, where being
+flagged is the desired outcome. **That plant does not exist yet** — the tree
+carries eight, and this would be the ninth. It lands with the gate, not before,
+and until then this paragraph describes a design and not a file.
+
+It will carry the real path as a **literal**, the way
+`plant-unchecked-sendable.sh` carries `@unchecked Sendable`, rather than
+assembling it from fragments to dodge the pattern. Assembly would be the wrong
+fix and is recorded as rejected: a plant whose defect the gate cannot match is
+a plant landing something other than what it names, the teeth run goes green,
+and the harness certifies a tooth that is not there. The named scope is what
+makes the literal safe, and it is the mechanism doing the work. That follows
+the convention already in the tree rather than a new one: every existing gate
+scans named source directories — `gate-hygiene` scans `Sources` and `Tests`,
+`gate-format` scans `Package.swift Sources Tests` — so `scripts/gates/teeth/`
+is outside every scan by construction. It is why `plant-unchecked-sendable.sh`
+can contain the literal `@unchecked Sendable` without tripping the gate it
+exercises.
+
+This gate takes the same shape: a named scope over the prose surface where the
+leak class lives — `docs/`, `CLAUDE.md`, `README.md`, `.claude/` — which puts the
+plant out of scope without an exclusion list. The cost is stated rather than
+hidden: an absolute host path inside `scripts/` or `Sources/` would not be
+caught, and closing that needs a wider scope and a decision about the plant.
+
+A directory scope is not a string exemption, and the difference is that it is
+testable both ways: a real path in `docs/` must fire, the plant's own copy must
+not. No unexercisable branch returns.
+
+So an exemption list for `<name>`, `<redacted>` and `…` **can never fire** — the
+class already excludes every one of them. Shipping it would be shipping a branch
+that cannot execute, which is the same shape as a check that cannot fail: it goes
+untested, rots quietly, and becomes load-bearing the day someone widens the class,
+at which point nobody knows whether it was ever right.
+
+The condition for its return, stated so the decision is not re-litigated: if the
+segment class is ever widened to admit `<`, `>` or `…`, the exemption comes back
+**in the same commit as a plant that exercises it**. Not before, and not against
+a hypothetical.
+
+The bare `/Users/` earns a place in teeth as a **negative** case — a line that
+must not trigger. That is this session's absence-needs-a-positive-control rule
+turned on the gate itself: without it, `+` and `*` are indistinguishable from a
+green run.
 
 It searches for a **shape** and not for the string, which is the whole reason it
 can exist. A gate that looks for a secret has to contain the secret; this one

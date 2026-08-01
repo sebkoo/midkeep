@@ -166,6 +166,15 @@ and append what no longer holds. A sentence asserting a general fact is a claim:
 falsify it and record what falsified it. Deciding which kind a sentence is comes
 before deciding how to correct it.
 
+Every figure in the record names what it counted. Three incidents in one day
+produced the rule: the About string measured 146 bytes by `wc -c` against 143
+characters, an `awk length` width check read 83 bytes against 79 characters, and
+`git grep -c` reports matching lines where the sentence around it meant
+occurrences. Bytes, characters, lines, occurrences, files and forms are six
+different counts, and a bare number picks one silently. A sentence in this
+repository saying `/Users/` "appears four times" was wrong by that mechanism —
+six occurrences, four forms, three files.
+
 When quoting terminal output, quote the command and its output and never the
 prompt line. A shell prompt carries the account name and the hostname in one
 string, and this repository's method is to paste tool output verbatim, so the
