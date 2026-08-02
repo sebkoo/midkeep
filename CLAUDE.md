@@ -109,17 +109,27 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
     invalidate cited hashes — which unit 02 falsified by action. ROADMAP →
     Findings carries it.)
 
-13. **INV-13** — No paid GitHub usage. No workflow carries a `push:` trigger,
-    and `runs-on: macos-*` appears only in a job that needs a Swift or SwiftUI
-    build. (`gate-workflow`, PARTIAL — and not yet true. Those two clauses are
-    the part a gate can read. The spending limit lives in account settings that
-    nothing in this tree can reach, and the Actions timing API reports
-    `billable.MACOS.total_ms` of 0 against a non-zero `run_duration_ms`, so
-    consumption is not readable from here either. As the tree stands both
-    workflows carry `push: branches: [main]` and `gate-workflow` asserts
-    neither clause; the gate and the workflows are both ask-gated, so closing
-    it is a ratification stop. Named in ROADMAP → Known holes. Where the tool
-    is weaker than the rule, the mark is weakened and the rule is not.)
+13. **INV-13** — No paid GitHub usage. The readable clauses: every `runs-on`
+    in every workflow names a standard GitHub-hosted runner label — the set
+    that is free on a public repository — never a large-runner or custom
+    label; and `runs-on: macos-*` appears only in a job that needs a Swift
+    or SwiftUI build. (`gate-workflow`, PARTIAL — the gate is named as
+    enforcement and asserts neither clause yet; an amendment moves no mark,
+    only enforcement does, so the mark moves when the gate carries both
+    clauses and teeth proves them going both ways. The unreadable half
+    stays: the spending limit lives in account settings nothing in this
+    tree can reach, and the Actions timing API read `billable.MACOS.total_ms`
+    of 0 against non-zero `run_duration_ms` on 2026-08-01. Clause 1 replaced
+    a push-trigger ban by amendment on 2026-08-02: the ban was right when
+    written — a private repository running `macos-*` jobs on push triggers
+    was the one configuration that could bill — and was overtaken when the
+    repository went public the same day it was added, not refuted. The
+    amendment holds only while the repository is public; if visibility ever
+    flips to private, push triggers become a paid path again and this
+    invariant is owed a revisit. Visibility is not readable from the tree,
+    so no tree-gate can assert that condition. ROADMAP → Findings carries
+    the amendment and its grounds. Where the tool is weaker than the rule,
+    the mark is weakened and the rule is not.)
 
 INV-6, INV-10, INV-11 and INV-12 staying visibly unenforced is deliberate. Do
 not invent a gate to make the list look complete. INV-13 is different: its

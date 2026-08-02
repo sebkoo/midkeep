@@ -481,6 +481,13 @@ gains the two assertions and `.github/workflows/**` loses the `push:` triggers;
 both paths are ask-gated. When the gate goes red on the workflows, the workflows
 change and the gate does not.
 
+**2026-08-02 — overtaken in part by amendment.** The clause banning `push:`
+triggers was replaced; push triggers stay. This entry is kept as the record
+of the invariant as first written and of the conditions it was right under.
+The amendment, its grounds and its revisit trigger are the 2026-08-02 entry
+below. What stays open from this disposition is enforcement: `gate-workflow`
+still asserts neither clause.
+
 **2026-08-01 — INV-12's Commit 1 exemption outlived the reason given for it.**
 Unit 02. `CLAUDE.md` justified the exemption by saying that amending the root
 would rewrite the hashes of every commit after it, and that those hashes are
@@ -669,6 +676,50 @@ session that produced this entry was conducted in Korean, so a quoted line
 entering the record is a live possibility rather than a hypothetical. Trigger:
 the first substantially non-ASCII line in the tree.
 
+**2026-08-02 — INV-13's first clause replaced by amendment; the motive and
+the second clause stand.** Ratified by the owner. Dates in this entry are
+UTC — the amendment landed at 2026-08-02 UTC while the host still read
+2026-08-01 EDT, and a bare date here would pick a timezone silently.
+
+What changed: the clause banning `push:` triggers is replaced by one
+requiring every `runs-on` in every workflow to name a standard
+GitHub-hosted runner label — the set that is free on a public repository —
+never a large-runner or custom label. What did not change: the motive, no
+paid GitHub usage, stated first as before; and clause 2, `macos-*` only in
+a job that needs a Swift or SwiftUI build. Push triggers stay.
+
+Why, on two measurements already in this file and nothing new: the
+repository is public — generation 3, `created_at 2026-08-01T13:28:48Z`,
+`id 1319316813` — and GitHub's page, quoted in the entry that added
+INV-13, says Actions is free for public repositories on standard hosted
+runners. And the Actions timing API read `billable.MACOS.total_ms` of 0
+against non-zero `run_duration_ms` across 2026-08-01's runs.
+
+The history, kept because the replaced clause was right when written.
+Under a private repository — which this was when INV-13 was added —
+`macos-*` jobs on push triggers were the one configuration that could
+bill. The facts the clause was written against died at 13:28:48Z the same
+day, when the repository went public. Overtaken, not refuted: dated and
+kept, not erased.
+
+The revisit trigger, the same shape as INV-12's wide-character trigger and
+the exemption's return condition: the amendment holds only while the
+repository is public. If visibility ever flips to private, push triggers
+become a paid path again and INV-13 is owed a revisit. Stated honestly:
+visibility is not readable from the tree, so no tree-gate can assert it. A
+workflow can read it at run time — `github.event.repository.private` is
+available on the runner — so a one-line tripwire step in `gates.yml`,
+failing loudly if it is ever true, puts the machine check exactly where
+the money would be spent: the run that would bill is the run that notices.
+Cost if it ever fires: one run against the private tier's free allowance.
+Taken; it lands with the enforcement commits rather than in this
+amendment, which is docs only, and until it lands this paragraph describes
+a design and not a file.
+
+An amendment moves no mark — the INV-2/INV-3/INV-7 rule. INV-13 stays
+PARTIAL, and moves when `gate-workflow` asserts both clauses and teeth
+proves them going both ways.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
@@ -684,9 +735,9 @@ shape. INV-13 — `gate-workflow` is named as its enforcement and does not yet
 carry the check, so at this commit the readable half is unenforced too.
 
 **INV-13's other half is outside the repository and always will be.** The two
-clauses a gate can read — no `push:` trigger, `macos-*` only where a build needs
-it — are a proxy for the thing that actually costs money, which is the account's
-spending limit. That limit lives in GitHub account settings. Nothing in the tree
+clauses a gate can read — every `runs-on` a standard GitHub-hosted label,
+`macos-*` only where a build needs it — are a proxy for the thing that actually
+costs money, which is the account's spending limit. That limit lives in GitHub account settings. Nothing in the tree
 can read it, no gate can assert it, and a green `gate-workflow` will never mean
 "no paid usage" — only "the workflows are shaped so that paid usage is less
 likely". The mark is PARTIAL for that reason, in the same way INV-4's names what
