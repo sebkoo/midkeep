@@ -716,6 +716,21 @@ Taken; it lands with the enforcement commits rather than in this
 amendment, which is docs only, and until it lands this paragraph describes
 a design and not a file.
 
+**Discharged, 2026-08-02 (UTC), stronger than drafted in two ways.** The
+step as landed demands affirmative proof of public — anything but a
+measured `"false"` fails the run, because `github.event.repository` can be
+absent on event types these files might gain later, and an empty
+interpolation would make a `== "true"` check pass silently on exactly the
+run that would bill: the meta.captured defect, a check with a path on
+which it cannot fail. And it guards every job that spins a runner, not
+`gates.yml` alone — the `gates` job, `ci.yml`'s `build` job, which would
+bill identically when private, and the `pull-request-body` job, whose 1x
+ubuntu tier is cheaper when private, not free. The shell logic was watched
+three ways before landing: `false` exits 0, `true` exits 1, and empty
+exits 1 reporting `unreadable`. The interpolation itself is only testable
+by a run; predicted, before the next push: all three copies pass, each
+printing the repository-is-public line.
+
 An amendment moves no mark — the INV-2/INV-3/INV-7 rule. INV-13 stays
 PARTIAL, and moves when `gate-workflow` asserts both clauses and teeth
 proves them going both ways.

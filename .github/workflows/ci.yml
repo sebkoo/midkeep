@@ -14,6 +14,18 @@ jobs:
     runs-on: macos-15
 
     steps:
+      # INV-13 tripwire — rationale at the copy in gates.yml's gates job. This
+      # run would bill identically to that one when private, so it is guarded
+      # identically.
+      - name: Visibility tripwire (INV-13)
+        run: |
+          vis="${{ github.event.repository.private }}"
+          if [ "$vis" != "false" ]; then
+            echo "INV-13: visibility is not provably public (private='${vis:-unreadable}') — revisit the amendment" >&2
+            exit 1
+          fi
+          echo "INV-13: repository is public; the amendment's condition holds"
+
       - uses: actions/checkout@v4
 
       # Recorded rather than assumed: every claim this repository makes about

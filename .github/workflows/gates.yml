@@ -12,6 +12,27 @@ jobs:
     runs-on: macos-15
 
     steps:
+      # INV-13's revisit trigger, machine-checked where the money would be
+      # spent. The amendment replacing the push-trigger ban holds only while
+      # this repository is public, and visibility is not readable from the
+      # tree — but it is readable here, at run time. Affirmative proof, not a
+      # private check: github.event.repository can be absent on event types
+      # this file might gain later, and an empty interpolation must fail
+      # loudly rather than pass silently — a check with a path on which it
+      # cannot fail is the meta.captured defect. Anything but a measured
+      # "false" fails the run before it checks anything out. Cost if it ever
+      # fires: one run against the private tier's free allowance. The
+      # interpolated value is a boolean from GitHub, not attacker text. The
+      # same step guards every job that spins a runner, here and in ci.yml.
+      - name: Visibility tripwire (INV-13)
+        run: |
+          vis="${{ github.event.repository.private }}"
+          if [ "$vis" != "false" ]; then
+            echo "INV-13: visibility is not provably public (private='${vis:-unreadable}') — revisit the amendment" >&2
+            exit 1
+          fi
+          echo "INV-13: repository is public; the amendment's condition holds"
+
       - uses: actions/checkout@v4
         with:
           # gate-hygiene resolves origin/main..HEAD for INV-8. A shallow clone
@@ -73,6 +94,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # INV-13 tripwire — rationale at the gates job's copy above. The 1x
+      # ubuntu tier is cheaper when private, not free, so this job is guarded
+      # like the macos ones.
+      - name: Visibility tripwire (INV-13)
+        run: |
+          vis="${{ github.event.repository.private }}"
+          if [ "$vis" != "false" ]; then
+            echo "INV-13: visibility is not provably public (private='${vis:-unreadable}') — revisit the amendment" >&2
+            exit 1
+          fi
+          echo "INV-13: repository is public; the amendment's condition holds"
+
       - uses: actions/checkout@v4
 
       - name: INV-8 over the pull request body
