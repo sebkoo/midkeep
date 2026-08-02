@@ -731,6 +731,18 @@ exits 1 reporting `unreadable`. The interpolation itself is only testable
 by a run; predicted, before the next push: all three copies pass, each
 printing the repository-is-public line.
 
+**Measured, 2026-08-02, runs 30727083627 (`gates`) and 30727083599 (`ci`) —
+the push carrying the tripwire.** Confirmed for every copy the event could
+reach, and the prediction overreached by one. Both executed copies passed
+and printed `INV-13: repository is public; the amendment's condition holds`,
+and the log's rendered script header reads `vis="false"` — the interpolation
+resolving to a measured `"false"` on the runner, not an inference. The third
+copy never ran: `pull-request-body` carries `if: github.event_name ==
+'pull_request'`, so a push cannot exercise it, and "all three copies" was
+unmeasurable by the run the prediction named. Falsified in the letter,
+confirmed in what it meant; the third copy's live measurement waits for the
+first pull request.
+
 An amendment moves no mark — the INV-2/INV-3/INV-7 rule. INV-13 stays
 PARTIAL, and moves when `gate-workflow` asserts both clauses and teeth
 proves them going both ways.
