@@ -21,7 +21,7 @@ Sources/MidkeepKit    runs, journal, engine contracts. No UI, no third party.
 Sources/MidkeepUI     views. May import SwiftUI and MidkeepKit, nothing else.
 Sources/MidkeepApp    composition root. Nothing imports it.
 Tests/                Swift Testing.
-scripts/gates/        six gates, one contract, one teeth harness.
+scripts/gates/        seven gates, one contract, one teeth harness.
 scripts/dev/          bootstrap. Sets core.hooksPath.
 docs/adr/             decisions.
 docs/prompts/         per-unit lab notes: asked, predicted, observed, falsified.
@@ -113,10 +113,15 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
     in every workflow names a standard GitHub-hosted runner label — the set
     that is free on a public repository — never a large-runner or custom
     label; and `runs-on: macos-*` appears only in a job that needs a Swift
-    or SwiftUI build. (`gate-workflow`, PARTIAL — the gate is named as
-    enforcement and asserts neither clause yet; an amendment moves no mark,
-    only enforcement does, so the mark moves when the gate carries both
-    clauses and teeth proves them going both ways. The unreadable half
+    or SwiftUI build. (`gate-runners`, PARTIAL — the gate carries both
+    clauses and `teeth.sh` proves each going both ways, the move the
+    previous mark promised, made on 2026-08-03 by enforcement rather than
+    amendment. PARTIAL for what a grep with no YAML parser cannot see — a
+    job calling a reusable workflow has its runner chosen in the called
+    file, and the gate's header names its false positives — and because
+    the marker clause checks a declaration, not the need it declares:
+    whether a `macos-*` job truly requires a Swift build stays a
+    hand-review question. The unreadable half
     stays: the spending limit lives in account settings nothing in this
     tree can reach, and the Actions timing API read `billable.MACOS.total_ms`
     of 0 against non-zero `run_duration_ms` on 2026-08-01. Clause 1 replaced
@@ -133,7 +138,7 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
 
 INV-6, INV-10, INV-11 and INV-12 staying visibly unenforced is deliberate. Do
 not invent a gate to make the list look complete. INV-13 is different: its
-readable half is unenforced because the check is not written yet, and its
+readable half is enforced by `gate-runners` since 2026-08-03, and its
 unreadable half never will be.
 
 ## Commands

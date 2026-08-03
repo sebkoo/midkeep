@@ -11,7 +11,7 @@ jobs:
     # image, so an unpinned image would change the toolchain under this
     # repository without a commit — and INV-1 is a claim about which language
     # mode the package is built in.
-    runs-on: macos-15
+    runs-on: macos-15 # INV-13: needs a Swift build
 
     steps:
       # INV-13 tripwire — rationale at the copy in gates.yml's gates job. This

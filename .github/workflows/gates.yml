@@ -7,9 +7,9 @@ on:
 
 jobs:
   gates:
-    # Pinned for the same reason as ci.yml: three of the five gates shell out
+    # Pinned for the same reason as ci.yml: three of the seven gates shell out
     # to the toolchain, and an unpinned image moves it without a commit.
-    runs-on: macos-15
+    runs-on: macos-15 # INV-13: needs a Swift build
 
     steps:
       # INV-13's revisit trigger, machine-checked where the money would be

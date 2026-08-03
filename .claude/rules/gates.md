@@ -3,7 +3,7 @@
 For an agent arriving after the harness was built. This is orientation, not
 rationale; the arguments are in `docs/adr/`.
 
-## The six gates
+## The seven gates
 
 Run them all with `scripts/gates/all.sh`.
 
@@ -11,12 +11,14 @@ Run them all with `scripts/gates/all.sh`.
 |---|---|---|
 | `gate-arch.sh` | INV-1, INV-3 | a checkout and git |
 | `gate-hygiene.sh` | INV-2, INV-4, INV-8 | a checkout and git |
+| `gate-runners.sh` | INV-13's readable clauses | a checkout and git |
 | `gate-workflow.sh` | `.github/workflows/*.yml` | `actionlint`, optional |
 | `gate-format.sh` | the committed `.swift-format` | the Swift toolchain |
 | `gate-build.sh` | INV-5 | the Swift toolchain |
 | `gate-test.sh` | INV-7 | the Swift toolchain |
 
-`gate-arch` and `gate-hygiene` still reach a verdict on a host with no Swift.
+`gate-arch`, `gate-hygiene` and `gate-runners` still reach a verdict on a host
+with no Swift.
 The three toolchain gates return 2 there, and so does `all.sh`. That is the
 contract working, not the definition of done.
 
@@ -43,7 +45,7 @@ Everything on stdout is a finding and nothing else goes there, because
 
 ## teeth
 
-`scripts/gates/teeth.sh` proves each gate fails on a planted defect. Eight
+`scripts/gates/teeth.sh` proves each gate fails on a planted defect. Ten
 plant cases and one contract case, each in a detached worktree under a temp
 directory and never in the checkout. Each case asserts the clean tree exits 0
 *before* planting, that the planted tree exits exactly 1 with the expected

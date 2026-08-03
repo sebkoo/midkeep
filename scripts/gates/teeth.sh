@@ -13,10 +13,11 @@
 # Assertion 1 runs per case, not once per gate. A gate that fires on everything
 # and a gate that fires on the defect are indistinguishable without it.
 #
-# Two groups, reported separately: eight plant cases, one per invariant a gate
-# claims plus the one gate-format case that claims none; and one contract case,
-# which tests a behaviour of a script rather than a property of a tree. Neither
-# number implies the other's coverage.
+# Two groups, reported separately: ten plant cases — at least one per
+# invariant a gate claims, two of them for INV-13's two clauses, plus the one
+# gate-format case that claims none — and one contract case, which tests a
+# behaviour of a script rather than a property of a tree. Neither number
+# implies the other's coverage.
 #
 # This does not source lib/contract.sh. teeth.sh needs its own EXIT trap for
 # worktree cleanup, and contract.sh documents that a gate installing its own
@@ -156,6 +157,8 @@ run_plant_case plant-skipped-test        INV-7  gate-test.sh     plant-skipped-t
 # The INV-8 finding is keyed by commit sha rather than a file path, so this
 # case counts every finding instead of those matching one path.
 run_plant_case plant-ai-trailer          INV-8  gate-hygiene.sh  plant-ai-trailer.sh          '*'
+run_plant_case plant-runner-label        INV-13 gate-runners.sh  plant-runner-label.sh        .github/workflows/planted-large.yml
+run_plant_case plant-macos-no-marker     INV-13 gate-runners.sh  plant-macos-no-marker.sh     .github/workflows/planted-macos.yml
 run_plant_case plant-bad-format          format gate-format.sh   plant-bad-format.sh          Sources/MidkeepKit/Placeholder.swift
 
 printf '\nteeth: contract case\n'

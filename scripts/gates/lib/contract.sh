@@ -42,8 +42,8 @@ set -uo pipefail
 # The tally is scoped to the shell that created it, which settles two boundary
 # questions that a bare mktemp on every source would get wrong.
 #
-# Gates run in sequence — all.sh invokes five of them — and each is a separate
-# process. GATE_FINDINGS_FILE is deliberately not exported, and the PID guard
+# Gates run in sequence — all.sh invokes each in turn — and every gate is a
+# separate process. GATE_FINDINGS_FILE is deliberately not exported, and the PID guard
 # means that even if it were, a different process would still create its own:
 # a finding in one gate can never make the next gate exit 1.
 #

@@ -747,6 +747,88 @@ An amendment moves no mark — the INV-2/INV-3/INV-7 rule. INV-13 stays
 PARTIAL, and moves when `gate-workflow` asserts both clauses and teeth
 proves them going both ways.
 
+**2026-08-03 — INV-13's readable clauses gain their gate; a review returned
+five findings and every fix landed against a measurement.** `gate-runners.sh`
+is the seventh gate: clause 1, every `runs-on` on an allowlist of the
+standard hosted labels the tree uses — `macos-15` and `ubuntu-latest`, each
+entry dated in the gate — and clause 2, `macos-*` only beside the literal
+marker `# INV-13: needs a Swift build`. It is a grep over
+`.github/workflows/` and needs only a checkout. The entry above named
+`gate-workflow` as the mark's destination; the check landed as its own gate
+instead, because `gate-workflow`'s tool is `actionlint`, which is optional,
+and coupling the clauses to it would leave a fresh clone with no INV-13
+verdict at all. Overtaken by a better shape, not refuted. Two plants land
+with it, the ninth and tenth: `plant-runner-label.sh` for clause 1,
+`plant-macos-no-marker.sh` for clause 2.
+
+A multi-agent review of the diff refused ratification with five findings,
+all verified — one by two adversarial refuters, four by direct measurement
+after a usage limit stopped the refuter fleet. The aggregation first misfiled
+those four as refuted on empty verdicts: absence read as a verdict, in the
+reviewer's own tooling, the same defect class this file records elsewhere.
+Kept because the reviewer is part of the measurement chain and its failures
+are findings like any other.
+
+The five, each with the measurement that decided it:
+
+1. Flow-style YAML defeated both clauses: `{runs-on: macos-latest-xlarge,
+   steps: [...]}` measured exit 0 against the anchored scan, and GitHub
+   honours flow mappings. Fixed by unanchoring the key match; the flow form
+   now reaches the label ladder with the rest of the mapping attached and
+   fails the allowlist as junk — the conservative direction. The cost, a
+   commented `# runs-on:` line read as a real one, is named in the gate's
+   header beside the `run:`-block false positive. Four flow fixtures joined
+   the probe battery — whole-job, jobs-level, mixed-realistic, and
+   flow-style `macos-15` without its marker — and each measured exit 1.
+
+2. The clause-1 plant proved nothing about the clause it names. Measured
+   both ways: with the allowlist deleted from the gate, the plant's
+   `macos-latest-xlarge` fixture still exited 1, because the marker clause
+   fired at the same path and the teeth case counts findings by path; with
+   the fixture relabelled `ubuntu-latest-xlarge` — a label clause 2 cannot
+   see — the mutant exits 0 and the teeth case fails. The plant now carries
+   the ubuntu label, and the mutation was re-run by hand after the fix,
+   2026-08-03: allowlist deleted, `ubuntu-latest-xlarge` → exit 0, no
+   finding, mutant caught; `macos-latest-xlarge` against the same mutant →
+   exit 1, one finding at the same path, the shape that had made the plant
+   blind.
+
+3. An unreadable workflow file measured exit 0 — `grep: Permission denied`
+   on stderr and a clean verdict the tool never earned. Under pipefail
+   `scan_file`'s status is grep's, and grep's 1 is a legitimate no-match,
+   so the fix discriminates: status above 1 is `die_cannot_run`. Probed
+   both ways: a chmod-000 workflow → 2, a runs-on-free workflow → 0.
+
+4. The plants' main-tree guard degraded silently on old git. The second
+   `rev-parse` never checked its status, and rev-parse hands an option it
+   does not recognise back on stdout with status 0 — measured:
+   `git rev-parse --frobnicate-nonsense` prints it and exits 0 — so on a
+   git without `--path-format` the two answers could never be equal and the
+   guard waved the main tree through. Both calls in both plants now check
+   status and require an absolute-path answer; any other shape refuses.
+
+5. Zero workflow files measured exit 0 — the meta.captured shape, a clean
+   verdict over an empty scan. One line closes it: zero files scanned is
+   `die_cannot_run`. Probed: an empty workflows directory → 2.
+
+The battery after the fixes, counted as probes: fifteen — the four flow
+fixtures, both clauses block-style, an expression, a sequence, an empty
+value, a quoted-and-markered clean case, a runs-on-free file, the
+commented-line false positive, the unreadable file, the empty directory,
+and the real tree's two workflows as the clean control — fifteen ok, zero
+failures. `all.sh` exited 0 over seven gates on the real tree. Teeth ran
+ten plant cases and the contract case with `failures 0`, in a scratch copy
+whose HEAD carried the working tree, because a teeth worktree holds only
+committed content — the same boundary the `status.sh` paragraph in Known
+holes records — and an uncommitted gate is invisible to it.
+
+Enforcement moved, so the mark moves — the same rule that held it still
+through two amendments. INV-13 now reads (`gate-runners`, PARTIAL): PARTIAL
+for the unreadable half, the spending limit and the visibility condition,
+which no tree-gate will ever assert, and for what a gate with no YAML
+parser cannot see — a reusable workflow's runner is chosen in the called
+file, and the false positives are named in the gate's header.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
@@ -758,14 +840,14 @@ being added; the ADR requirement is a habit until a gate reads the resolved
 dependency list. INV-10 — cannot be gated until there is a runtime. INV-11 —
 read by hand, and the line between "what this is for" and "what this does" is
 where the hand review earns its keep. INV-12 — no gate reads commit message
-shape. INV-13 — `gate-workflow` is named as its enforcement and does not yet
-carry the check, so at this commit the readable half is unenforced too.
+shape. INV-13 left this list on 2026-08-03, when `gate-runners` landed with
+both readable clauses and their plants; its unreadable half never will.
 
 **INV-13's other half is outside the repository and always will be.** The two
 clauses a gate can read — every `runs-on` a standard GitHub-hosted label,
 `macos-*` only where a build needs it — are a proxy for the thing that actually
 costs money, which is the account's spending limit. That limit lives in GitHub account settings. Nothing in the tree
-can read it, no gate can assert it, and a green `gate-workflow` will never mean
+can read it, no gate can assert it, and a green `gate-runners` will never mean
 "no paid usage" — only "the workflows are shaped so that paid usage is less
 likely". The mark is PARTIAL for that reason, in the same way INV-4's names what
 a line-level grep cannot see, and the rule is not narrowed to what the tool can
@@ -819,9 +901,10 @@ is structural rather than an omission, and the first push is what closes it.
 
 **`gate-workflow` is the only gate outside the teeth harness.** It was watched
 firing on a planted defect and staying quiet on a clean tree, by hand, but it
-has no plant in `scripts/gates/teeth.sh`. The plant count stays at eight because
-Acceptance names that number and a ninth needs a delta editing it. A later unit
-that wants the ninth plant should take that delta.
+has no plant in `scripts/gates/teeth.sh`. The plant count stayed at eight while
+Acceptance named that number; INV-13's two plants took that delta on 2026-08-03
+and the count is ten. `gate-workflow` still has no plant, and a later unit that
+wants one takes its own delta.
 
 **`actionlint` is optional, not a precondition.** Without it `gate-workflow`
 returns 2 and so does `all.sh` — the contract's third code rather than a
@@ -990,7 +1073,7 @@ behaviour.
 
 The control belongs in `scripts/gates/teeth/plant-hostpath.sh`, where being
 flagged is the desired outcome. **That plant does not exist yet** — the tree
-carries eight, and this would be the ninth. It lands with the gate, not before,
+carries ten, and this would be the eleventh. It lands with the gate, not before,
 and until then this paragraph describes a design and not a file.
 
 It will carry the real path as a **literal**, the way
