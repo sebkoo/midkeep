@@ -1635,6 +1635,7 @@ Findings.
   need. Until this lands, nothing runs on a device and no launch, memory
   or UI measurement is possible. Driven by unit 03, opened 2026-08-03.
 - The journal, and a test that kills the process and resumes from it.
+  Driven by unit 04, opened 2026-08-04.
 - The streaming contract, with a recorded-fixture test.
 - The on-device gate that decides local against server, and a second
   engine behind the same contract.
