@@ -9,6 +9,10 @@
 # The trait follows the display name. `@Test(.disabled("..."), "name")` does
 # not compile, and an uncompilable plant makes the gate fire off a compile
 # error rather than off the skip scan, passing the case for the wrong reason.
+#
+# Self-contained since 2026-08-04: writes its own planted test file instead
+# of editing a feature test, whose rename had silenced six plants at once.
+# The mechanism and the repair are in ROADMAP → Findings.
 
 [ -n "${TEETH_WORKTREE:-}" ] || {
     echo 'refusing to plant: TEETH_WORKTREE is not set' >&2
@@ -31,25 +35,25 @@ _common="$(git -C "$TEETH_WORKTREE" rev-parse --path-format=absolute --git-commo
 set -uo pipefail
 cd "$TEETH_WORKTREE" || exit 2
 
-FILE=Tests/MidkeepKitTests/PlaceholderTests.swift
-ORIGINAL='@Test("Kit placeholder declares schema version 1")'
-PLANTED='@Test("Kit placeholder declares schema version 1", .disabled("planted"))'
-
-grep -qF "$ORIGINAL" "$FILE" || {
-    echo "plant-skipped-test: the line to replace is not in $FILE" >&2
+FILE=Tests/MidkeepKitTests/PlantedDefectTests.swift
+[ ! -e "$FILE" ] || {
+    echo "plant-skipped-test: $FILE already exists" >&2
     exit 2
 }
 
-awk -v o="$ORIGINAL" -v p="$PLANTED" '{ if ($0 == o) print p; else print }' \
-    "$FILE" > "$FILE.planted" && mv "$FILE.planted" "$FILE"
+cat > "$FILE" <<'SWIFT'
+import Testing
 
-grep -qF "$PLANTED" "$FILE" || {
+/// Planted by the teeth harness. Never present in a checkout.
+@Test("planted disabled test", .disabled("planted"))
+func plantedDisabledTest() {
+    #expect(Bool(true))
+}
+SWIFT
+
+[ "$(grep -c '\.disabled(' "$FILE")" -eq 1 ] || {
     echo 'plant-skipped-test: the disabled trait did not arrive' >&2
     exit 2
 }
-grep -qF "$ORIGINAL" "$FILE" && {
-    echo 'plant-skipped-test: the original line is still present' >&2
-    exit 2
-}
 
-echo 'planted: the one test is disabled'
+echo 'planted: a disabled test'

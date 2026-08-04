@@ -1482,6 +1482,41 @@ products, and the post-kill journal a byte-prefix of the final one.
 Judge exit 0. The ladder row flips on this measurement, in the closing
 commit that cites it.
 
+**2026-08-04 — six plants went silently red when the file they anchored
+on died; caught at close, not at the landings.** Unit 04. The
+mechanism: harness fixtures coupled to feature-file identity. Six
+plants appended their defects to `Sources/MidkeepKit/Placeholder.swift`
+or edited `Tests/MidkeepKitTests/PlaceholderTests.swift`, then asserted
+those files' own members afterwards — and `48122a8` deleted both files.
+From that commit through `fbf6fa9` and `ac04756`, `teeth.sh` read
+`failures 6` — plant-unchecked-sendable, plant-ui-in-kit,
+plant-force-unwrap, plant-warning, plant-skipped-test,
+plant-bad-format, each "refused or failed to plant" — while `all.sh`
+read 0 at every landing. The two instruments measure different things:
+gates measure the tree and teeth measures the gates, and only one was
+run. Acceptance item 5 promised teeth green at every landing; unit
+04's Results marks it falsified in part at those three SHAs. The red
+was measured before the repair — failures 6, twice, consistently — and
+stands as the repair's own positive control.
+
+The repair, ruled Option B at a ratification stop: self-contained
+plants. Each of the six now writes its own planted file —
+`Sources/MidkeepKit/PlantedDefect.swift`,
+`Tests/MidkeepKitTests/PlantedDefectTests.swift` — the harness's own
+namespace, the shape every plant added since INV-13 already used: the
+six were the old exception, not the rule. The near-miss forms moved
+unchanged; every case still asserts exactly one finding at its planted
+path; the clobber tripwires retired with the append hazard they
+guarded. Repointing was rejected because it moves the coupling to the
+next filename and the class recurs silently on the next rename — the
+mechanism just measured. After the repair: `plant cases 14, contract
+cases 1, failures 0`.
+
+Deferred, named rather than built: "teeth at every landing" is a
+promise with no mechanism, and this miss shows habit does not suffice.
+A hook under `.githooks/` is the named candidate, its own ratification
+stop when a unit takes it up.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a

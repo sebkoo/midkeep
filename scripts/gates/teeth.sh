@@ -150,11 +150,11 @@ run_contract_case() {
 
 printf 'teeth: plant cases\n'
 run_plant_case plant-lang-mode           INV-1  gate-arch.sh     plant-lang-mode.sh           Package.swift
-run_plant_case plant-unchecked-sendable  INV-2  gate-hygiene.sh  plant-unchecked-sendable.sh  Sources/MidkeepKit/Placeholder.swift
-run_plant_case plant-ui-in-kit           INV-3  gate-arch.sh     plant-ui-in-kit.sh           Sources/MidkeepKit/Placeholder.swift
-run_plant_case plant-force-unwrap        INV-4  gate-hygiene.sh  plant-force-unwrap.sh        Sources/MidkeepKit/Placeholder.swift
-run_plant_case plant-warning             INV-5  gate-build.sh    plant-warning.sh             Sources/MidkeepKit/Placeholder.swift
-run_plant_case plant-skipped-test        INV-7  gate-test.sh     plant-skipped-test.sh        Tests/MidkeepKitTests/PlaceholderTests.swift
+run_plant_case plant-unchecked-sendable  INV-2  gate-hygiene.sh  plant-unchecked-sendable.sh  Sources/MidkeepKit/PlantedDefect.swift
+run_plant_case plant-ui-in-kit           INV-3  gate-arch.sh     plant-ui-in-kit.sh           Sources/MidkeepKit/PlantedDefect.swift
+run_plant_case plant-force-unwrap        INV-4  gate-hygiene.sh  plant-force-unwrap.sh        Sources/MidkeepKit/PlantedDefect.swift
+run_plant_case plant-warning             INV-5  gate-build.sh    plant-warning.sh             Sources/MidkeepKit/PlantedDefect.swift
+run_plant_case plant-skipped-test        INV-7  gate-test.sh     plant-skipped-test.sh        Tests/MidkeepKitTests/PlantedDefectTests.swift
 # The INV-8 finding is keyed by commit sha rather than a file path, so this
 # case counts every finding instead of those matching one path.
 run_plant_case plant-ai-trailer          INV-8  gate-hygiene.sh  plant-ai-trailer.sh          '*'
@@ -162,7 +162,7 @@ run_plant_case plant-runner-label        INV-13 gate-runners.sh  plant-runner-la
 run_plant_case plant-macos-no-marker     INV-13 gate-runners.sh  plant-macos-no-marker.sh     .github/workflows/planted-macos.yml
 run_plant_case plant-hostpath            INV-14 gate-hostpath.sh plant-hostpath.sh            docs/planted-hostpath.md
 run_plant_case plant-address             INV-15 gate-address.sh  plant-address.sh             docs/planted-address.md
-run_plant_case plant-bad-format          format gate-format.sh   plant-bad-format.sh          Sources/MidkeepKit/Placeholder.swift
+run_plant_case plant-bad-format          format gate-format.sh   plant-bad-format.sh          Sources/MidkeepKit/PlantedDefect.swift
 run_plant_case plant-app-import          INV-3  gate-arch.sh     plant-app-import.sh          App/Planted.swift
 run_plant_case plant-project-settings    INV-5  gate-arch.sh     plant-project-settings.sh    Midkeep.xcodeproj/project.pbxproj
 

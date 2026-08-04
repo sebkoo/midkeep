@@ -9,6 +9,11 @@
 #
 # What this does not prove is stated in the gate and in ROADMAP: a line-level
 # check cannot find Swift's literal boundaries in general.
+#
+# Self-contained since 2026-08-04: writes its own planted file instead of
+# appending to a feature file, whose rename had silenced six plants at once.
+# The mechanism and the repair are in ROADMAP → Findings; the forms above
+# moved unchanged.
 
 [ -n "${TEETH_WORKTREE:-}" ] || {
     echo 'refusing to plant: TEETH_WORKTREE is not set' >&2
@@ -31,10 +36,14 @@ _common="$(git -C "$TEETH_WORKTREE" rev-parse --path-format=absolute --git-commo
 set -uo pipefail
 cd "$TEETH_WORKTREE" || exit 2
 
-FILE=Sources/MidkeepKit/Placeholder.swift
+FILE=Sources/MidkeepKit/PlantedDefect.swift
+[ ! -e "$FILE" ] || {
+    echo "plant-force-unwrap: $FILE already exists" >&2
+    exit 2
+}
 
-cat >> "$FILE" <<'SWIFT'
-
+cat > "$FILE" <<'SWIFT'
+/// Planted by the teeth harness. Never present in a checkout.
 func plantedForceUnwrap() {
     let maybe: Int? = 1
     let notEqual = 1 != 2
@@ -60,10 +69,6 @@ SWIFT
 }
 [ "$(grep -cF 'value \(maybe!)' "$FILE")" -eq 1 ] || {
     echo 'plant-force-unwrap: the interpolation near-miss did not arrive' >&2
-    exit 2
-}
-grep -q 'static let schemaVersion = 1' "$FILE" || {
-    echo 'plant-force-unwrap: the original member was lost' >&2
     exit 2
 }
 
