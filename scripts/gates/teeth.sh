@@ -13,11 +13,12 @@
 # Assertion 1 runs per case, not once per gate. A gate that fires on everything
 # and a gate that fires on the defect are indistinguishable without it.
 #
-# Two groups, reported separately: twelve plant cases — at least one per
-# invariant a gate claims, two of them for INV-13's two clauses, plus the one
-# gate-format case that claims none — and one contract case, which tests a
-# behaviour of a script rather than a property of a tree. Neither number
-# implies the other's coverage.
+# Two groups, reported separately: fourteen plant cases — at least one per
+# invariant a gate claims, two of them for INV-13's two clauses, two for the
+# app layer's clauses (the App/ import allowlist and the project's
+# warnings-as-errors setting), plus the one gate-format case that claims
+# none — and one contract case, which tests a behaviour of a script rather
+# than a property of a tree. Neither number implies the other's coverage.
 #
 # This does not source lib/contract.sh. teeth.sh needs its own EXIT trap for
 # worktree cleanup, and contract.sh documents that a gate installing its own
@@ -162,6 +163,8 @@ run_plant_case plant-macos-no-marker     INV-13 gate-runners.sh  plant-macos-no-
 run_plant_case plant-hostpath            INV-14 gate-hostpath.sh plant-hostpath.sh            docs/planted-hostpath.md
 run_plant_case plant-address             INV-15 gate-address.sh  plant-address.sh             docs/planted-address.md
 run_plant_case plant-bad-format          format gate-format.sh   plant-bad-format.sh          Sources/MidkeepKit/Placeholder.swift
+run_plant_case plant-app-import          INV-3  gate-arch.sh     plant-app-import.sh          App/Planted.swift
+run_plant_case plant-project-settings    INV-5  gate-arch.sh     plant-project-settings.sh    Midkeep.xcodeproj/project.pbxproj
 
 printf '\nteeth: contract case\n'
 run_contract_case

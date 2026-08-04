@@ -54,3 +54,16 @@ jobs:
 
       - name: Test
         run: swift test --parallel
+
+      # The app target rides the same runner as the package build — the
+      # INV-13 marker on this job's runs-on line covers it, and no second
+      # runner spins. Warnings-as-errors binds in the committed project
+      # settings (SWIFT_TREAT_WARNINGS_AS_ERRORS, read by gate-arch), not in
+      # a flag here. A simulator build needs no signing; CODE_SIGNING_ALLOWED
+      # makes that explicit rather than assumed.
+      - name: Build the app target for the iOS simulator
+        run: |
+          xcodebuild -version
+          xcodebuild -project Midkeep.xcodeproj -scheme Midkeep \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build

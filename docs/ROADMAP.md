@@ -612,6 +612,38 @@ The seven topics, recorded for the same reason:
 swift  swiftui  ios  swift6  swift-concurrency  swift-package-manager  spm
 ```
 
+**2026-08-03 — the deferred topics, recovered to the tree.** The seven
+live topics above were committed here; the thirteen deferred ones
+existed only in the unit-01 session's closing hand-off — the same
+outside-the-tree carry that lost the About string once, surfaced by an
+owner's question. Recovered from that transcript verbatim, each with
+the capability that makes it true:
+
+```
+state-machine       run engine (a static schemaVersion is not one)
+resumable           journal + resume-after-kill test
+offline-first       journal storage; no storage or network path today
+workflow-engine     run engine
+durable-execution   journal + resume-after-kill test
+sqlite              journal storage
+background-tasks    background continuation of a run
+streaming           streaming contract
+sse                 only if SSE is the transport that ships
+on-device-ml        local-versus-server routing
+coreml              first Core ML path
+tensorflow-lite     second engine behind the same contract
+feature-flags       remote-config-backed flag service
+```
+
+The release rule, stated by the owner with the recovery: a topic is
+added when the capability it names lands, never before — topics follow
+artifacts the way badges follow checks. Three of the thirteen —
+on-device-ml, coreml, tensorflow-lite — assume on-device execution,
+which the whose-server question (ADR-0007's open questions, the
+deferred ADR-0008) has not decided; the rule already covers them, since
+a capability that never lands releases no topic, and the assumption is
+named so a later reader knows the three may expire rather than land.
+
 **The three bundles and what each is for**, because a bundle whose purpose is
 unwritten is a file nobody dares delete and nobody dares use. All three sit in
 `$HOME` and none is committed.
@@ -1023,6 +1055,94 @@ thirteen. The visibility tripwire printed its public line;
 discharges acceptance item 1 of unit 03's prompt, with the prediction's
 split between letter and meaning recorded above.
 
+**2026-08-03 — a fourth reader question refines the Driven-by cell.**
+Unit 03, decided by the owner as a refinement rather than a repair, and
+ridden into the next docs commit rather than taking one of its own.
+Effort in flight was invisible: with the app-shell row reading "not
+started" beside a bare "unit 03", nothing in the table said work was
+under way. The cell now reads "unit 03, open", the word read from the
+record file's own Status section in `docs/prompts/` — so the mark has a
+file behind it, and an unmeasurable status stays out of the Status
+column, which keeps the claim the first repair paid for. The mark is
+maintained by the same hand that maintains the row words; when a unit's
+record closes, the mark goes with it.
+
+**2026-08-04 (UTC) — unit 03's five decisions ratified and the app target
+lands born-enforced, in one commit.** The host read 2026-08-03 for most of
+the work. The decision brief was delivered in-session and ruled on per
+decision: all five ratified, two handbacks taken — the INV-3 amendment
+reworded to permission form ("nothing in the package imports `MidkeepApp`;
+only the app-shell layer may"), so the rule is true of a tree whether or
+not the shim exists; and sequencing, where of the two admissible shapes
+the one-commit form was chosen: both new gate clauses' subjects — `App/`
+and the pbxproj — exist in the only tree the harness verified, the
+INV-14/15 argument, and no commit boundary ever holds a clause scanning a
+file the tree does not carry.
+
+The generator probes, taken in a scratchpad project before the brief. A
+hand-written pbxproj at `objectVersion 77` with one
+`PBXFileSystemSynchronizedRootGroup` parses — `xcodebuild -list` reports
+the target and an auto-generated scheme — at 150 lines for the probe; the
+committed project is 196. Adding a source file left the probe's pbxproj
+byte-identical by `diff`, which is the measurement that removed the
+generator's reason to exist and decided against xcodegen (present on this
+host) and tuist (absent): a dependency purchased for churn that no longer
+occurs. A warning planted in the added file failed the build — one
+measurement proving both that the synchronized folder compiles what is on
+disk and that `SWIFT_TREAT_WARNINGS_AS_ERRORS = YES` promotes Swift
+diagnostics to errors. The boundary it does not cover, found by the
+probe's first run: a build-system warning (traditional headermap) built at
+exit 0 under the same setting; `ALWAYS_SEARCH_USER_PATHS = NO` silences
+that one, measured. And the probe built for the simulator with
+`CODE_SIGNING_ALLOWED=NO` — a simulator build needs no signing, as a run
+rather than a doctrine.
+
+The target as landed, measured on this host, Xcode 26.6 (17F113):
+`xcodebuild build` for the generic simulator destination printed zero
+`warning:` or `error:` lines and `BUILD SUCCEEDED`; the app installed and
+launched on an iPhone 16 Pro simulator, iOS 18.0 runtime against the
+`.v17` deployment target — no iOS 17 runtime is installed here, the
+2026-08-01 finding — and rendered the honest screen, captured as a
+screenshot. The three lines and their derivations: "midkeep", the bundle
+display name; "No journal yet. No runs yet.", from
+`Sources/MidkeepKit/Placeholder.swift` naming the journal as future and
+`Sources/` holding no run type; "This screen is the whole app.", true by
+construction and self-enforcing — the diff adding a second screen must
+remove it. No gate reads screen text: that removal is enforced by diff
+review, by convention, stated INV-11 style rather than implied.
+
+The harness delta, each direction watched. `gate-arch` grew the `App/`
+import allowlist (`SwiftUI|MidkeepApp`) and the app-project clause —
+`SWIFT_VERSION` 6 and `SWIFT_TREAT_WARNINGS_AS_ERRORS = YES`, presence
+and value both ways, with a missing project a finding rather than a skip.
+Probed against a clean control (0 findings) and five mutants: a UIKit
+import in `App/` → 1, `SWIFT_VERSION = 5.0` → 3, the
+warnings-as-errors lines deleted → 1, switched to `NO` → 3, the project
+deleted → 1 — the 3s are the presence and value checks overlapping, the
+conservative direction. Two plants landed in the same commit,
+`plant-app-import` and `plant-project-settings`, the latter planting the
+deletion the ruling named load-bearing. In a scratch copy whose HEAD
+carried the working tree — the rig the INV-13 and prose-gate landings
+used — teeth closed `plant cases 14, contract cases 1, failures 0`, and
+`all.sh` exited 0 over nine gates.
+
+The boundary that stays open, named rather than implied: `gate-hygiene`
+and `gate-format` scan `Sources/` and `Tests/`, so INV-2, INV-4 and the
+format rule are unenforced in `App/`. The shim is a handful of lines
+partly for that reason; Known holes carries it.
+
+Predictions, filed before the push that carries this entry. Both
+workflows green. The `ci` run's new step prints the runner's
+`xcodebuild -version` — recorded as the first CI app-build toolchain,
+value unknown until measured — and the step's duration joins the record
+as a new baseline under its own conditions. The gates run prints
+fourteen plant cases, `plant cases 14, contract cases 1, failures 0`,
+and its teeth wall time joins the series on the stated basis. The prose
+gates' counts stay 17 and 18 — this commit adds no prose file, and
+neither `App/` nor the pbxproj is in their scope. The visibility
+tripwire prints its public line; `pull-request-body` still waits for the
+first pull request.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
@@ -1054,6 +1174,15 @@ nothing exercises a manifest that declares no tools-version at all.
 finds a disabled test, and nothing plants a *failing* test, which the gate finds
 by a different mechanism. Both are asserted at the gate's own verification and
 neither is watched by the harness.
+
+**`App/` is read for imports and nothing else.** `gate-arch`'s allowlist
+is the only check that opens the shim; `gate-hygiene` and `gate-format`
+scan `Sources/` and `Tests/`, so INV-2's and INV-4's bans and the format
+rule are unenforced there. Deliberate at this size — the shim is a
+handful of lines and real code belongs in the package, where the gates
+read it — and the boundary is restated in `.claude/rules/gates.md`.
+Widening either gate's scope is a ratification stop and takes its plant
+with it, the born-enforced convention.
 
 **Heuristics that can be wrong.** `gate-hygiene`'s force-unwrap check is
 line-level and cannot find Swift's literal boundaries. It fails in both

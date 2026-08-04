@@ -19,7 +19,9 @@ for them.
 ```
 Sources/MidkeepKit    runs, journal, engine contracts. No UI, no third party.
 Sources/MidkeepUI     views. May import SwiftUI and MidkeepKit, nothing else.
-Sources/MidkeepApp    composition root. Nothing imports it.
+Sources/MidkeepApp    composition root. Only App/ may import it.
+App/                  the app-shell shim. Imports MidkeepApp and SwiftUI only.
+Midkeep.xcodeproj     the app target wrapping the package. Hand-committed.
 Tests/                Swift Testing.
 scripts/gates/        nine gates, one contract, one teeth harness.
 scripts/dev/          bootstrap. Sets core.hooksPath.
@@ -27,8 +29,9 @@ docs/adr/             decisions.
 docs/prompts/         per-unit lab notes: asked, predicted, observed, falsified.
 ```
 
-Swift Package Manager is the source of truth. There is no Xcode project yet, so
-nothing runs on a device — ADR-0003.
+Swift Package Manager stays the source of truth for the modules;
+`Midkeep.xcodeproj` wraps them for the app target and holds no code of its
+own. ADR-0003's "no Xcode project" held until unit 03.
 
 ## Invariants
 
@@ -44,17 +47,27 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
    every target in Swift 6 mode. Negative: nothing opts back out. Both are
    needed — under Swift 6 mode complete checking is implied and never appears
    in the manifest, so an opt-down search alone passes a manifest that declares
-   nothing at all.)
+   nothing at all. Since unit 03 the gate also reads
+   `Midkeep.xcodeproj/project.pbxproj` the same two ways — `SWIFT_VERSION` 6
+   declared, no line setting it lower, and a missing project is a finding
+   rather than a skip — because the `App/` shim compiles under the project's
+   settings and never sees the manifest. What a grep of a settings
+   serialization cannot see is inheritance across configuration levels; the
+   gate's header names it.)
 
 2. **INV-2** — No `@unchecked Sendable`, `nonisolated(unsafe)` or
    `@preconcurrency import` in `Sources/`. Tests may, with
    `// INV-2-EXEMPT: <reason>`. (`gate-hygiene`)
 
 3. **INV-3** — `MidkeepKit` imports no UI framework and no third-party module;
-   `MidkeepUI` imports `MidkeepKit` and SwiftUI only; nothing imports
-   `MidkeepApp`. (`gate-arch`. This is a source-level property and a test
-   cannot assert it — a test can only observe what its own target links, not
-   what another module chose to import.)
+   `MidkeepUI` imports `MidkeepKit` and SwiftUI only; nothing in the package
+   imports `MidkeepApp` — only the app-shell layer (`App/`) may, and `App/`
+   itself imports `MidkeepApp` and SwiftUI only. Amended to permission form in
+   unit 03, so the rule is true of a tree whether or not the shim exists.
+   (`gate-arch`, including an allowlist scan of `App/` since unit 03. This is
+   a source-level property and a test cannot assert it — a test can only
+   observe what its own target links, not what another module chose to
+   import.)
 
 4. **INV-4** — No force unwrap or `try!` in `Sources/`. Tests exempt.
    (`gate-hygiene`, PARTIAL — the rule is absolute and binds anyone writing
@@ -65,7 +78,14 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
 
 5. **INV-5** — Warning-free debug and release build, no suppression mechanism.
    (`gate-build`, which passes `-Xswiftc -warnings-as-errors` and adds
-   `--build-tests` to the debug pass so `Tests/` is covered too.)
+   `--build-tests` to the debug pass so `Tests/` is covered too. The app
+   target is outside `gate-build`: its warnings-as-errors lives in the
+   committed project as `SWIFT_TREAT_WARNINGS_AS_ERRORS = YES`, whose
+   presence and value `gate-arch` asserts, and the build that enforces it is
+   CI's simulator step — the local harness does not build the app target,
+   stated here rather than implied. The setting covers compiler diagnostics
+   only; the one build-system warning observed so far is silenced by
+   `ALWAYS_SEARCH_USER_PATHS = NO`, measured, not suppressed.)
 
 6. **INV-6** — No new dependency without an accepted ADR. (UNENFORCED —
    `Package.swift` is `ask`-gated in `.claude/settings.json`, and a settings

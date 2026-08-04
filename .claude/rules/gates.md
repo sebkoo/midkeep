@@ -9,7 +9,7 @@ Run them all with `scripts/gates/all.sh`.
 
 | Gate | Enforces | Needs |
 |---|---|---|
-| `gate-arch.sh` | INV-1, INV-3 | a checkout and git |
+| `gate-arch.sh` | INV-1, INV-3, INV-5's app-project clause | a checkout and git |
 | `gate-hygiene.sh` | INV-2, INV-4, INV-8 | a checkout and git |
 | `gate-runners.sh` | INV-13's readable clauses | a checkout and git |
 | `gate-hostpath.sh` | INV-14 | a checkout and git |
@@ -62,9 +62,16 @@ Less than you would assume, and knowing the boundary matters more than knowing
 the gates.
 
 They read `Sources/`, `Tests/`, `Package.swift`, `.swift-format`,
-`.github/workflows/*.yml`, commit messages, and — for exactly two leak
-shapes, host paths and email addresses — the prose surface: `docs/`,
-`CLAUDE.md`, `README.md`, `.claude/` and `.githooks/`. This paragraph once
+`.github/workflows/*.yml`, commit messages, and — since unit 03 — `App/`
+(imports only, by `gate-arch`'s allowlist) and
+`Midkeep.xcodeproj/project.pbxproj` (two settings, by grep). They also
+read — for exactly two leak shapes, host paths and email addresses — the
+prose surface: `docs/`, `CLAUDE.md`, `README.md`, `.claude/` and
+`.githooks/`. `App/` is read by no other gate: `gate-hygiene` and
+`gate-format` scan `Sources/` and `Tests/`, so INV-2's and INV-4's bans
+and the format rule are unenforced in `App/` — the shim is kept to a
+handful of lines partly for that reason, and the boundary is recorded in
+ROADMAP → Known holes. This paragraph once
 counted sixteen paths read by no gate; of those sixteen, thirteen fell
 inside the prose gates' scope when INV-14 and INV-15 landed, and three
 remain read by nothing: `LICENSE`, `.gitignore` and
