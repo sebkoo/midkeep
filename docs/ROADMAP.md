@@ -1200,6 +1200,14 @@ itself sits in `docs/` and so enters the prose gates' scope: their
 counts move to 18 and 19, measured locally at this commit, which is what
 the next CI run should print.
 
+**Measured, 2026-08-04 (UTC), runs 30878062468 (`gates`) and 30878062498
+(`ci`) — the push carrying `08f45eb`, pushed by the owner.** Both green.
+The gates run printed the predicted 18 and 19 prose-gate counts, then
+`all.sh: 0` and `plant cases 14, contract cases 1, failures 0`. And the
+badge is live end to end: shields' endpoint, given the raw `main` URL,
+returned a rendering carrying `gates 9 / teeth 14+1` — read by `curl`
+from the published service, not inferred from the JSON.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a

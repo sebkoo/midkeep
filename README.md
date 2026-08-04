@@ -87,7 +87,7 @@ are still written by hand; the numbers live in the generated block.
 | | |
 |---|---|
 | version | no tag yet |
-| commits | 30 |
+| commits | 31 |
 | last commit | 2026-08-04 |
 | gates | 9 |
 | teeth plant cases | 14 |
