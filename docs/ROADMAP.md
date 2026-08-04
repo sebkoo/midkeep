@@ -1918,7 +1918,8 @@ Findings.
   or UI measurement is possible. Driven by unit 03, opened 2026-08-03.
 - The journal, and a test that kills the process and resumes from it.
   Driven by unit 04, opened 2026-08-04.
-- The streaming contract, with a recorded-fixture test.
+- The streaming contract, with a recorded-fixture test. Driven by
+  unit 05, opened 2026-08-04.
 - The on-device gate that decides local against server, and a second
   engine behind the same contract.
 - Signal capture and an offline evaluation loop.
