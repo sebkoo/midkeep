@@ -1315,6 +1315,20 @@ block predictions — records filed 4, the unit 04 span row reading "file
 not committed yet" — stand confirmed in the committed block. This
 discharges acceptance item 1 of unit 04's prompt.
 
+**2026-08-04 — ADR-0008 is the journal schema; the numeral the
+deferred-topics entry had informally reserved for whose-server moves.**
+Ruled at unit 04's decision brief. The 2026-08-03 deferred-topics entry
+above says "the deferred ADR-0008" of whose-server; acceptance order
+wins, and a deferred marker reserves no numeral — reserving a number
+for an unwritten record is the forward-reference defect class in
+another artifact, the same reason a record never names a future
+commit's number. That entry is a kept finding and is not edited;
+whose-server takes its own numeral the day it is accepted.
+`docs/adr/0008-the-journal-schema.md` carries unit 04's ruling D2 as
+amended at review — the framed-record file, the torn-tail/corrupt-middle
+asymmetry with the refusal's fabricated-history argument, and the
+durability boundary stated in both directions.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
