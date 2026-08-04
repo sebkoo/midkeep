@@ -25,6 +25,12 @@ cites something re-runnable.
 step a run takes must be journalled before its effect is observable, and there
 is no runtime to check. Disposition: revisit when the journal lands.
 
+**Revisited, 2026-08-04.** The journal landed and the run engine followed
+with the ordering test; the mark moved to PARTIAL in the commit carrying
+the test (unit 04, ruling D6). Not a gate: `gate-test` runs the suite,
+and the boundary — a test sees only the step types it drives — is stated
+in the invariant's own row.
+
 **2026-08-01 — the definition-of-done INV-8 proof was wrong three ways.**
 Unit 01. It used BRE alternation, which is a GNU extension while `gates.yml`
 runs on a macOS runner; a bare `generated with` that flags this repository's own
@@ -1360,6 +1366,31 @@ relaunch minus the kill, blind to a write held in process memory,
 which is the rig's job and the deferred kill test's return trigger
 (ruling D4).
 
+**2026-08-04 — the run engine lands with INV-10's first test, and the
+mark moves to PARTIAL in the same commit.** Unit 04, ruling D6 and the
+engine half of D1. `Sources/MidkeepKit/RunEngine.swift`: `RunEntry` —
+attempted, then completed carrying the step's product, ADR-0002's
+two-record shape; `RunStep`, whose doc states its work must be safe to
+re-run and why; `RunEngine.run()`, which journals the attempt before
+the work and the completion after the product exists, skips steps the
+journal shows completed, and re-attempts an attempted step whose
+completion never landed, keeping both attempts in the history. The
+ordering test asserts INV-10's own wording from inside a step's work:
+the work reads the journal file from disk — not the actor's memory —
+and records whether the attempted record preceded it. Five engine
+tests, twelve in the suite. Three mutants, each planted alone and
+reverted before the next, counted as full-suite runs: attempted
+appended after the work → 2 tests failed, the ordering test reading
+"work-first" and the failing-step test; the completed-skip removed →
+exactly the resume test; the completion append removed → 3 tests.
+Every engine test failed under at least one mutant, every mutant was
+caught, and the restored suite ran 12 of 12 green with `all.sh` at 0
+over nine gates before the commit. The mark move rides the same
+commit, the D6 ruling: CLAUDE.md's row reads PARTIAL naming the test
+and its boundary, INV-10 leaves the visibly-unenforced list it
+opened, and the 2026-08-01 finding's disposition is discharged at its
+entry.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
@@ -1368,7 +1399,8 @@ true and uncomfortable.
 
 **Invariants with no gate.** INV-6 — nothing in the tree stops a dependency
 being added; the ADR requirement is a habit until a gate reads the resolved
-dependency list. INV-10 — cannot be gated until there is a runtime. INV-11 —
+dependency list. INV-10 — left this list on 2026-08-04, moved to PARTIAL by
+the run engine's ordering test, the boundary in its row. INV-11 —
 read by hand, and the line between "what this is for" and "what this does" is
 where the hand review earns its keep. INV-12 — no gate reads commit message
 shape. INV-13 left this list on 2026-08-03, when `gate-runners` landed with

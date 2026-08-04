@@ -102,9 +102,16 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
    ADR-0005.)
 
 10. **INV-10** — Every step a run takes is journalled before its effect is
-    observable; no run state lives only in memory. (UNENFORCED — no runtime
-    exists. The invariant the product rests on, and the one that cannot be
-    gated until there is code. ADR-0002.)
+    observable; no run state lives only in memory. (PARTIAL since
+    2026-08-04 — the ordering test in
+    `Tests/MidkeepKitTests/RunEngineTests.swift` asserts, from inside a
+    step's work reading the journal file on disk, that the attempted
+    record precedes the work; `gate-test` runs it, and it was watched
+    reading "work-first" under a reordered engine at its landing. PARTIAL
+    because a test sees only the step types it drives: a future executor,
+    or a step journalling after its own side effect, is unseen until a
+    test drives it. The rule binds everything; the check covers the
+    engine that exists. ADR-0002.)
 
 11. **INV-11** — Every statement of what the repository *does* names the file,
     script or run behind it. A statement of what it is *for* is not that kind
@@ -178,10 +185,11 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
     INV-14 and for what a line grep cannot see: a wrapped or obfuscated
     address is not email-shaped.)
 
-INV-6, INV-10, INV-11 and INV-12 staying visibly unenforced is deliberate. Do
-not invent a gate to make the list look complete. INV-13 is different: its
-readable half is enforced by `gate-runners` since 2026-08-03, and its
-unreadable half never will be.
+INV-6, INV-11 and INV-12 staying visibly unenforced is deliberate. Do not
+invent a gate to make the list look complete. INV-10 left this list on
+2026-08-04, when the run engine landed carrying the ordering test that moved
+it to PARTIAL. INV-13 is different: its readable half is enforced by
+`gate-runners` since 2026-08-03, and its unreadable half never will be.
 
 ## Commands
 
