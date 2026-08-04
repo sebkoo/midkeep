@@ -911,6 +911,23 @@ device-bridge git reads, which cannot unlink the lock they create — a
 relay hazard on the reviewer's record, not this tree's. The editor was
 not the cause and the suspicion is withdrawn.
 
+**Measured, 2026-08-04 (UTC), runs 30871618701 (`gates`) and 30871618710
+(`ci`) — the push carrying the pair, while the host still read
+2026-08-03.** Both green: the first CI run with nine gates and thirteen
+teeth cases. The gates run printed `gate-hostpath: INV-14 over 15 files
+in scope` and `gate-address: INV-15 over 16 files in scope`, each
+followed by its 0 — the same scanned counts as the local landing — then
+`all.sh: 0 — every gate ran and found nothing`, and teeth closed
+`plant cases 12, contract cases 1, failures 0`. Teeth wall time, from
+its first log line to its summary line by step timestamps: 26 seconds
+for thirteen cases. The series on its one basis, plants plus the
+contract case, each figure under its own conditions with no cause
+claimed for the direction: 42.249 seconds for nine cases local, 30 for
+nine on a runner, 28 for eleven, 26 for thirteen. The visibility
+tripwire printed its public line again. This measurement closes unit
+02's harness arc: every invariant whose readable half can be gated now
+is, and the record of proving it is this entry and the two above.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
