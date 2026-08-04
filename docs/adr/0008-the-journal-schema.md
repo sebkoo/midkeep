@@ -115,3 +115,24 @@ the discriminating pair unit 04's ruling demands.
 The journal file's location is not part of the schema. `MidkeepKit`
 takes a URL and stays platform-neutral; the composition root decides
 where the file lives on each platform.
+
+## Amendment, 2026-08-04 — entry vocabulary grows under version 1
+
+Unit 05's ruling D2, added below the accepted text, which stands
+unedited. The streaming records — a chunk record and a stream-resumed
+record — enter the run-entry vocabulary without moving the version.
+The version names the framing contract: one JSON object per line,
+header first, the torn-tail/corrupt-middle asymmetry. None of that
+changes; entry vocabulary grows within it.
+
+The hole this creates is named rather than hidden, and it has two
+faces. A version-1 reader older than the vocabulary refuses a newer
+non-final record as `corruptRecord`, which is the wrong word for
+"newer than me". And a newer record in the final position it treats
+as a torn tail: dropped, reported, and physically truncated away —
+the lossier face, destruction rather than misnaming, found by reading
+the replay path at this amendment rather than predicted by the
+ruling. Both are tolerated while no build ships and every journal is
+discardable rehearsal data; the revisit trigger is the first journal
+that must outlive a build boundary. "The file describes itself" in
+the Decision above is weakened by exactly this much.

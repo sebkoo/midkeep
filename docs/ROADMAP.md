@@ -1653,6 +1653,53 @@ refused with teeth's own output visible, never a bare failure. The
 hook lands at a ratification stop as its own commit; the unit-04
 deferred marker is discharged by annotation when it does.
 
+**2026-08-04 — the streaming contract lands with per-chunk
+journalling, and every new test was watched failing before its green
+was trusted.** Unit 05, rulings D1, D2, D3 and D5.
+`Sources/MidkeepKit/Streaming.swift`: `StreamChunk` and `StreamSource`
+— an answer delivered from any byte offset, in order, never a byte
+before it — and `FixtureStreamSource`, whose fixture format opens with
+a provenance record naming what the recording is OF, writer and parser
+one contract. `RunEntry` grows `streamChunk` and `streamResumed` under
+schema version 1; ADR-0008 takes the repository's first ADR amendment,
+appended below the accepted text — the position ruled at the landing
+as the precedent every later amendment inherits — naming both faces of
+the vocabulary hole, including the one found by reading the replay
+path rather than predicted by the ruling: an older build destroys a
+newer final record as a torn tail, truncation and all. The engine
+journals each chunk before its effect, appends the resumed record
+before any continued chunk, and re-delivers journalled chunks as
+reconstruction against the effect's own artifact check — D3's
+orientation throughout, and the healing path for a chunk recorded
+whose effect never ran.
+
+The watched-both-ways measurements, counted as full runs of the
+22-test suite against nine mutants of the contract and engine,
+planted one at a time and reverted before the next:
+
+```
+1  effect before chunk record      the streaming ordering test, "effect-first"
+2  resumed record removed          the resume test
+3  resume streams from zero        the resume and reconstruction tests, 2 failures
+4  reconstruction removed          the resume and reconstruction tests, 3 issues
+5  states ignore chunk text        the partial-states test
+6  fixture trim off by one         the trim test
+7  product loses its prefix        the resume test, "5" against "2 3 5"
+8  chunk records never journalled  4 tests, both ordering families among them
+9  parser tolerates malformed      the refusal test
+```
+
+Every new test failed under at least one mutant, every mutant was
+caught, and the restored suite ran 22 of 22 green. One repair inside
+the measurement, recorded rather than smoothed over: mutant 4's first
+run crashed the test helper — `dropFirst` handed a negative count when
+the artifact met a gap the mutant created — which is a process death,
+not a failed expectation, and it hides every other test's verdict. The
+helper was repaired to refuse a gap cleanly and the mutant re-measured
+as two clean test failures. `all.sh` exited 0 over nine gates after
+one `gate-format` finding was fixed at the gate's direction; teeth
+closed `plant cases 14, contract cases 1, failures 0` at the landing.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a

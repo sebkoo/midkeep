@@ -41,6 +41,32 @@ func attemptedRecordPrecedesWork() async throws {
     #expect(await log.calls == ["record-first"])
 }
 
+@Test("A chunk's record is on disk before the chunk's effect runs — INV-10 for the streaming step")
+func chunkRecordPrecedesEffect() async throws {
+    // The second step type the ordering test drives (unit 05, ruling D5).
+    // The effect reads the journal file from disk — not the actor's memory —
+    // and records whether this chunk's own record preceded it, which is
+    // INV-10's wording held per chunk (ruling D2).
+    let url = try temporaryJournalURL()
+    let journal = try Journal<RunEntry>(url: url)
+    let log = WorkLog()
+    let source = FixtureStreamSource(
+        provenance: .init(recordedFrom: "hand-built in this test", date: "2026-08-04"),
+        chunks: [StreamChunk(offset: 0, text: "ab"), StreamChunk(offset: 2, text: "cd")])
+    let engine = RunEngine(
+        journal: journal,
+        steps: [
+            RunStep(name: "stream", streaming: source) { chunk in
+                let onDisk = String(decoding: try Data(contentsOf: url), as: UTF8.self)
+                await log.record(
+                    onDisk.contains(#""offset":\#(chunk.offset)"#) ? "record-first" : "effect-first"
+                )
+            }
+        ])
+    try await engine.run()
+    #expect(await log.calls == ["record-first", "record-first"])
+}
+
 @Test("A fresh run completes every step in order and journals both records per step")
 func freshRunCompletesEverything() async throws {
     let url = try temporaryJournalURL()

@@ -236,6 +236,7 @@ public struct RunView: View {
         switch state {
         case .pending: Text("waiting")
         case .attempted: Text("working…")
+        case .streaming(let partial): Text(partial)
         case .completed(let product): Text(product)
         }
     }

@@ -103,15 +103,17 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
 
 10. **INV-10** — Every step a run takes is journalled before its effect is
     observable; no run state lives only in memory. (PARTIAL since
-    2026-08-04 — the ordering test in
-    `Tests/MidkeepKitTests/RunEngineTests.swift` asserts, from inside a
+    2026-08-04 — the ordering tests in
+    `Tests/MidkeepKitTests/RunEngineTests.swift` assert, from inside a
     step's work reading the journal file on disk, that the attempted
-    record precedes the work; `gate-test` runs it, and it was watched
-    reading "work-first" under a reordered engine at its landing. PARTIAL
-    because a test sees only the step types it drives: a future executor,
-    or a step journalling after its own side effect, is unseen until a
-    test drives it. The rule binds everything; the check covers the
-    engine that exists. ADR-0002.)
+    record precedes a unitary step's work and — unit 05, ruling D5 —
+    that a chunk's record precedes that chunk's effect in a streaming
+    step; `gate-test` runs both, and each was watched reading the wrong
+    order under a reordered engine at its landing. PARTIAL because a
+    test sees only the step types it drives: a future executor, or a
+    step journalling after its own side effect, is unseen until a test
+    drives it. The rule binds everything; the check covers the engine
+    that exists. ADR-0002.)
 
 11. **INV-11** — Every statement of what the repository *does* names the file,
     script or run behind it. A statement of what it is *for* is not that kind
