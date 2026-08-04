@@ -1437,6 +1437,51 @@ simulator delivers it, which is not the phone. The phone measurement
 with its own channel record remains, and only it flips the ladder
 row.
 
+**2026-08-04 — the rig lands and the ladder capability is measured on
+the phone: a job killed mid-flight carried on.** Unit 04, ruling D5 and
+acceptance item 4. `scripts/dev/device-rig.sh` — not a gate, `all.sh`
+stays device-free, device state not being a tree property. The two
+channels, measured against Xcode 26.6's devicectl before use: the kill
+is `device process signal --signal SIGKILL` — kill-mid-foreground, no
+suspend ceremony, the strong semantics D5's rider required the record
+to name; verification is `device copy from --domain-type
+appDataContainer` — journal and artifact read off the device by the
+host, never a screen. The signing team identifier is derived at run
+time from the local certificate and never committed, the unit-03
+withholding rule extended to the rig.
+
+The judge was watched three ways against fixtures extracted from the
+committed script before any live run: an honest resume exits 0; a
+wiped-and-replayed journal exits 1; a rewritten journal exits 1. One
+sharpening came out of the fixtures, recorded because the review that
+demanded the prefix check deserves the measured answer: a wiped journal
+replaying deterministic steps is byte-identical to a true resume's
+prefix, so the prefix check alone stays quiet there — it is the
+one-more-attempt check that catches the wipe, and the rewritten journal
+is caught the other way around. The two checks cover each other's
+blind sides, and neither alone suffices.
+
+Two live runs failed before the pass, both at exit 2 — could not
+measure, not capability failure — and each left a finding. Trust: iOS
+denies the launch until the developer profile is trusted on the phone,
+and an uninstall drops that trust — measured twice, a `--fresh` run
+costs a new trust tap in Settings. Suspension: with the screen
+auto-locking during the rig's minute-long build, the resumed job froze
+mid-step — `attempted(2)` then silence, the journal unchanged when
+re-read after the run — loss mode one intruding on the measurement of
+loss mode two, and the judge refused it correctly. The run condition:
+screen on and unlocked for the whole run.
+
+The passing run, every fact derived from the device. iPhone 16 Pro Max
+(iPhone17,2), build 23F84 — the unit-03 phone — pid 2708 SIGKILLed at
++5 seconds. The journal at the kill: steps 0 and 1 completed,
+`attempted(2)` with no completion — the kill window, caught live on
+hardware. After the plain relaunch: `attempted(2)` twice, its
+completion, step 3's pair, the artifact at exactly four distinct
+products, and the post-kill journal a byte-prefix of the final one.
+Judge exit 0. The ladder row flips on this measurement, in the closing
+commit that cites it.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
