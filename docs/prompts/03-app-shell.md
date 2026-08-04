@@ -99,6 +99,43 @@ flows without dialogs — the approval volume of unit 02 was a property
 of harness work, not of the mode. The reviewer relay continues: stop at
 draft for every ratification stop; commits land only after review.
 
+## Results
+
+Closed 2026-08-04 (UTC) by the commit carrying this section. The Status
+section above records the filing and is left as written, per the
+never-edit rule; this section is an addition below the filed prompt,
+not an edit of it, and the amendment log is empty — nothing above
+needed correcting.
+
+The six acceptance items, each with what discharged it:
+
+1. The opening docs commit landed as `e9d923e`, green on runs
+   30873597996 and 30873597904. The block's prediction split between
+   letter and meaning — the record count read 3 because this prompt
+   filed first, and the label was renamed to name what it counts —
+   ROADMAP → Findings, 2026-08-03.
+2. The app target landed as `56621c4`: xcodebuild for the simulator
+   with zero warning lines, locally (Xcode 26.6, 17F113) and on CI
+   (Xcode 16.4, 16F6, run 30877538825, the step at 30 seconds), on the
+   standard hosted runner already markered for INV-13.
+3. The honest screen launched in an iPhone 16 Pro simulator, iOS 18.0
+   runtime, and rendered its three lines; screenshot taken in the
+   landing session, derivations recorded in the ratification entry.
+4. The owner installed and launched it on a phone with free
+   personal-team signing: iPhone 16 Pro Max (iPhone17,2), iOS 26.5.2
+   (23F84), `devicectl device info apps` reading
+   `Midkeep dev.midkeep.Midkeep 1.0 (1)` from the connected device,
+   2026-08-04T05:05Z. The ladder row flipped to landed in the closing
+   commit.
+5. gate-arch's verdict covers the app sources through two clauses that
+   landed with their two plants in `56621c4`; teeth stands at
+   `plant cases 14, contract cases 1, failures 0` locally and on CI,
+   and `all.sh` exited 0 over nine gates at every landing.
+6. Held as a standing property: every figure in the unit's entries
+   names what it counted and its instrument, and the timing series
+   took its CI points on the stated basis — 31 seconds for fifteen
+   cases the latest.
+
 ## Amendment log
 
 Nothing yet. Corrections land here, dated, and never edit the text

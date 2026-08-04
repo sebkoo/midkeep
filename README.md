@@ -43,11 +43,10 @@ finished, so that coming back means continuing rather than restarting.
 
 ## What this cannot do yet
 
-There is no journal, so nothing resumes yet. The app shell builds and launches
-in a simulator and says exactly that on its one screen; it has not been
-installed on a phone, which is the measurement its ladder row waits for. What
-exists besides the shell is the harness — the checks, and the proof that each
-one fails when it should.
+There is no journal, so nothing resumes yet. The app shell installs on a phone
+and launches; its one screen says exactly what is missing and that it is the
+whole app. What exists besides the shell is the harness — the checks, and the
+proof that each one fails when it should.
 
 See [the roadmap](docs/ROADMAP.md).
 
@@ -58,7 +57,7 @@ read code could do once that row lands. The rows carry no numbers, and the word
 "unit" appears in exactly one column — Driven by, which maps each row to the
 driving units that served it. Driving units are the numbered work-session
 records in `docs/prompts/`; their filenames anchor the only numeral namespace
-this table uses. A driving unit still open is marked so — "unit 03, open" —
+this table uses. A driving unit still open is marked so — "unit NN, open" —
 the word read from that record file's own Status section, so effort in flight
 is visible without an unmeasurable status entering the Status column. The
 rows were numbered 01–09 until 2026-08-03, under a first
@@ -74,7 +73,7 @@ are still written by hand; the numbers live in the generated block.
 | Capability | What you could do once it lands | Status | Driven by |
 |---|---|---|---|
 | repository and harness | Nothing — there is no app to open. The work here built the checks that guard every row below, and watched each one fail on purpose. | landed | units 01 and 02 |
-| app shell | Install it on a phone and watch it launch. | not landed — builds and launches in a simulator; no phone install measured yet | unit 03, open |
+| app shell | Install it on a phone and watch it launch. | landed — installed and launched on an iPhone 16 Pro Max, iOS 26.5.2, free personal-team signing, 2026-08-04 | unit 03 |
 | the journal | Close the app in the middle of a job and open it again; the job carries on from where it stopped instead of starting over. | not started | none yet |
 | streaming | Watch a step's answer arrive as it is written, rather than waiting for the whole thing to finish. | not started | none yet |
 | on-device or server | Keep a job moving with no signal, because the work can run on the phone instead of being sent away. | not started | none yet |
@@ -87,7 +86,7 @@ are still written by hand; the numbers live in the generated block.
 | | |
 |---|---|
 | version | no tag yet |
-| commits | 31 |
+| commits | 32 |
 | last commit | 2026-08-04 |
 | gates | 9 |
 | teeth plant cases | 14 |

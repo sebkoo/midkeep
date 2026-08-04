@@ -10,8 +10,8 @@ marker shows where it is now. This ladder is maintained by hand.
   can choose     work routed on device or to a server, one contract either way
   can recover    a killed run resumes from its journal
   can run        a multi-step run executes and streams
-  can install    an app that launches on a device
-> can build      the package compiles, the tests pass, the gates bite
+> can install    an app that launches on a device
+  can build      the package compiles, the tests pass, the gates bite
 ```
 
 Everything below the marker is done. Everything above it is not started.
@@ -1207,6 +1207,95 @@ The gates run printed the predicted 18 and 19 prose-gate counts, then
 badge is live end to end: shields' endpoint, given the raw `main` URL,
 returned a rendering carrying `gates 9 / teeth 14+1` — read by `curl`
 from the published service, not inferred from the JSON.
+
+**2026-08-04 — unit 03 closes: the install measured on the phone, the
+About string refreshed, the deferred topics re-audited.** Clock readings
+at the measurement, both per the dating rule: 2026-08-04T05:05Z UTC,
+2026-08-04 01:05 EDT on the host.
+
+The install, acceptance item 4, performed by the owner with free
+personal-team signing — by design: the first install was measured by
+its owner, and the regressions belong to machines. The facts are
+derived from the connected device rather than transcribed from the act:
+`xcrun devicectl list devices` reports the phone connected as an
+iPhone 16 Pro Max (iPhone17,2), `devicectl device info details` reads
+iOS 26.5.2 (23F84), and `devicectl device info apps` lists
+`Midkeep dev.midkeep.Midkeep 1.0 (1)` installed — the install read back
+from the device itself. Three lines rendered on launch, reported by the
+owner. iOS 26.5.2 runs an app declaring `.iOS(.v17)`, so the deployment
+target is now exercised on hardware two majors ahead of it; a 17.x
+device has still never run it, the same boundary the simulator
+measurement carries. The ladder's marker moves to "can install", the
+app-shell row flips to landed citing these facts, and the "unit 03,
+open" mark leaves the Driven-by column — the rule that the mark goes
+when the record closes, paying out for the first time.
+
+The About refresh, owed since `56621c4` falsified its closing clause.
+The string that stood, from the 2026-08-01 recovery entry above:
+
+```
+Unfinished work as first-class data — a Swift 6 iOS project built
+harness-first: gates, invariants and a teeth harness before any feature
+code.
+```
+
+"Before any feature code" stopped being true when the app shell landed.
+The replacement, applied with `gh repo edit` and verified by reading the
+description back through `gh api`:
+
+```
+Unfinished work as first-class data — a Swift 6 iOS app built
+harness-first: nine gates and a teeth harness landed before the app
+shell that now installs on a phone.
+```
+
+165 characters, 167 bytes in UTF-8 with no trailing newline counted —
+the em dash is the difference — against GitHub's 350-character limit.
+Provenance split as before: the first clause is `README.md:13-15`'s
+reconstruction, unchanged; the remainder is observed from the tree —
+nine gates counted from `scripts/gates/gate-*.sh`, the ordering from
+units 01 and 02 preceding `56621c4`, the install from this entry's
+measurement.
+
+The deferred-topics re-audit against the new tree: none of the thirteen
+names the app shell, so **zero topics release** — the rule ran and
+released nothing, recorded rather than skipped. What the landing does
+discharge is the caveat the 2026-08-01 About entry attached to the live
+topic `ios` — "a declared deployment target, not a shipped surface" —
+which stops holding at this measurement: the topic now stands on an
+installed artifact. The thirteen stay deferred, each still waiting on
+the capability that names it.
+
+**The signing session rewrote the project file, and one line of it is
+withheld from the tree.** Opening the project to select the personal
+team made Xcode reserialize the pbxproj — its canonical formatting, a
+Products group, `objectVersion` rewritten to 71 — and insert
+`DEVELOPMENT_TEAM` with the owner's personal team identifier in both
+configurations. The normalization is committed, so later Xcode sessions
+stop churning the file; the identifier is not, and it is described here
+rather than quoted, the same rule the address and host-path records
+follow. It is a stable identifier of the owner's Apple account, headed
+for a public tree, and neither prose gate can see it — not path-shaped,
+not email-shaped — so nothing but review stands between it and a push.
+Withholding is reversible in one commit if the owner rules the other
+way (the identifier ships inside every distributed binary, so the case
+is arguable); publishing is not, and this repository has paid for that
+asymmetry three rewrites' worth. Until ruled on, selecting the team
+again on the next device deploy re-adds the line locally, and an
+untracked xcconfig is the candidate mechanism if the friction earns a
+fix. gate-arch re-run against the normalized file: exit 0, both
+clauses intact.
+
+**A unit 04 prelude, filed now because the journal needs it.** Device
+verification is automatable locally and not on CI. Locally: XCUITest
+against a device destination, and `devicectl` scripts the
+install-launch-read loop this entry used by hand. On CI: hosted runners
+carry no physical devices, and paid device farms are excluded by the
+standing constraint — no paid charges, ever. The journal's
+kill-and-relaunch measurements need exactly the local rig, so unit 04
+inherits this boundary on its first day: its device measurements run on
+the development host and are recorded here, and CI covers everything up
+to the device.
 
 ## Known holes
 
