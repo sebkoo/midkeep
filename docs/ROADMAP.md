@@ -1578,6 +1578,81 @@ waiting for the first pull request. This run is the CI half of
 acceptance item 3's discharge, and unit 04's record owes nothing
 further.
 
+**2026-08-04 — unit 05 opens; the opening's own figure takes a
+correction from the owner's side.** The driving prompt delivered to
+the session said main stood at 44 commits; `git rev-list --count HEAD`
+at `d957c86` reads 43, `scripts/status.sh` derived the same 43 into
+the committed block, and the prompt's own source-of-truth clause —
+the repository's records win over the prompt — caught its author. The
+correction was the owner's first ruling on the unit, filed here as
+directed. The opening commit `f88e700` landed with both instruments
+read before it: `all.sh` at 0 over nine gates, teeth at
+`plant cases 14, contract cases 1, failures 0` — the unit 04 lesson
+applied at the first landing it binds.
+
+**2026-08-04 — unit 05's decision brief ruled, six decisions, riders
+recorded with the rulings they bind.** Every implementation commit of
+this unit traces to one of these.
+
+**D1 — both sources, one contract.** The streaming contract lands in
+`MidkeepKit`; recorded fixtures drive the tests, and the rehearsal
+gains a streaming step whose chunks are its own real local work. The
+rider, on fixture provenance: a committed fixture must be honest
+about what it is a recording OF — it is recorded from the rehearsal
+streaming step's own real output, so the recorded-fixture test
+inherits provenance from a real source and the tree carries no
+invented "model output" text. The screen says what the stream is.
+
+**D2 — the strict reading.** A chunk-offset record is journalled
+before the chunk is displayed, and the cost of that choice is
+measured and recorded this unit — chunk rate, journal growth, wall
+overhead, each figure naming its instrument — so a later unit that
+relaxes to watermarks rules against a figure, not a guess. Schema
+version stays 1: the version names the framing contract — one JSON
+object per line, header first, the torn-tail/corrupt-middle
+asymmetry — and none of that changes; entry vocabulary grows within
+it. The hole that creates is named rather than hidden: a version-1
+reader older than the entry vocabulary refuses a newer file as
+corrupt-record, which is the wrong word for "newer than me" —
+tolerated while no build ships and every journal is discardable
+rehearsal data; revisit trigger, the first journal that must outlive
+a build boundary. ADR-0008's "the file describes itself" is weakened
+by exactly that much, and ADR-0008's amendment says so.
+
+**D3 — resume as reconstruction.** Re-display of journalled content
+is reconstruction, not a duplicate effect; `resumed(fromOffset:)`
+makes ADR-0007's sentence literal in the schema; the resumed record
+lands before any continued chunk is displayed — the same orientation
+as every other record.
+
+**D4 — the rig measures, records stay clockless.** The streaming
+measurement gains an uninterrupted control run — the rig's own
+positive control. Timing is external, by the rig, instrument named:
+determinism is load-bearing — the fixture tests and the byte-prefix
+discriminator both lean on reproducible bytes, and a timestamp per
+chunk would spend that for a figure the rig can take from outside.
+Revisit only if a future unit needs in-record time, as its own
+schema decision.
+
+**D5 — the ordering test grows, the mark stays.** The INV-10
+ordering test drives the streaming step, watched failing under a
+reordered mutant before its green is trusted; the mark stays PARTIAL,
+the row names the second driven step type, and the boundary sentence
+stays — driving two types does not falsify "a test sees only the
+step types it drives".
+
+**D6 — the pre-push teeth hook, with three riders.** Ruled in: a
+`.githooks/pre-push` hook running `teeth.sh`. One, the install
+boundary is named in the hook's own header — `.githooks/` binds only
+where `core.hooksPath` points at it, a fresh clone is unbound until
+`scripts/dev/bootstrap.sh` runs, so the hook is a local seatbelt and
+CI remains the public enforcement. Two, `--no-verify` exists and the
+record says so: the hook raises the cost of an unwatched landing and
+does not make one impossible. Three, on red teeth the push is
+refused with teeth's own output visible, never a bare failure. The
+hook lands at a ratification stop as its own commit; the unit-04
+deferred marker is discharged by annotation when it does.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
