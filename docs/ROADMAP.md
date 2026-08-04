@@ -829,6 +829,29 @@ which no tree-gate will ever assert, and for what a gate with no YAML
 parser cannot see — a reusable workflow's runner is chosen in the called
 file, and the false positives are named in the gate's header.
 
+**Measured, 2026-08-03 (UTC), runs 30862749381 (`gates`) and 30862749377
+(`ci`) — the push carrying the gate.** Both green. The gates run printed
+`gate-runners: INV-13 over 2 workflow files` and `gate-runners   0`, then
+`all.sh: 0 — every gate ran and found nothing`, and teeth closed
+`plant cases 10, contract cases 1, failures 0` — the first eleven-case
+teeth run (ten plant, one contract) on a hosted runner, 28 seconds from
+its first log line to its summary line by step timestamps, beside the
+nine-case 30 of run 30724101184 as a baseline under its own conditions.
+The series stands on one basis, plants plus the contract case: 42.249
+seconds for nine cases local, 30 for nine on a runner, 28 for eleven on a
+runner — each under its own conditions, no cause claimed for the
+direction. The visibility tripwire printed
+`INV-13: repository is public; the amendment's condition holds` again, and
+`pull-request-body` skipped as before — its copy still waits for the first
+pull request.
+
+The badge rule, adopted with the README's two live workflow badges: a
+badge is either derived live by a machine or a claim linking to its
+committed evidence. Anything else is prose in a costume — the README's
+status block sat at gates 6 and plants 8 against a tree carrying seven
+and ten, which is what happens to numbers a machine derives only when
+someone remembers to ask.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
