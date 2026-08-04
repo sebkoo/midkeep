@@ -1898,6 +1898,67 @@ The run condition stands as unit 04 wrote it: screen on and unlocked
 for the whole run. The phone measurement remains owed, and only it
 flips the ladder row.
 
+**2026-08-04 — the ladder capability measured on the phone: a stream
+killed mid-answer carried on from the journalled offset. Four runs,
+two instrument defects found and fixed by their own checks.** Unit 05,
+acceptance item 4, ruling D4. Every fact below is derived from the
+device — iPhone 16 Pro Max (iPhone17,2), iOS 26.5.2 (23F84), read via
+`devicectl device info details`, the unit-03 phone — with the rig's
+parameters named: KILL_AFTER 11 (the stream-mode default), RESUME_WAIT
+15.
+
+The four runs, kept in order because two of them are the instruments
+being caught by their own verification:
+
+Run 1 held — judge exit 0, 25 chunk records and 70 answer bytes at
+the kill, `streamResumed(fromOffset: 70)`, artifacts byte-equal to
+control — but the session captured only the tail of its output, and
+the rig deletes its workspace on success, so the run's time-to-first-
+token line is unrecoverable. A measurement not captured is not a
+measurement; the run's capability verdict stands on the quoted facts,
+its TTFT does not exist. Capture the full log; the truncation cost a
+figure.
+
+A retry died at codesign with `errSecInternalComponent` — a host
+keychain condition, exit 2, could-not-measure working as written.
+
+Run 2, fully captured, held again — and its TTFT read "between -0.0s
+and -0.0s", an impossible figure, so the instrument was refused. The
+cause was then measured on the host: two `python3 -c` calls to
+`time.monotonic()` two real seconds apart subtract to 0.00, because
+each poll ran its own process and monotonic's reference point is
+undefined across processes — the Python documentation says so, and
+the instrument compared timestamps from different processes anyway.
+Fixed to epoch `time.time()`, cross-process valid, NTP noise
+irrelevant at this scale. The committed simulator figure was then
+re-examined under this defect: its instrument was one Python process
+holding one clock — `t0` and every poll reading taken by the same
+interpreter that launched the app — which is exactly the in-process
+difference the documentation blesses, so the 9.44 s stands, qualified
+as a single-process measurement rather than merely a lucky one.
+
+Run 3 exited 2 at the reset: "container reset left bytes behind" —
+the reset's own read-back verification firing, racing an app instance
+a previous run left holding the journal open. Fixed by retrying the
+whole reset up to five times — re-running the operation, not
+re-reading until lucky — with the incident dated in the function's
+comment.
+
+Run 4, the definitive measurement, every instrument valid: time to
+first token between 8.2 s and 8.6 s after launch, external poll, the
+interval width the poll period, presentation pacing named as the
+dominant term. Killed pid 4383 at +11 s: steps 0–3 completed, 23
+chunk records carrying 64 answer bytes, no completion — the mid-
+stream window caught live on hardware. After the plain relaunch:
+exactly one `streamResumed(stepIndex: 4, fromOffset: 64)`, contiguous
+continuation offsets with no re-emitted byte, the post-kill journal a
+byte-prefix of the final one, four distinct products, and the stream
+artifact at 218 bytes equal to the control run's — the uninterrupted
+control this rig runs first by ruling D4. Judge exit 0: "the stream
+carried on — killed mid-answer, resumed from the journalled offset."
+The ladder row flips on this run, in the closing commit that cites
+it.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a

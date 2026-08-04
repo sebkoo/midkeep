@@ -154,17 +154,25 @@ reset_container() {
     # Empty files over the three run files: a fresh run without an
     # uninstall, so the trust tap is not spent. Verified by reading one
     # back — a reset that silently failed would corrupt every later
-    # judgement, so the reset carries its own check.
+    # judgement, so the reset carries its own check. The whole reset
+    # retries, because an app instance left running by an earlier rig
+    # run holds the journal open and can race the overwrite — observed
+    # 2026-08-04, one verification failure between two clean runs — and
+    # a retry re-runs the operation rather than re-reading until lucky.
     : > "$TMP/empty"
-    copy_to "$TMP/empty" "$CONTAINER_DIR/rehearsal.journal" \
-        || die2 'cannot run: container reset failed (copy to journal)'
-    copy_to "$TMP/empty" "$CONTAINER_DIR/rehearsal-products.txt" \
-        || die2 'cannot run: container reset failed (copy to artifact)'
-    copy_to "$TMP/empty" "$CONTAINER_DIR/rehearsal-stream.txt" \
-        || die2 'cannot run: container reset failed (copy to stream artifact)'
-    copy_from "$CONTAINER_DIR/rehearsal.journal" "$TMP/reset-check" \
-        || die2 'cannot run: container reset unverifiable'
-    [ ! -s "$TMP/reset-check" ] || die2 'cannot run: container reset left bytes behind'
+    local attempt
+    for attempt in 1 2 3 4 5; do
+        if copy_to "$TMP/empty" "$CONTAINER_DIR/rehearsal.journal" \
+            && copy_to "$TMP/empty" "$CONTAINER_DIR/rehearsal-products.txt" \
+            && copy_to "$TMP/empty" "$CONTAINER_DIR/rehearsal-stream.txt" \
+            && copy_from "$CONTAINER_DIR/rehearsal.journal" "$TMP/reset-check" \
+            && [ ! -s "$TMP/reset-check" ]; then
+            return 0
+        fi
+        note "container reset attempt $attempt left bytes behind; retrying"
+        sleep 3
+    done
+    die2 'cannot run: container reset left bytes behind after 5 attempts'
 }
 
 launch_start_job() {
@@ -176,7 +184,11 @@ launch_start_job() {
 # ---- The control run: uninterrupted, in a reset container. ----
 note 'control run: reset, launch, wait for completion'
 reset_container
-CONTROL_LAUNCH_AT="$(python3 -c 'import time; print(time.monotonic())')"
+# Epoch time, not time.monotonic(): each poll below runs its own python
+# process, and monotonic's reference point is undefined across processes —
+# measured on this host, two calls 2 s apart subtracted to 0.00. Epoch
+# time is cross-process valid, and NTP steps are noise at this scale.
+CONTROL_LAUNCH_AT="$(python3 -c 'import time; print(time.time())')"
 launch_start_job "$TMP/control-launch.json" "$TMP/control-launch.log" \
     || die2 "cannot run: control launch failed (phone unlocked?); log kept at $TMP/control-launch.log"
 
@@ -188,7 +200,7 @@ TTFT_HIGH=''
 LAST_EMPTY_AT="$CONTROL_LAUNCH_AT"
 DEADLINE=$((SECONDS + CONTROL_WAIT))
 while [ "$SECONDS" -lt "$DEADLINE" ]; do
-    NOW="$(python3 -c 'import time; print(time.monotonic())')"
+    NOW="$(python3 -c 'import time; print(time.time())')"
     if copy_from "$CONTAINER_DIR/rehearsal-stream.txt" "$TMP/ttft-probe" \
         && [ -s "$TMP/ttft-probe" ]; then
         TTFT_LOW="$(python3 -c "print(f'{$LAST_EMPTY_AT - $CONTROL_LAUNCH_AT:.1f}')")"
