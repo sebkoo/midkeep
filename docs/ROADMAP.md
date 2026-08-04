@@ -1003,6 +1003,26 @@ that carries it and describes that commit's parent, which is also why a
 record filed in the same commit shows "file not committed yet" as its
 span.
 
+**Measured, 2026-08-04 (UTC), runs 30873597996 (`gates`) and
+30873597904 (`ci`) — the push carrying `e9d923e`, while the host still
+read 2026-08-03. The session's own push was declined at the permission
+layer and the owner pushed by hand: the ask list working as the
+ratification mechanism unit 03's prompt names it.** Both green. The
+gates run printed `gate-hostpath: INV-14 over 17 files in scope` and
+`gate-address: INV-15 over 18 files in scope` — two more each than the
+prose gates' landing run, and the delta is exactly the two
+`docs/prompts/` files filed since: unit 02's record and unit 03's
+prompt. Then `all.sh: 0 — every gate ran and found nothing`, and teeth
+closed `plant cases 12, contract cases 1, failures 0` — 34 seconds for
+thirteen cases, first log line to summary line by step timestamps. The
+series on its one basis, each figure under its own conditions with no
+cause claimed for any direction: 42.249 seconds for nine cases local,
+30 for nine on a runner, 28 for eleven, 26 for thirteen, 34 for
+thirteen. The visibility tripwire printed its public line;
+`pull-request-body` still waits for the first pull request. This run
+discharges acceptance item 1 of unit 03's prompt, with the prediction's
+split between letter and meaning recorded above.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a

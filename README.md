@@ -81,14 +81,14 @@ are still written by hand; the numbers live in the generated block.
 | | |
 |---|---|
 | version | no tag yet |
-| commits | 27 |
+| commits | 28 |
 | last commit | 2026-08-03 |
 | gates | 9 |
 | teeth plant cases | 12 |
 | unit records filed | 3 |
 | unit 01 record span | b853d54..b853d54, 1 commit touches it |
 | unit 02 record span | 286d55b..286d55b, 1 commit touches it |
-| unit 03 record span | file not committed yet |
+| unit 03 record span | e9d923e..e9d923e, 1 commit touches it |
 
 A record span counts commits touching that file, not the unit's
 whole work. The block is generated before the commit that carries
