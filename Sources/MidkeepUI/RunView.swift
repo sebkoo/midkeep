@@ -31,6 +31,7 @@ import SwiftUI
     private let directory: URL
     private let journalURL: URL
     private let artifactURL: URL
+    private let streamArtifactURL: URL
     private let pacing: Duration
     private var journal: Journal<RunEntry>?
     private var engine: RunEngine?
@@ -39,6 +40,7 @@ import SwiftUI
         self.directory = directory
         journalURL = directory.appendingPathComponent("rehearsal.journal")
         artifactURL = directory.appendingPathComponent("rehearsal-products.txt")
+        streamArtifactURL = directory.appendingPathComponent("rehearsal-stream.txt")
         self.pacing = pacing
     }
 
@@ -49,7 +51,8 @@ import SwiftUI
         do {
             try FileManager.default.createDirectory(
                 at: directory, withIntermediateDirectories: true)
-            let steps = RehearsalRun.steps(artifactURL: artifactURL, pacing: pacing)
+            let steps = RehearsalRun.steps(
+                artifactURL: artifactURL, streamArtifactURL: streamArtifactURL, pacing: pacing)
             let journal = try Journal<RunEntry>(url: journalURL)
             let engine = RunEngine(journal: journal, steps: steps)
             self.journal = journal
@@ -163,19 +166,30 @@ public struct RunView: View {
                 .font(.largeTitle.weight(.semibold))
             Text(
                 "A rehearsal job — real arithmetic, written down step by step. "
-                    + "It exists to prove that a killed job carries on, and it "
-                    + "promises no feature."
+                    + "The last step streams: its answer arrives as the search "
+                    + "finds it, each piece on disk before it is shown. It exists "
+                    + "to prove that a killed job carries on, and it promises no "
+                    + "feature."
             )
             .foregroundStyle(.secondary)
 
             ForEach(model.rows) { row in
-                HStack {
-                    Text(row.name)
-                    Spacer()
-                    stateText(row.state)
-                        .foregroundStyle(.secondary)
+                if case .streaming(let partial) = row.state {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(row.name)
+                        Text(partial)
+                            .foregroundStyle(.secondary)
+                    }
+                    .font(.callout)
+                } else {
+                    HStack {
+                        Text(row.name)
+                        Spacer()
+                        stateText(row.state)
+                            .foregroundStyle(.secondary)
+                    }
+                    .font(.callout)
                 }
-                .font(.callout)
             }
 
             controls

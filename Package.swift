@@ -14,6 +14,10 @@ let package = Package(
         .target(name: "MidkeepKit"),
         .target(name: "MidkeepUI", dependencies: ["MidkeepKit"]),
         .target(name: "MidkeepApp", dependencies: ["MidkeepUI"]),
-        .testTarget(name: "MidkeepKitTests", dependencies: ["MidkeepKit"]),
+        .testTarget(
+            name: "MidkeepKitTests",
+            dependencies: ["MidkeepKit"],
+            resources: [.copy("Fixtures")]
+        ),
     ]
 )

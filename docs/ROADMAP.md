@@ -1700,6 +1700,47 @@ as two clean test failures. `all.sh` exited 0 over nine gates after
 one `gate-format` finding was fixed at the gate's direction; teeth
 closed `plant cases 14, contract cases 1, failures 0` at the landing.
 
+**2026-08-04 — the rehearsal streams, and the fixture is provably a
+recording.** Unit 05, ruling D1 with its rider, and the screen half of
+the honest-stream requirement. `PrimeStreamSource`: the primes below
+300, found by trial division and emitted as each one is found — the
+text exists only as the search produces it, so watching it arrive is
+watching the work happen. 62 chunks, 218 bytes, and the answer was
+measured with a Python trial-division loop before the Swift source was
+judged against it — the unit-04 fixture discipline, applied to an
+answer instead of a count. The streaming step is the rehearsal's
+fifth; its bytes land in a second artifact whose appender holds the
+idempotence check in offset form and refuses a gap rather than
+fabricating bytes. The screen's intro names the streaming step and
+the ordering it rides on, per the honest-screen rule.
+
+The fixture, `Tests/MidkeepKitTests/Fixtures/rehearsal-stream.jsonl`,
+was recorded from the live source by a throwaway recorder test that
+was deleted after the one run that recorded it; its first line names
+the source it records. The provenance test re-records that source on
+every suite run and holds the committed bytes equal — the D1 rider as
+a check that runs forever, not a claim made once. The recorded-fixture
+test the ROADMAP bullet has named since unit 01 drives a killed stream
+back to the measured answer from the fixture alone. `Package.swift`
+gains the test-resource declaration — a resource, not a dependency;
+INV-6 is untouched.
+
+The watched-both-ways measurements, counted as full runs of the
+27-test suite against four mutants, planted one at a time and
+reverted before the next:
+
+```
+1  the search skips 2          answer, provenance and full-run tests
+2  effect idempotence removed  the redelivery test
+3  gap guard removed           the gap test
+4  a fixture line deleted      both fixture-driven tests
+```
+
+Mutant 4 tampers with committed evidence rather than with code — the
+direction the provenance check exists for, watched catching it. Every
+new test failed under at least one mutant, 27 of 27 green restored,
+`all.sh` 0 over nine gates, teeth `failures 0` at the landing.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
