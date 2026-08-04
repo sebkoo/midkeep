@@ -955,6 +955,54 @@ Xcode project exists". Unit 02's own record is still unfiled in
 block shows no span for it, and the ladder's row 01 says "record not
 filed yet" rather than borrowing unit 01's.
 
+**2026-08-03 — the collision survived its first repair twice; the
+numerals leave the ladder.** Unit 03's opening commit. The first repair
+(`5e8775e`, the entry above) had a structural half — the Driven-by
+column and the derived spans — and an explanatory half, the paragraph
+naming the two schemes apart. Three events now stand, all 2026-08-03 by
+the host clock, all observed by the owner reading rather than by any
+check:
+
+1. The false row: "02 app shell — in progress" above a tree holding no
+   Xcode project — the entry above, repaired by `5e8775e`.
+2. After that repair landed: the owner read "01 landed / 02 not
+   started" and asked why unit 2 never started. The number collision
+   survived the Driven-by column.
+3. With the explanatory paragraph on screen: the owner pointed at the
+   table itself — column 1 headed "Unit" while column 4 reads "units 01
+   and 02". One word, two namespaces, in one table.
+
+The explanatory half is twice overtaken: both later events happened
+with the explanation present. An explanation the reader must hold while
+reading is not a repair — it is a dependency on reading order, the
+shape the INV-12 exemption's closure already refused to rely on. The
+repair in the commit carrying this entry removes the namespace instead
+of explaining it: the ladder rows lose their numerals and stand on
+their names, the first column is renamed "Capability", the word unit
+appears in exactly one column — Driven by, whose numerals are anchored
+by `docs/prompts/` filenames — and Next units below becomes Next
+capabilities with its enumeration dropped, so the collision dies rather
+than migrates.
+
+The same commit regenerates the status block and measures the
+prediction the first repair filed — that the block would show landed
+units 2 and unit 02's record span. Confirmed in what it meant,
+falsified in the letter. Unit 02's span appears, and the count reads 3,
+not 2, because this commit also begins the convention of filing a
+unit's driving prompt before its work: `docs/prompts/03-app-shell.md`
+is counted the moment it exists, and `status.sh` counts record files,
+not closed units. "Landed units" is false as worded over that count —
+unit 03 has only opened — so the label now reads "unit records filed",
+naming what the number counts. Two smaller facts ride along. The block
+sat one commit stale between `286d55b`, which filed unit 02's record
+without regenerating, and here — the badge entry's decay family, in the
+generated block that rule was written about. And the block's footer now
+carries the disposition the 2026-08-01 generated-block entry offered
+and left open: it states that the block is generated before the commit
+that carries it and describes that commit's parent, which is also why a
+record filed in the same commit shows "file not committed yet" as its
+span.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
@@ -1273,19 +1321,23 @@ the tree's own scan read 15 files and found nothing. INV-14 and INV-15
 are the first invariant rows born enforced — the row, its gate and its
 plant landing together rather than the rule arriving before the check.
 
-## Next units
+## Next capabilities
 
-1. **App shell.** An Xcode project wrapping the SPM modules, with the
-   Info.plist, entitlements and background-task identifiers later units need.
-   Until this lands, nothing runs on a device and no launch, memory or UI
-   measurement is possible.
-2. The journal, and a test that kills the process and resumes from it.
-3. The streaming contract, with a recorded-fixture test.
-4. The on-device gate that decides local against server, and a second engine
-   behind the same contract.
-5. Signal capture and an offline evaluation loop.
-6. Performance and memory instrumentation.
-7. A remote-config-backed feature flag service.
-8. An `EntitlementProviding` protocol with an always-entitled stub, decided
-   while the module boundaries are still soft rather than retrofitted through
-   call sites later.
+In ladder order, unnumbered: the driving units in `docs/prompts/` hold
+the only numeral namespace, per the 2026-08-03 collision entry in
+Findings.
+
+- **App shell.** An Xcode project wrapping the SPM modules, with the
+  Info.plist, entitlements and background-task identifiers later units
+  need. Until this lands, nothing runs on a device and no launch, memory
+  or UI measurement is possible. Driven by unit 03, opened 2026-08-03.
+- The journal, and a test that kills the process and resumes from it.
+- The streaming contract, with a recorded-fixture test.
+- The on-device gate that decides local against server, and a second
+  engine behind the same contract.
+- Signal capture and an offline evaluation loop.
+- Performance and memory instrumentation.
+- A remote-config-backed feature flag service.
+- An `EntitlementProviding` protocol with an always-entitled stub, decided
+  while the module boundaries are still soft rather than retrofitted
+  through call sites later.
