@@ -155,6 +155,57 @@ Empty at filing, by design: results land here when the unit closes,
 as an addition below the filed prompt rather than an edit of it, and
 the emptiness declared now is what makes that filling an addition.
 
+Closed 2026-08-04 (UTC) by the commit carrying this text, added below
+the declaration above exactly as it provided for. The six acceptance
+items, each marked against what discharged or disproved it:
+
+1. Confirmed in meaning, its letter split by batching. The opening
+   commit landed as `f88e700` with the block predictions holding as
+   filed. The prose-gate prediction — 21 and 22 on the push carrying
+   the commit — assumed a push per commit; no push happened until the
+   unit's close, and the pre-push hook later added a 23rd
+   address-scope file, so the batched push will print 21 and 23. The
+   per-commit local gate runs recorded 21 and 22 before the hook and
+   21 and 23 after, confirming the meaning: the opening's delta was
+   exactly this file. The CI half of this item is measured at the
+   push and recorded in ROADMAP when taken.
+2. Confirmed. The brief was delivered in-session after `f88e700`,
+   ruled per decision with riders, and every implementation commit
+   names its ruling; two mid-landing shape rulings — the ADR
+   amendment's position and the mutant table's location — were taken
+   at their commits and honored.
+3. Confirmed. The contract landed in `77a6ae1` and the rehearsal
+   stream with its fixture in `283e4f8`, thirteen mutants watched
+   across the two landings — nine of code, four including a tamper of
+   the committed fixture — every new test seen failing before its
+   green was trusted, 27 of 27 restored. The tests are plain
+   `swift test` and run on the existing free runners; the CI run
+   follows the owner's push.
+4. Confirmed, on the phone, fourth run of the extended rig: killed at
+   +11 s with 23 chunk records and 64 answer bytes on record and no
+   completion, resumed through `streamResumed(fromOffset: 64)` with
+   contiguous offsets and no re-emitted byte, final artifacts
+   byte-equal to the uninterrupted control run's, judge exit 0, every
+   fact derived from the device (iPhone17,2, 23F84). That run and no
+   other flipped the row. Time to first token entered README's table
+   from the same run — 8.2 to 8.6 s by the rig's external poll — with
+   the simulator's single-process 9.44 s beside it and the pacing
+   caveat on both. Two instrument defects found on the way are
+   findings in ROADMAP, each caught by its own check.
+5. Held in meaning, its letter narrowed and stated: `all.sh` exited 0
+   at every landing; teeth ran green at the opening and at both code
+   landings — the only commits that could move it, since no gate
+   reads `scripts/dev/` or `.githooks/` — and not after every docs
+   commit. The pre-push hook landed mid-unit (ruling D6), so the push
+   boundary is now enforced rather than habitual; the close's final
+   sweep ran both instruments green over the finished tree.
+6. Held as a standing property: every figure names what it counted
+   and its instrument, findings are dated in ROADMAP with two
+   retractions handled by refusal rather than erasure — an uncaptured
+   TTFT recorded as not existing, an impossible reading refused and
+   its cause measured — and the fixture's finding of absence carries
+   the provenance test as its standing positive control.
+
 ## Amendment log
 
 Nothing yet. Corrections land here, dated, and never edit the text

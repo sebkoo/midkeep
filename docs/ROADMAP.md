@@ -8,8 +8,8 @@ marker shows where it is now. This ladder is maintained by hand.
 ```
   can learn      signals captured, offline evaluation closes the loop
   can choose     work routed on device or to a server, one contract either way
-  can run        a multi-step run executes and streams
-> can recover    a killed run resumes from its journal
+> can run        a multi-step run executes and streams
+  can recover    a killed run resumes from its journal
   can install    an app that launches on a device
   can build      the package compiles, the tests pass, the gates bite
 ```
@@ -1958,6 +1958,46 @@ control this rig runs first by ruling D4. Judge exit 0: "the stream
 carried on — killed mid-answer, resumed from the journalled offset."
 The ladder row flips on this run, in the closing commit that cites
 it.
+
+**2026-08-04 — unit 05 closes: the streaming row flips on the phone
+measurement, the marker climbs to "can run", and the release rule
+frees one topic.** The row flip cites run 4 of the rig entry above
+and nothing else; the "unit 05, open" mark leaves the Driven-by cell
+— the close rule paying out a third time. The ladder marker moves to
+"can run": its sentence — a multi-step run executes and streams — is
+true of the rehearsal as measured, on the same run the row cites, and
+the ladder stays hand-maintained as its caption says. README's
+cannot-do paragraph now names the stream among what the rehearsal
+does, and its measurement table's time-to-first-token row is filled
+with both instruments and the pacing caveat.
+
+The deferred-topics re-audit against the release rule: one released.
+`streaming` — its truth-maker the streaming contract measured on
+hardware — applied with `gh repo edit` and read back at twelve topics
+total. `sse` stays deferred: no transport shipped, and whether SSE
+ever carries a real stream is decided with whose-server. The
+on-device cluster and the rest stay deferred unchanged.
+
+Predictions, filed before the push that carries this close — the
+first push of the unit, carrying all of it. The pre-push hook fires
+live for the first time on that push and prints `pre-push: teeth
+green; the push proceeds` after teeth's own summary. Both workflows
+green. The gates run prints `gate-hostpath: INV-14 over 21 files in
+scope` and `gate-address: INV-15 over 23 files in scope` — the counts
+measured locally at this commit. The opening prompt's prediction of
+21 and 22 "on the push carrying this commit" meets the same
+letter-versus-meaning split the pull-request-body prediction did:
+it assumed a push per commit, the unit's pushes batched, and the hook
+later added a 23rd address-scope file — the per-commit local runs
+recorded 21 and 22 before the hook and 21 and 23 after, so the
+meaning (the opening's delta is exactly the prompt file) is confirmed
+while the letter is falsified by batching, recorded in the record's
+Results. Teeth closes `plant cases 14, contract cases 1, failures 0`
+on the runner, its wall time joining the series on the stated basis;
+`ci.yml` builds the streaming screen for the simulator with zero
+`warning:` or `error:` lines; the visibility tripwire prints its
+public line; `pull-request-body` still waits for the first pull
+request.
 
 ## Known holes
 

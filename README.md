@@ -43,11 +43,12 @@ finished, so that coming back means continuing rather than restarting.
 
 ## What this cannot do yet
 
-The one job it runs is a rehearsal that says so — real arithmetic, journalled
-and resumable, promising no feature. No real work, no streaming, no server: a
-killed job carries on, and what it carries on doing is counting primes. Beyond
-the rehearsal, what exists is the harness — the checks, and the proof that
-each one fails when it should.
+The one job it runs is a rehearsal that says so — real arithmetic, journalled,
+resumable and streamed, promising no feature. No real work, no server: a
+killed job carries on — counting primes, and listing them as they are found —
+and a killed stream resumes from where its answer got to. Beyond the
+rehearsal, what exists is the harness — the checks, and the proof that each
+one fails when it should.
 
 See [the roadmap](docs/ROADMAP.md).
 
@@ -76,7 +77,7 @@ are still written by hand; the numbers live in the generated block.
 | repository and harness | Nothing — there is no app to open. The work here built the checks that guard every row below, and watched each one fail on purpose. | landed | units 01 and 02 |
 | app shell | Install it on a phone and watch it launch. | landed — installed and launched on an iPhone 16 Pro Max, iOS 26.5.2, free personal-team signing, 2026-08-04 | unit 03 |
 | the journal | Close the app in the middle of a job and open it again; the job carries on from where it stopped instead of starting over. | landed — killed mid-job on an iPhone 16 Pro Max, iOS 26.5.2, and the job carried on after relaunch, 2026-08-04 | unit 04 |
-| streaming | Watch a step's answer arrive as it is written, rather than waiting for the whole thing to finish. | not started | unit 05, open |
+| streaming | Watch a step's answer arrive as it is written, rather than waiting for the whole thing to finish. | landed — killed mid-answer on an iPhone 16 Pro Max, iOS 26.5.2, and the stream resumed from the journalled offset, 2026-08-04 | unit 05 |
 | on-device or server | Keep a job moving with no signal, because the work can run on the phone instead of being sent away. | not started | none yet |
 | signals and evaluation | Nothing new to do. The app keeps a record of how jobs went, so a change can be checked against the runs that came before it. | not started | none yet |
 | performance and memory | Nothing new to do. How long a job takes and how much memory it uses becomes something anyone can measure. | not started | none yet |
@@ -87,7 +88,7 @@ are still written by hand; the numbers live in the generated block.
 | | |
 |---|---|
 | version | no tag yet |
-| commits | 43 |
+| commits | 52 |
 | last commit | 2026-08-04 |
 | gates | 9 |
 | teeth plant cases | 14 |
@@ -96,7 +97,7 @@ are still written by hand; the numbers live in the generated block.
 | unit 02 record span | 286d55b..286d55b, 1 commit touches it |
 | unit 03 record span | e9d923e..de6d24a, 2 commits touch it |
 | unit 04 record span | 24b254a..ac82cd0, 2 commits touch it |
-| unit 05 record span | file not committed yet |
+| unit 05 record span | f88e700..f88e700, 1 commit touches it |
 
 A record span counts commits touching that file, not the unit's
 whole work. The block is generated before the commit that carries
@@ -171,7 +172,7 @@ One row is measured; the others say what would fill them.
 |---|---|
 | Cold launch to first frame | not measured yet; the shell exists, nothing times it |
 | Resume after termination | measured 2026-08-04 on an iPhone 16 Pro Max, iOS 26.5.2: killed mid-step by SIGKILL, resumed from the journal — `scripts/dev/device-rig.sh`, ROADMAP → Findings |
-| Time to first token | not yet written; needs the streaming contract |
+| Time to first token | measured 2026-08-04 — phone (iPhone 16 Pro Max, iOS 26.5.2): between 8.2s and 8.6s after launch, the rig's external poll, the interval width its poll period; simulator (iPhone 16 Pro, iOS 18.0): 9.44s by single-process 50ms polling. Presentation pacing dominates both by design — `scripts/dev/device-rig.sh --stream`, ROADMAP → Findings |
 | Peak memory during a run | not yet written; needs instrumentation |
 
 ## Decisions
