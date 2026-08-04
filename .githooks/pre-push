@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# pre-push — teeth at every landing (unit 05, ruling D6): the mechanism
+# unit 04's close deferred with its name already chosen. Runs
+# scripts/gates/teeth.sh before any push leaves this machine and refuses
+# the push when teeth is red, with teeth's own output visible — never a
+# bare failure.
+#
+# The install boundary, stated per the ruling's first rider: this hook
+# binds only where core.hooksPath points at .githooks, which
+# scripts/dev/bootstrap.sh configures; a fresh clone is unbound until
+# that runs. So this is a local seatbelt, and CI remains the public
+# enforcement — the same boundary the commit-msg hook beside this one
+# states for INV-8.
+#
+# And `git push --no-verify` skips this hook entirely — the second
+# rider, written here so nobody discovers it as a loophole: the hook
+# raises the cost of an unwatched landing, it does not make one
+# impossible.
+#
+# A teeth that cannot run (exit 2, no Swift toolchain, missing script)
+# also refuses the push: an unverified landing and a failed one are
+# different facts, but neither is a verified one.
+
+set -uo pipefail
+
+cd "$(git rev-parse --show-toplevel)" || {
+    printf 'pre-push: cannot reach the repository root; refusing the push\n' >&2
+    exit 1
+}
+
+if [ ! -x scripts/gates/teeth.sh ]; then
+    printf 'pre-push: scripts/gates/teeth.sh missing or not executable; refusing the push\n' >&2
+    exit 1
+fi
+
+printf 'pre-push: running teeth before the push — about a minute\n' >&2
+if scripts/gates/teeth.sh >&2; then
+    printf 'pre-push: teeth green; the push proceeds\n' >&2
+    exit 0
+fi
+printf 'pre-push: teeth did not pass — the push is refused, the output above says why\n' >&2
+exit 1

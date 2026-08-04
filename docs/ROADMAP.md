@@ -1517,6 +1517,15 @@ promise with no mechanism, and this miss shows habit does not suffice.
 A hook under `.githooks/` is the named candidate, its own ratification
 stop when a unit takes it up.
 
+**Discharged, 2026-08-04.** Unit 05, ruling D6: `.githooks/pre-push`
+landed as its own commit at the ratification stop this marker named,
+with the three riders the ruling attached — the install boundary in
+the hook's own header, `--no-verify` written down rather than
+discovered, and refusal always carrying teeth's own output. The
+mechanism guards the push, not the commit: landings between pushes
+still rely on the habit this unit has kept by hand, and CI remains
+the enforcement a contributor cannot switch off.
+
 **2026-08-04 — unit 04 closes: the journal row flips on the phone
 measurement, the ladder reorders, and the release rule frees four
 topics with one held by ruling.** The row flip cites the rig entry
@@ -1825,6 +1834,34 @@ now, and both artifacts must match the control — so its clean case
 was re-watched rather than assumed (case 7), and the window-miss path
 now exits 2 through the judge itself (case 9). One line of dead code
 found by shellcheck at this landing was removed rather than shipped.
+
+**2026-08-04 — the pre-push hook lands, watched four ways on stubs
+before it guards anything.** Unit 05, ruling D6 with its three riders,
+discharging unit 04's deferred marker by annotation at that marker.
+`.githooks/pre-push` runs `scripts/gates/teeth.sh` and refuses the
+push on anything but teeth's 0 — red refuses, exit 2 refuses too,
+because an unverified landing and a failed one are different facts
+but neither is a verified one, and a missing or non-executable
+teeth.sh refuses on the same ground. The hook's header carries the
+install boundary (bound only where `core.hooksPath` points, which
+`bootstrap.sh` sets; a fresh clone is unbound) and names
+`--no-verify` so the bypass is documentation, not a discovery.
+
+Watched before landing, in a scratch repository with `teeth.sh`
+stubbed to each verdict — the hook relays, so the stub isolates the
+relay itself:
+
+```
+teeth exits 1 (red)        push refused, stub's output in the refusal
+teeth exits 0 (green)      push proceeds
+teeth exits 2 (no verdict) push refused
+teeth.sh missing           push refused
+```
+
+The green path through the real teeth runs on the owner's next push —
+the hook's first live firing is that push, and this entry predicts it
+prints `pre-push: teeth green; the push proceeds` after teeth's own
+summary line.
 
 ## Known holes
 
