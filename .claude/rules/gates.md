@@ -3,7 +3,7 @@
 For an agent arriving after the harness was built. This is orientation, not
 rationale; the arguments are in `docs/adr/`.
 
-## The seven gates
+## The nine gates
 
 Run them all with `scripts/gates/all.sh`.
 
@@ -12,13 +12,15 @@ Run them all with `scripts/gates/all.sh`.
 | `gate-arch.sh` | INV-1, INV-3 | a checkout and git |
 | `gate-hygiene.sh` | INV-2, INV-4, INV-8 | a checkout and git |
 | `gate-runners.sh` | INV-13's readable clauses | a checkout and git |
+| `gate-hostpath.sh` | INV-14 | a checkout and git |
+| `gate-address.sh` | INV-15 | a checkout and git |
 | `gate-workflow.sh` | `.github/workflows/*.yml` | `actionlint`, optional |
 | `gate-format.sh` | the committed `.swift-format` | the Swift toolchain |
 | `gate-build.sh` | INV-5 | the Swift toolchain |
 | `gate-test.sh` | INV-7 | the Swift toolchain |
 
-`gate-arch`, `gate-hygiene` and `gate-runners` still reach a verdict on a host
-with no Swift.
+`gate-arch`, `gate-hygiene`, `gate-runners`, `gate-hostpath` and
+`gate-address` still reach a verdict on a host with no Swift.
 The three toolchain gates return 2 there, and so does `all.sh`. That is the
 contract working, not the definition of done.
 
@@ -45,7 +47,7 @@ Everything on stdout is a finding and nothing else goes there, because
 
 ## teeth
 
-`scripts/gates/teeth.sh` proves each gate fails on a planted defect. Ten
+`scripts/gates/teeth.sh` proves each gate fails on a planted defect. Twelve
 plant cases and one contract case, each in a detached worktree under a temp
 directory and never in the checkout. Each case asserts the clean tree exits 0
 *before* planting, that the planted tree exits exactly 1 with the expected
@@ -60,24 +62,27 @@ Less than you would assume, and knowing the boundary matters more than knowing
 the gates.
 
 They read `Sources/`, `Tests/`, `Package.swift`, `.swift-format`,
-`.github/workflows/*.yml` and commit messages. That is all. Sixteen paths in the
-tree are read by no gate — this file among them, along with every ADR,
-`CLAUDE.md`, `README.md`, `docs/ROADMAP.md`, `.gitignore`, `LICENSE` and
+`.github/workflows/*.yml`, commit messages, and — for exactly two leak
+shapes, host paths and email addresses — the prose surface: `docs/`,
+`CLAUDE.md`, `README.md`, `.claude/` and `.githooks/`. This paragraph once
+counted sixteen paths read by no gate; of those sixteen, thirteen fell
+inside the prose gates' scope when INV-14 and INV-15 landed, and three
+remain read by nothing: `LICENSE`, `.gitignore` and
 `scripts/dev/bootstrap.sh`.
 
-So the harness makes changes to *code* safer and does much less for prose.
-INV-11 — that every claim about what the repository does names the file, script
-or run behind it — is UNENFORCED for exactly this reason, and is checked by
-reading. Of the sixteen, `.gitignore` is the one worth singling out, because git
-acts on it: a wrong line either commits a per-machine override or silently hides
-a tracked path, and no gate would notice either.
+Being read for two shapes is not review. The harness makes changes to
+*code* safer and still does much less for prose: INV-11 — that every claim
+about what the repository does names the file, script or run behind it —
+is UNENFORCED for exactly this reason, and is checked by reading. Of the
+three unread paths, `.gitignore` is the one worth singling out, because
+git acts on it: a wrong line either commits a per-machine override or
+silently hides a tracked path, and no gate would notice either.
 
-If you are changing documentation, the gates will stay green and will have told
-you nothing. This file is itself in that set — it went stale the moment a sixth
-gate was added, and a review caught it rather than a check.
-
-If you are changing documentation, the gates will stay green and will have told
-you nothing.
+If you are changing documentation, every gate but the two prose gates will
+stay green, and green from those two means only that no host-path or
+address shape appeared — nothing about whether the prose is true. This
+file went stale the moment a sixth gate was added, and a review caught it
+rather than a check.
 
 ## Paths that prompt
 

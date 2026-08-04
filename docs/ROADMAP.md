@@ -331,6 +331,18 @@ carries a family list, and unit 01's document quotes `noreply@anthropic.com` and
 several `@example.invalid` addresses as the evidence that its hook discriminates.
 All of that must stay.
 
+**Discharged, 2026-08-03.** `scripts/gates/gate-address.sh` landed with the
+exclusions as specified, one of them sharpened by a probe: the reserved
+domain is matched as `@example.com` or `.example.com`, never as a bare
+`example.com` suffix, which would also excuse a name merely ending in
+those letters — probed both ways, the subdomain excluded and the
+lookalike firing. Measured at landing: the scope held twelve distinct
+email-shaped tokens, every one excluded, and a fabricated gmail control
+fired. The `.test` and `.localhost` suffixes have no coverage in the
+tree's own text, so the plant's fixture is the one place they are watched
+excluding something; the other four exclusion classes are re-measured by
+the clean-tree half of the teeth case on every run.
+
 **A third shape, closed by a rule rather than a gate.** A shell prompt carries
 the account name and the hostname in one string, and this project's method is to
 paste tool output verbatim into the notebook. Neither owed gate would catch it:
@@ -852,6 +864,53 @@ status block sat at gates 6 and plants 8 against a tree carrying seven
 and ten, which is what happens to numbers a machine derives only when
 someone remembers to ask.
 
+**2026-08-03 — the two prose gates land born enforced; ratified on an
+independent adversarial pass.** `gate-hostpath.sh` (INV-14) and
+`gate-address.sh` (INV-15), each with its plant and its invariant row in
+one commit — the first rows for which rule and check have no gap between
+their arrivals. The design was already in this file; the discharge
+paragraphs beside each owed marker carry what sharpened in the landing.
+Both gates enumerate committed text with
+`git ls-files -co --exclude-standard`, scan the named prose surface, and
+never print what they matched.
+
+The author's battery, counted as probes: twenty across the two gates,
+zero failures — must-fire, must-not-fire, no-verdict and blind-spot
+cases, each direction watched. `all.sh` exited 0 over nine gates on the
+real tree; teeth ran twelve plant cases and the contract case with
+`failures 0`, in a scratch copy whose HEAD carried the working tree, the
+same rig the INV-13 landing used.
+
+The review ran thirteen probes and five mutants against the operative
+code in an independent clone. The real tree read 0 findings over 15 and
+16 files; every dangerous shape fired; an `example.com` subdomain and a
+bare `@localhost` were exactly quiet. All five mutants were caught:
+plus-to-star, the carve-out deleted, the exclusions deleted, and
+always-clean twice — the exclusion deletion caught by the clean-tree
+half of the teeth case, which is the mechanism the plant's own header
+claims. All seven draft decisions were ratified, including reading the
+old "carries the real path as a literal" sentence as real-shaped rather
+than the redacted string, and the single commit, because the verified
+tree is the one with both gates and a split manufactures a tree nobody
+ran.
+
+The review's one addition, landed in the same commit: a doubled slash —
+`/Users//alice` — yields zero findings, because the class demands a
+segment character immediately after the slash. Re-measured here before
+recording: 0 matching lines. The gate's header names it beside the
+wrapped-line hole, the same family on the same grounds.
+
+An incident during verification, kept because the first reading was
+wrong. A zero-byte `.git/index.lock` in the checkout rode a copy into
+the teeth rig, the rig's scratch commit silently failed, and two plant
+cases reported exit 127 — worktrees missing uncommitted gates, not gate
+verdicts. The stale lock was removed per git's own remedy and the rig
+rebuilt clean. The draft blamed the editor's git integration as the
+likeliest origin; the review established it instead: the reviewer's own
+device-bridge git reads, which cannot unlink the lock they create — a
+relay hazard on the reviewer's record, not this tree's. The editor was
+not the cause and the suspicion is withdrawn.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
@@ -925,9 +984,10 @@ is structural rather than an omission, and the first push is what closes it.
 **`gate-workflow` is the only gate outside the teeth harness.** It was watched
 firing on a planted defect and staying quiet on a clean tree, by hand, but it
 has no plant in `scripts/gates/teeth.sh`. The plant count stayed at eight while
-Acceptance named that number; INV-13's two plants took that delta on 2026-08-03
-and the count is ten. `gate-workflow` still has no plant, and a later unit that
-wants one takes its own delta.
+Acceptance named that number; INV-13's two plants took that delta on 2026-08-03,
+and INV-14's and INV-15's brought the count to twelve the same day.
+`gate-workflow` still has no plant, and a later unit that wants one takes its
+own delta.
 
 **`actionlint` is optional, not a precondition.** Without it `gate-workflow`
 returns 2 and so does `all.sh` — the contract's third code rather than a
@@ -935,13 +995,16 @@ failure, and the same shape as a host with no Swift. The cost is that a fresh
 clone's `all.sh` reports "could not run" rather than green until the tool is
 installed.
 
-**Things nothing reads.** Sixteen paths in the tree are read by no gate:
-`LICENSE`, `.gitignore`, `CLAUDE.md`, `README.md`, the ADR index and its six
-records, this file, `docs/prompts/README.md`, `.claude/settings.json`,
-`.claude/rules/gates.md` and `scripts/dev/bootstrap.sh`. For documentation that
-is expected. One is worth naming because something other than a human acts on
-it: `.gitignore` is read by git, so a wrong line either commits a per-machine
-override or silently hides a tracked path, and no gate would notice either.
+**Things nothing reads.** Three paths in the tree are read by no gate:
+`LICENSE`, `.gitignore` and `scripts/dev/bootstrap.sh`. This paragraph
+counted sixteen until 2026-08-03, when the two prose gates landed and
+thirteen of the sixteen — every ADR, both README files, `CLAUDE.md`, this
+file, `.claude/settings.json` and `.claude/rules/gates.md` among them —
+fell inside their scope. Read for two leak shapes, which is not review:
+INV-11 stays checked by hand. Of the three, `.gitignore` is still the one
+worth naming, because something other than a human acts on it: it is read
+by git, so a wrong line either commits a per-machine override or silently
+hides a tracked path, and no gate would notice either.
 
 The two workflow files were in this set until `gate-workflow` was added.
 
@@ -1146,6 +1209,25 @@ occurrence at Commit 10. It lands before any feature code rather than somewhere
 in unit 02, because the string has cost three rewrites and this is what stops a
 fourth. The commit that discharges this marker cites it; the marker does not
 name that commit, because a record cannot know a future commit's number.
+
+**Discharged, 2026-08-03.** `scripts/gates/gate-hostpath.sh` and
+`scripts/gates/teeth/plant-hostpath.sh` landed as specified: the segment
+class with `+`, the plant carrying a fabricated real-shaped literal as its
+must-fire control, and the bare `/Users/` line as the negative case this
+record demanded. Two things sharpened in the landing, both ratified. A
+carve-out for the hosted runner's home — one occurrence in scope at the
+time, this file quoting an actionlint checksum line — enters with a
+must-not-fire plant line in the same commit, which is the exemption
+rule's own condition; it is removed from a line per occurrence rather
+than exempting the line, and a probe proved a real path written
+immediately after a runner path still fires. And files are enumerated
+with `git ls-files -co --exclude-standard` rather than a bare recursive
+grep, because `.gitignore` documents a per-machine file inside `.claude/`
+and a finding on ignored text would be a verdict about something git will
+never record. Twenty probes across the two prose gates, zero failures;
+the tree's own scan read 15 files and found nothing. INV-14 and INV-15
+are the first invariant rows born enforced — the row, its gate and its
+plant landing together rather than the rule arriving before the check.
 
 ## Next units
 

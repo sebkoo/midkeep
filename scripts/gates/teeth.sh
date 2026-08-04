@@ -13,7 +13,7 @@
 # Assertion 1 runs per case, not once per gate. A gate that fires on everything
 # and a gate that fires on the defect are indistinguishable without it.
 #
-# Two groups, reported separately: ten plant cases — at least one per
+# Two groups, reported separately: twelve plant cases — at least one per
 # invariant a gate claims, two of them for INV-13's two clauses, plus the one
 # gate-format case that claims none — and one contract case, which tests a
 # behaviour of a script rather than a property of a tree. Neither number
@@ -159,6 +159,8 @@ run_plant_case plant-skipped-test        INV-7  gate-test.sh     plant-skipped-t
 run_plant_case plant-ai-trailer          INV-8  gate-hygiene.sh  plant-ai-trailer.sh          '*'
 run_plant_case plant-runner-label        INV-13 gate-runners.sh  plant-runner-label.sh        .github/workflows/planted-large.yml
 run_plant_case plant-macos-no-marker     INV-13 gate-runners.sh  plant-macos-no-marker.sh     .github/workflows/planted-macos.yml
+run_plant_case plant-hostpath            INV-14 gate-hostpath.sh plant-hostpath.sh            docs/planted-hostpath.md
+run_plant_case plant-address             INV-15 gate-address.sh  plant-address.sh             docs/planted-address.md
 run_plant_case plant-bad-format          format gate-format.sh   plant-bad-format.sh          Sources/MidkeepKit/Placeholder.swift
 
 printf '\nteeth: contract case\n'

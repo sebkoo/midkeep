@@ -21,7 +21,7 @@ Sources/MidkeepKit    runs, journal, engine contracts. No UI, no third party.
 Sources/MidkeepUI     views. May import SwiftUI and MidkeepKit, nothing else.
 Sources/MidkeepApp    composition root. Nothing imports it.
 Tests/                Swift Testing.
-scripts/gates/        seven gates, one contract, one teeth harness.
+scripts/gates/        nine gates, one contract, one teeth harness.
 scripts/dev/          bootstrap. Sets core.hooksPath.
 docs/adr/             decisions.
 docs/prompts/         per-unit lab notes: asked, predicted, observed, falsified.
@@ -135,6 +135,28 @@ Where the tool is weaker than the rule, weaken the mark, never the rule.
     so no tree-gate can assert that condition. ROADMAP → Findings carries
     the amendment and its grounds. Where the tool is weaker than the rule,
     the mark is weakened and the rule is not.)
+
+14. **INV-14** — No absolute host path in committed text under `docs/`,
+    `CLAUDE.md`, `README.md` or `.claude/`. (`gate-hostpath`, PARTIAL —
+    the check is the segment class `/(Users|home)/` followed by one or
+    more of `A-Za-z0-9._-`, with one carve-out for the hosted runner's
+    home, removed per occurrence so a line carrying both a runner path
+    and a real one still fires. PARTIAL because the scope is the prose
+    surface only — a path in `scripts/`, `Sources/` or `.github/` is not
+    seen — and because the class is ASCII: a non-ASCII account name
+    passes it, and widening the class is the exemption's return trigger
+    in ROADMAP → Known holes. The gate hunts a shape, carries no secret,
+    and never prints what it matched.)
+
+15. **INV-15** — No personal email shape in the same scope plus
+    `.githooks/`. (`gate-address`, PARTIAL — shape, not string: an
+    address that is neither GitHub's attribution address, nor a
+    `noreply@` role address, nor at an RFC 2606 reserved domain is a
+    finding. Exclusions match as suffixes or prefixes, never as
+    `example.*`, and are case-sensitive, so a case variant fires — the
+    conservative direction. PARTIAL for the same scope boundary as
+    INV-14 and for what a line grep cannot see: a wrapped or obfuscated
+    address is not email-shaped.)
 
 INV-6, INV-10, INV-11 and INV-12 staying visibly unenforced is deliberate. Do
 not invent a gate to make the list look complete. INV-13 is different: its
