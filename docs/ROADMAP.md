@@ -1297,6 +1297,24 @@ inherits this boundary on its first day: its device measurements run on
 the development host and are recorded here, and CI covers everything up
 to the device.
 
+**Measured, 2026-08-04 (UTC), runs 30924525654 (`gates`) and 30924525125
+(`ci`) — the push carrying `24b254a`, unit 04's opening docs commit,
+pushed by the owner.** Both green, and every prediction the prompt filed
+holds. The gates run printed `gate-hostpath: INV-14 over 19 files in
+scope` and `gate-address: INV-15 over 20 files in scope` — the move from
+18 and 19 the prompt predicted, the delta exactly the filed record —
+then `all.sh: 0 — every gate ran and found nothing`, and teeth closed
+`plant cases 14, contract cases 1, failures 0` — 48 seconds for fifteen
+cases, first log line to summary line by step timestamps. The series on
+its one basis, each figure under its own conditions, no cause claimed
+for any direction: 42.249 seconds for nine cases local, 30 for nine on
+a runner, 28 for eleven, 26 for thirteen, 34 for thirteen, 31 for
+fifteen, 48 for fifteen. The visibility tripwire printed its public
+line; `pull-request-body` still waits for the first pull request. The
+block predictions — records filed 4, the unit 04 span row reading "file
+not committed yet" — stand confirmed in the committed block. This
+discharges acceptance item 1 of unit 04's prompt.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
