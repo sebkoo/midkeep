@@ -8,9 +8,9 @@ marker shows where it is now. This ladder is maintained by hand.
 ```
   can learn      signals captured, offline evaluation closes the loop
   can choose     work routed on device or to a server, one contract either way
-  can recover    a killed run resumes from its journal
   can run        a multi-step run executes and streams
-> can install    an app that launches on a device
+> can recover    a killed run resumes from its journal
+  can install    an app that launches on a device
   can build      the package compiles, the tests pass, the gates bite
 ```
 
@@ -1516,6 +1516,47 @@ Deferred, named rather than built: "teeth at every landing" is a
 promise with no mechanism, and this miss shows habit does not suffice.
 A hook under `.githooks/` is the named candidate, its own ratification
 stop when a unit takes it up.
+
+**2026-08-04 — unit 04 closes: the journal row flips on the phone
+measurement, the ladder reorders, and the release rule frees four
+topics with one held by ruling.** The row flip cites the rig entry
+above and nothing else; the "unit 04, open" mark leaves the Driven-by
+cell — the close rule paying out a second time.
+
+The ladder's rung order was a prediction and this unit falsified it:
+"can recover" sat above "can run", and recovery landed while
+streaming — half of "can run"'s own sentence — does not exist. The
+rungs reorder rather than leaving the marker pinned under a false
+ordering, and the marker moves to "can recover". The ladder is
+hand-maintained, as its caption has always said.
+
+The deferred-topics re-audit, against the release rule. Four released,
+each by its committed truth-maker, applied with `gh repo edit` and
+read back at eleven topics total: `state-machine` and
+`workflow-engine` by the run engine, `resumable` and
+`durable-execution` by the journal plus the resume-after-kill measured
+on the phone. One held by ruling, recorded the way sqlite's hold was —
+a coarse unit-01 mapping superseded by a specific decision:
+`offline-first` maps to "journal storage" in the recovered list, but
+that mapping was recovered verbatim after ADR-0007 had ruled
+authoritative execution onto a server, and the capability the topic
+names to a reader is the not-started "keep a job moving with no
+signal" row, not the journal row. It joins the
+on-device-ml/coreml/tensorflow-lite cluster on the undecided
+whose-server assumption and may land or expire with it. The remaining
+nine stay deferred, `sqlite` among them per ADR-0008.
+
+Predictions, filed before the push that carries this close. Both
+workflows green. The gates run prints `gate-hostpath: INV-14 over 20
+files in scope` and `gate-address: INV-15 over 21 files in scope` —
+the counts measured locally at this commit — then `all.sh: 0`, and
+teeth closes `plant cases 14, contract cases 1, failures 0` with the
+six repaired plants running on a hosted runner for the first time.
+`ci.yml`'s simulator build stays green with the run screen in place of
+the shell. The visibility tripwire prints its public line;
+`pull-request-body` still waits for the first pull request. The teeth
+wall time joins the series on its stated basis, no cause claimed for
+any direction.
 
 ## Known holes
 

@@ -136,6 +136,46 @@ Empty at filing, by design: results land here when the unit closes,
 as an addition below the filed prompt rather than an edit of it, and
 the emptiness declared now is what makes that filling an addition.
 
+Closed 2026-08-04 (UTC) by the commit carrying this text, added below
+the declaration above exactly as it provided for. The six acceptance
+items, each marked against what discharged or disproved it:
+
+1. Confirmed. The opening commit landed as `24b254a`, green on runs
+   30924525654 and 30924525125; the prose gates printed 19 and 20 as
+   predicted, the block figures held as filed, and teeth ran fifteen
+   cases in 48 seconds on the series' stated basis (ROADMAP →
+   Findings, the measured entry).
+2. Confirmed. The brief was delivered in-session after `24b254a` and
+   ruled per decision, with one amendment taken at review — the
+   corrupt-middle refusal — and every implementation commit names its
+   ruling.
+3. Confirmed. `Journal.swift` landed in `48122a8` with seven package
+   tests, each watched failing under at least one of seven planted
+   mutants before its green was trusted, and the torn-tail/
+   corrupt-middle pair watched discriminating in both directions. The
+   CI run over these commits follows the owner's push and is recorded
+   in ROADMAP when taken.
+4. Confirmed. The rehearsal job ran on the phone: pid 2708 SIGKILLed
+   at +5 seconds inside step 2, the plain relaunch carried on — both
+   attempts kept, earlier steps not re-run, four distinct products,
+   the post-kill journal a byte-prefix of the final one — every fact
+   derived from the device (iPhone17,2, build 23F84) by
+   `scripts/dev/device-rig.sh`, judge exit 0. The ladder row flipped
+   in the closing commit, on this measurement and no other.
+5. Falsified in part, repaired before close. `all.sh` exited 0 at
+   every landing, but teeth was not run at `48122a8`, `fbf6fa9` or
+   `ac04756` and was red there — six plants anchored on the deleted
+   placeholder files, `failures 6`, measured twice. Caught at close,
+   repaired at a ratification stop by ruling (self-contained plants,
+   `2931c0f`), teeth back to `failures 0` over fourteen plants and
+   the contract case. ROADMAP carries the mechanism, the three SHAs,
+   and the deferred enforcement — teeth-at-every-landing has no
+   mechanism yet, and a `.githooks/` hook is the named candidate.
+6. Held as a standing property: every figure names what it counted
+   and its instrument, findings are dated in ROADMAP, and the rig
+   judge's fixtures gave its finding of absence the positive controls
+   the rule demands.
+
 ## Amendment log
 
 Nothing yet. Corrections land here, dated, and never edit the text

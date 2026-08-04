@@ -45,10 +45,9 @@ finished, so that coming back means continuing rather than restarting.
 
 The one job it runs is a rehearsal that says so — real arithmetic, journalled
 and resumable, promising no feature. No real work, no streaming, no server: a
-killed job carries on, and what it carries on doing is counting primes. Resume
-after a kill is measured on a simulator so far; the phone measurement flips
-the journal row below when it lands. Beyond the rehearsal, what exists is the
-harness — the checks, and the proof that each one fails when it should.
+killed job carries on, and what it carries on doing is counting primes. Beyond
+the rehearsal, what exists is the harness — the checks, and the proof that
+each one fails when it should.
 
 See [the roadmap](docs/ROADMAP.md).
 
@@ -76,7 +75,7 @@ are still written by hand; the numbers live in the generated block.
 |---|---|---|---|
 | repository and harness | Nothing — there is no app to open. The work here built the checks that guard every row below, and watched each one fail on purpose. | landed | units 01 and 02 |
 | app shell | Install it on a phone and watch it launch. | landed — installed and launched on an iPhone 16 Pro Max, iOS 26.5.2, free personal-team signing, 2026-08-04 | unit 03 |
-| the journal | Close the app in the middle of a job and open it again; the job carries on from where it stopped instead of starting over. | not measured on a phone yet — resumes after a kill on a simulator, 2026-08-04 | unit 04, open |
+| the journal | Close the app in the middle of a job and open it again; the job carries on from where it stopped instead of starting over. | landed — killed mid-job on an iPhone 16 Pro Max, iOS 26.5.2, and the job carried on after relaunch, 2026-08-04 | unit 04 |
 | streaming | Watch a step's answer arrive as it is written, rather than waiting for the whole thing to finish. | not started | none yet |
 | on-device or server | Keep a job moving with no signal, because the work can run on the phone instead of being sent away. | not started | none yet |
 | signals and evaluation | Nothing new to do. The app keeps a record of how jobs went, so a change can be checked against the runs that came before it. | not started | none yet |
@@ -88,7 +87,7 @@ are still written by hand; the numbers live in the generated block.
 | | |
 |---|---|
 | version | no tag yet |
-| commits | 36 |
+| commits | 41 |
 | last commit | 2026-08-04 |
 | gates | 9 |
 | teeth plant cases | 14 |
@@ -165,12 +164,12 @@ nobody has watched fail is not a check. The contract is
 
 ## What is measured and what is not
 
-No measurements yet — this commit contains no runtime.
+One row is measured; the others say what would fill them.
 
-| | Will be filled by |
+| | Status |
 |---|---|
-| Cold launch to first frame | not yet written; needs the app shell |
-| Resume after termination | not yet written; needs the journal |
+| Cold launch to first frame | not measured yet; the shell exists, nothing times it |
+| Resume after termination | measured 2026-08-04 on an iPhone 16 Pro Max, iOS 26.5.2: killed mid-step by SIGKILL, resumed from the journal — `scripts/dev/device-rig.sh`, ROADMAP → Findings |
 | Time to first token | not yet written; needs the streaming contract |
 | Peak memory during a run | not yet written; needs instrumentation |
 
