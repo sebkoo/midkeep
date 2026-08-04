@@ -928,6 +928,33 @@ tripwire printed its public line again. This measurement closes unit
 02's harness arc: every invariant whose readable half can be gated now
 is, and the record of proving it is this entry and the two above.
 
+**2026-08-03 — two schemes shared the word "unit", and the README stated
+progress that was false as measured; observed by the owner, reading.**
+The ladder's row "02 app shell — in progress" sat above a tree holding
+zero feature code: `Sources/` is three `Placeholder.swift` files and no
+Xcode project exists. The work actually in progress was harness — filed
+by the ladder under row 01, marked landed — and the driving-unit
+scheme's own 02 is that harness arc, closed by the entry above. So "02"
+named app shell in one scheme and a harness session in the other, and
+the false row is what the collision cost. The ladder had declared
+itself hand-written and able to go stale without anything noticing;
+this is that clause paying out, the badge entry's decay mode in its
+prose form, caught by an owner's read rather than a check — which is
+what INV-11's UNENFORCED mark has always meant in practice.
+
+The fix, in the commit carrying this entry. The ladder now names the
+two schemes apart and maps each row to its driving units in a last
+column; `scripts/status.sh` derives the commit span of every filed
+driving-unit record into the generated block — endpoints and count are
+of commits touching the record file, the basis named in the block
+itself because it is not the unit's whole work, which no derivation
+can recover from git alone; and "in progress" is replaced by a
+statement measurable against the tree: row 02 reads "not started — no
+Xcode project exists". Unit 02's own record is still unfiled in
+`docs/prompts/`; until it lands, its arc is prose in this file, the
+block shows no span for it, and the ladder's row 01 says "record not
+filed yet" rather than borrowing unit 01's.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
