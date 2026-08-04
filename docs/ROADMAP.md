@@ -1391,6 +1391,52 @@ and its boundary, INV-10 leaves the visibly-unenforced list it
 opened, and the 2026-08-01 finding's disposition is discharged at its
 entry.
 
+**2026-08-04 — the rehearsal job lands with its screen, and
+kill-and-relaunch was measured end to end on a simulator.** Unit 04,
+ruling D1 with all three riders, and D5's entry point.
+`RehearsalRun.swift`: four steps counting primes by sieve below 2000,
+4000, 8000 and 16000 — real, tiny, deterministic — each product
+appended to an artifact file distinct from the journal entry that
+records it, with the step's own did-this-already-happen check read
+from the artifact, never the journal: ADR-0002's demanded shape, so a
+step killed between effect and completion re-attempts without
+duplicating. The four expected counts were measured with an
+independent sieve before the fixtures were written — 303, 550, 1007,
+1862 — so the test compares the implementation to a measurement, not
+to itself. Pacing is presentation, not work, and its doc says so. The
+engine gained `afterEachRecord`, reporting reconstructed states after
+every append so the screen shows exactly what the journal holds;
+`RunView` and `RunScreenModel` render it, `ShellView` and the UI
+placeholder die, and D1's third rider is discharged: "This screen is
+the whole app." leaves in this diff, the new screen carrying its own
+form of the claim. A corrupt journal renders its refusal on screen —
+"nothing was skipped and nothing was guessed". `--start-job` is the
+rig's entry point, standing in for the tap a person gives Start;
+resume needs no argument and no tap, which is the capability itself.
+
+Three more mutants, full-suite runs, each reverted: the sieve made to
+skip 2 → the fixture test read 471, 853, 1557, 2869 against the
+measured counts, 2 tests failed; the idempotence check removed →
+exactly the duplication test, the duplicate line observed; the hook
+made silent on attempted records → exactly the hook test. Restored:
+15 of 15 green.
+
+The simulator measurement, instruments named. Built with `xcodebuild`
+for an iPhone 16 Pro simulator, iOS 18.0 runtime, exit 0 with zero
+`warning:` or `error:` lines. Launched by `simctl launch` with
+`--start-job`; killed by `simctl terminate` at +5 seconds; the journal
+read back from the app container held the header, steps 0 and 1
+completed, and `attempted(2)` with no completion — the kill window
+ADR-0002 names, caught live. Relaunched with no argument; the journal
+then held `attempted(2)` twice, its completion, and step 3's pair;
+steps 0 and 1 were not re-run; the artifact held exactly four lines,
+no duplicate; the screen read "Resumed from the journal: finished
+steps were not re-run." — screenshot taken. The kill channel and its
+semantics, per D5's rider: `simctl terminate`, process death as the
+simulator delivers it, which is not the phone. The phone measurement
+with its own channel record remains, and only it flips the ladder
+row.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a

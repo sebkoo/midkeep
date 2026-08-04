@@ -125,6 +125,36 @@ func attemptedWithoutCompletionIsReAttempted() async throws {
         ])
 }
 
+@Test("The hook reports states after every record, in journal order")
+func hookReportsEveryRecord() async throws {
+    let url = try temporaryJournalURL()
+    let journal = try Journal<RunEntry>(url: url)
+    let engine = RunEngine(
+        journal: journal,
+        steps: [
+            RunStep(name: "rename") { "renamed" },
+            RunStep(name: "file") { "filed" },
+        ])
+    let reported = ReportedStates()
+    try await engine.run { states in
+        await reported.record(states)
+    }
+    #expect(
+        await reported.all == [
+            [.attempted, .pending],
+            [.completed(product: "renamed"), .pending],
+            [.completed(product: "renamed"), .attempted],
+            [.completed(product: "renamed"), .completed(product: "filed")],
+        ])
+}
+
+private actor ReportedStates {
+    private(set) var all: [[RunEngine.StepState]] = []
+    func record(_ states: [RunEngine.StepState]) {
+        all.append(states)
+    }
+}
+
 @Test("A step that throws leaves its attempted record and no completion")
 func failingStepLeavesAttemptedOnly() async throws {
     struct StepFailure: Error {}

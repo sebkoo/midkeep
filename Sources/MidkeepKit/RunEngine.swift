@@ -67,16 +67,22 @@ public actor RunEngine {
 
     /// Runs every step the journal does not show completed, in order. The
     /// attempted record reaches the journal before the step's work runs;
-    /// the completion follows the product it names.
-    public func run() async throws {
+    /// the completion follows the product it names. `afterEachRecord`
+    /// reports the reconstructed states after every append, so a screen can
+    /// show exactly what the journal holds — never more.
+    public func run(
+        afterEachRecord: (@Sendable ([StepState]) async -> Void)? = nil
+    ) async throws {
         for index in steps.indices {
             let current = await states()
             if case .completed = current[index] {
                 continue
             }
             try await journal.append(.attempted(stepIndex: index))
+            await afterEachRecord?(states())
             let product = try await steps[index].work()
             try await journal.append(.completed(stepIndex: index, product: product))
+            await afterEachRecord?(states())
         }
     }
 }
