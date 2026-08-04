@@ -1143,6 +1143,63 @@ neither `App/` nor the pbxproj is in their scope. The visibility
 tripwire prints its public line; `pull-request-body` still waits for the
 first pull request.
 
+**Measured, 2026-08-04 (UTC), runs 30877538830 (`gates`) and 30877538825
+(`ci`) — the push carrying `56621c4`, pushed by the owner.** Every
+prediction held, and the two unknowns are now values. The runner's app
+build toolchain: Xcode 16.4 (16F6), printed by the step itself — against
+Xcode 26.6 (17F113) locally, and the objectVersion-77 project built under
+both without translation. The step ran 30 seconds by step timestamps
+(04:24:10 to 04:24:40), package resolution and build included, with zero
+`warning:` or `error:` lines anywhere in the run's log — the first CI
+build of the app target, and a new baseline under its own conditions.
+The gates run printed the same 17 and 18 prose-gate counts, then
+`all.sh: 0 — every gate ran and found nothing`, and teeth closed
+`plant cases 14, contract cases 1, failures 0` — 31 seconds for fifteen
+cases, first log line to summary line by step timestamps. The series on
+its one basis, each figure under its own conditions, no cause claimed:
+42.249 seconds for nine cases local, 30 for nine on a runner, 28 for
+eleven, 26 for thirteen, 34 for thirteen, 31 for fifteen. The
+visibility tripwire printed its public line; `pull-request-body` still
+waits for the first pull request. Acceptance items 2, 3 and 5 of unit
+03's prompt are discharged — the simulator build locally and in CI, the
+launch rendering the honest screen, and the harness green at fourteen
+plants with the scope growth's plants in the same commit. Items 4 and 6
+remain: the phone install is the owner's act at the unit's end, and
+item 6 is a standing property, not a one-time check.
+
+**The harness badge, landed with this record; its two flagged defects
+were ruled remedied at review, before the commit.** `scripts/status.sh`
+now also writes `docs/harness-badge.json` — shields endpoint schema,
+label "harness", message "gates 9 / teeth 14+1", every figure derived —
+and the README badge row gains one endpoint badge reading that file from
+`main`, placed after the two live workflow badges. It is machine-derived
+under the same one-behind convention as the block, which the badge rule
+requires; nothing else qualifies today — coverage has no measurement,
+and CodeQL is a checker decision, not a badge decision. The color field
+is omitted with its reason stated in the script: counts, not verdicts.
+
+The two defects the first draft carried, both caught at review as
+already-ruled items shipping unfixed. A middle dot as the separator
+would have been the tree's first non-ASCII character in a generated
+string, spent on a glyph; the ruling was an ASCII separator, and the
+message uses "/". And the draft's "+1" was a hand constant inside a
+derived sentence — the constant-in-generated-block class the 2026-08-01
+status.sh finding names, and the day a second contract case landed the
+badge would have lied silently. The count is now derived from teeth.sh
+itself, with one correction taken by measurement rather than from the
+review's example: the pattern `^run_contract_case` also matches the
+function definition line and reads 2 against a true 1, so the landed
+pattern anchors both ends, `^run_contract_case$`, counting argument-less
+call lines only — the script's comment carries the measurement. One
+source of truth, zero typed figures.
+
+The status.sh write boundary widened from README.md alone to README.md
+plus the badge file; the script's header says so, and the boundary stays
+verified at the commit that changes it, not by teeth. The badge file
+itself sits in `docs/` and so enters the prose gates' scope: their
+counts move to 18 and 19, measured locally at this commit, which is what
+the next CI run should print.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a

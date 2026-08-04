@@ -16,6 +16,7 @@ data.
 
 [![gates](https://github.com/sebkoo/midkeep/actions/workflows/gates.yml/badge.svg?branch=main)](https://github.com/sebkoo/midkeep/actions/workflows/gates.yml)
 [![ci](https://github.com/sebkoo/midkeep/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/sebkoo/midkeep/actions/workflows/ci.yml)
+[![harness](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsebkoo%2Fmidkeep%2Fmain%2Fdocs%2Fharness-badge.json)](docs/harness-badge.json)
 [![Swift 6](https://img.shields.io/badge/Swift-6-orange)](Package.swift)
 [![iOS 17+](https://img.shields.io/badge/iOS-17%2B-blue)](docs/adr/0004-ios-17-deployment-target.md)
 [![MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -86,8 +87,8 @@ are still written by hand; the numbers live in the generated block.
 | | |
 |---|---|
 | version | no tag yet |
-| commits | 29 |
-| last commit | 2026-08-03 |
+| commits | 30 |
+| last commit | 2026-08-04 |
 | gates | 9 |
 | teeth plant cases | 14 |
 | unit records filed | 3 |

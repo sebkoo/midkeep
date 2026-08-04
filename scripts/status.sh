@@ -8,7 +8,8 @@
 # wrong again on the next run, silently.
 #
 # What this deliberately does not do: read docs/ROADMAP.md, parse the capability
-# ladder, or write to any file other than README.md. The ladder is prose, drawn
+# ladder, or write to any file other than README.md and the badge JSON at
+# docs/harness-badge.json. The ladder is prose, drawn
 # by hand and maintained by hand, and a shell script that lifts ASCII art out of
 # one markdown file and injects it into another breaks the first time someone
 # adds a blank line — and breaks silently, which is the failure this repository
@@ -140,5 +141,22 @@ cat "$tmp" > "$README" || {
     exit 2
 }
 
-printf 'status: %s regenerated (%s commits, %s gates, %s plant cases, %s records)\n' \
-    "$README" "$commits" "$gates" "$plants" "$units" >&2
+# The shields endpoint JSON, committed as a generated artifact under the same
+# one-behind convention as the block above. All three figures are derived —
+# one source of truth, zero typed numbers. The contract-case count is of
+# argument-less `run_contract_case` call lines in teeth.sh: the `$` anchor is
+# load-bearing, because without it the pattern also matches the function
+# definition line and reads 2 against a true 1, measured. The message keeps
+# the plant/contract split the 2026-08-01 finding demanded rather than a sum
+# that hides the code-path case. No color field: shields' default grey claims
+# nothing, and these are counts, not verdicts.
+contracts="$(grep -c '^run_contract_case$' scripts/gates/teeth.sh)"
+BADGE=docs/harness-badge.json
+printf '{\n  "schemaVersion": 1,\n  "label": "harness",\n  "message": "gates %s / teeth %s+%s"\n}\n' \
+    "$gates" "$plants" "$contracts" > "$BADGE" || {
+    printf 'status: could not write %s\n' "$BADGE" >&2
+    exit 2
+}
+
+printf 'status: %s regenerated (%s commits, %s gates, %s plant cases, %s records), %s written\n' \
+    "$README" "$commits" "$gates" "$plants" "$units" "$BADGE" >&2
