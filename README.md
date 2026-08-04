@@ -43,10 +43,11 @@ finished, so that coming back means continuing rather than restarting.
 
 ## What this cannot do yet
 
-There is no journal, so nothing resumes yet. The app shell installs on a phone
-and launches; its one screen says exactly what is missing and that it is the
-whole app. What exists besides the shell is the harness — the checks, and the
-proof that each one fails when it should.
+The journal exists and nothing writes to it yet — there is no run engine, so
+nothing resumes. The app shell installs on a phone and launches; its one
+screen says exactly what is missing and that it is the whole app. Beyond the
+shell and the journal, what exists is the harness — the checks, and the proof
+that each one fails when it should.
 
 See [the roadmap](docs/ROADMAP.md).
 
@@ -86,7 +87,7 @@ are still written by hand; the numbers live in the generated block.
 | | |
 |---|---|
 | version | no tag yet |
-| commits | 33 |
+| commits | 36 |
 | last commit | 2026-08-04 |
 | gates | 9 |
 | teeth plant cases | 14 |
@@ -94,7 +95,7 @@ are still written by hand; the numbers live in the generated block.
 | unit 01 record span | b853d54..b853d54, 1 commit touches it |
 | unit 02 record span | 286d55b..286d55b, 1 commit touches it |
 | unit 03 record span | e9d923e..de6d24a, 2 commits touch it |
-| unit 04 record span | file not committed yet |
+| unit 04 record span | 24b254a..24b254a, 1 commit touches it |
 
 A record span counts commits touching that file, not the unit's
 whole work. The block is generated before the commit that carries

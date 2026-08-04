@@ -1329,6 +1329,37 @@ amended at review — the framed-record file, the torn-tail/corrupt-middle
 asymmetry with the refusal's fabricated-history argument, and the
 durability boundary stated in both directions.
 
+**2026-08-04 — the journal lands, and every test was watched failing
+before its green was trusted.** Unit 04, rulings D2 as amended and D3.
+`Sources/MidkeepKit/Journal.swift`: an actor generic over its entry
+type, ADR-0008 made code — header record first, torn tail dropped,
+reported and physically truncated so the next append cannot merge with
+its bytes, corrupt non-final record refused, unknown schema version
+refused. The URL is injected; the type is platform-neutral.
+`Placeholder.swift` died absorbed, its `schemaVersion` now
+`JournalSchema.version`, and the shell's second line moved to "A
+journal exists. No runs yet." — the derivation being that `MidkeepKit`
+holds `Journal.swift` and still no run type. INV-10's mark does not
+move here: the ordering test needs a step executor to instrument, and
+that is the run engine's commit (ruling D6).
+
+The watched-both-ways measurements, counted as full runs of the
+seven-test suite against seven mutants of `Journal.swift`, planted one
+at a time and reverted before the next: no header written → 5 tests
+failed; append skips memory → exactly 1, its target; replay discards
+entries → 3; torn tail refused instead of dropped → exactly the two
+drop tests, the refusal test green; corrupt middle skipped instead of
+refused → exactly the refusal test, the drop tests green — the
+discriminating pair ruled in D2, watched discriminating in both
+directions; version guard removed → exactly 1; truncation removed → 2,
+the physical-drop assertions. Every test failed under at least one
+mutant, every mutant was caught, and the restored implementation ran
+7 of 7 green with `all.sh` at 0 over nine gates before the commit.
+The reopen-as-relaunch test carries its label in its own comment:
+relaunch minus the kill, blind to a write held in process memory,
+which is the rig's job and the deferred kill test's return trigger
+(ruling D4).
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
