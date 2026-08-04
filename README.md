@@ -64,7 +64,7 @@ are still written by hand; the numbers live in the generated block.
 
 | Unit | What you could do once it lands | Status | Driven by |
 |---|---|---|---|
-| 01 repository and harness | Nothing — there is no app to open. This unit built the checks that guard every row below, and watched each one fail on purpose. | landed | unit 01, then unit 02's harness arc (record not filed yet) |
+| 01 repository and harness | Nothing — there is no app to open. This unit built the checks that guard every row below, and watched each one fail on purpose. | landed | units 01 and 02 |
 | 02 app shell | Install it on a phone and watch it launch. | not started — no Xcode project exists | none yet |
 | 03 the journal | Close the app in the middle of a job and open it again; the job carries on from where it stopped instead of starting over. | not started | none yet |
 | 04 streaming | Watch a step's answer arrive as it is written, rather than waiting for the whole thing to finish. | not started | none yet |
