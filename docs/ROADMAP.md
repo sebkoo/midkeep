@@ -1741,6 +1741,44 @@ direction the provenance check exists for, watched catching it. Every
 new test failed under at least one mutant, 27 of 27 green restored,
 `all.sh` 0 over nine gates, teeth `failures 0` at the landing.
 
+**2026-08-04 — the D2 cost measured: what per-chunk journalling costs
+on this host.** Unit 05, the measurement ruling D2 demanded with the
+choice it prices. Instrument: a throwaway measurement test — deleted
+after its runs, the fixture recorder's convention — under
+`swift test -c release`, timed by `ContinuousClock`, on the
+development host, an Apple Silicon Mac with a warm toolchain; three
+runs, all quoted. The subject: a synthetic 10,000-chunk stream, 6
+payload bytes per chunk, consumed twice — bare, and through the
+engine with one record per chunk before its effect.
+
+```
+bare consumption   8.4 / 8.7 / 9.1 ms        the source alone
+journalled         78.4 / 81.5 / 83.1 ms     one record per chunk
+chunk rate         120,000–128,000 chunks/s  n over journalled wall
+wall overhead      7.0–7.4 us per chunk      (journalled - bare) / n
+journal growth     62.8 bytes per chunk record, 6 payload bytes each
+```
+
+The growth arithmetic, so the figure names what it counted: 688,240
+bytes on disk, minus the header at 20, the attempted record at 30 and
+the completion record at 60,049 — it carries the whole answer — is
+628,141 bytes across 10,000 chunk records, 62.8 average. Framing
+dominates at this chunk size and shrinks as chunks grow. The
+rehearsal's own five-step run journals 4,280 bytes total, its
+streamed answer 218.
+
+Two observations, named rather than ruled. First: the journal holds a
+streamed answer twice — once as chunk records, once inside the
+completion product. Trivial at rehearsal scale; doubling at any
+scale. Whether a streaming step's completion should carry its full
+product is a question for the first unit that meets a big answer.
+Second: the strict reading's price on this host is microseconds per
+chunk against the 125 ms presentation pacing the rehearsal runs at —
+four orders apart — so the watermark relaxation has no case today,
+which is exactly what these figures exist to decide when someone
+proposes it (ruling D2's purpose). Host figures, named as such: the
+phone's own cost is the rig's business, timed externally per D4.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
