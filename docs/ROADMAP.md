@@ -1779,6 +1779,53 @@ which is exactly what these figures exist to decide when someone
 proposes it (ruling D2's purpose). Host figures, named as such: the
 phone's own cost is the rig's business, timed externally per D4.
 
+**2026-08-04 — the rig learns the stream, and its judge was watched
+nine ways before any live run.** Unit 05, ruling D4 with all three of
+its parts. `scripts/dev/device-rig.sh` gains `--stream`: the kill
+lands mid-answer (KILL_AFTER defaults to 11 in stream mode, set only
+inside the mode conditional so the stream default cannot be shadowed —
+a pre-run check the owner filed and the file passed), and the judge
+demands exactly one `streamResumed` carrying the offset the kill's
+journal adds up to, contiguous continuation offsets after it, and no
+re-emitted byte. Every rig run now begins with an uninterrupted
+control run in a reset container — the positive control D4 ruled —
+and "carried on" means byte-equal to what the control produced, never
+to a constant. Time to first token is measured on the control run by
+the rig, externally: a poll loop over `devicectl copy from`, reported
+as an interval whose width is the poll period, with presentation
+pacing named as the dominant term. Records stay clockless, per D4.
+
+Two operational changes ride along, both bought by unit-04 findings:
+the container is reset by overwriting the three run files over
+`devicectl device copy to` — verified empty by reading one back —
+instead of uninstalling, because an uninstall drops the phone's trust
+and costs a tap per run; and the judge now reads a torn journal tail
+the way the app does, dropping it and saying so, because a SIGKILL
+can land mid-append and the old judge would have crashed on the very
+evidence the kill is for. `--fresh` still uninstalls, at its price.
+
+The judge, extracted verbatim from the committed script and driven
+with hand-built fixture journals before any device saw it — nine
+cases, each watched returning the verdict its direction demands:
+
+```
+1  honest stream resume                 0
+2  wiped and replayed journal           1
+3  resumed record with the wrong offset 1
+4  a re-emitted byte after resume       1
+5  stream artifact differs from control 1
+6  torn tail at the kill, honest resume 0, tear named in a fact line
+7  honest unitary resume, five steps    0
+8  unitary wiped                        1
+9  no step mid-flight at the kill       2
+```
+
+The unitary mode's judge changed with the tree — five steps complete
+now, and both artifacts must match the control — so its clean case
+was re-watched rather than assumed (case 7), and the window-miss path
+now exits 2 through the judge itself (case 9). One line of dead code
+found by shellcheck at this landing was removed rather than shipped.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
