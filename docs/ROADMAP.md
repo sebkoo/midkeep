@@ -1558,6 +1558,26 @@ the shell. The visibility tripwire prints its public line;
 wall time joins the series on its stated basis, no cause claimed for
 any direction.
 
+**Measured, 2026-08-04 (UTC), runs 30940587990 (`gates`) and
+30940588095 (`ci`) — the push carrying `ac82cd0`, unit 04's close,
+pushed by the owner.** Both green, every prediction held. The gates
+run printed `gate-hostpath: INV-14 over 20 files in scope` and
+`gate-address: INV-15 over 21 files in scope` — the counts predicted
+from the local measurement — then `all.sh: 0 — every gate ran and
+found nothing`, and teeth closed `plant cases 14, contract cases 1,
+failures 0`: the six self-contained plants green on a hosted runner
+for the first time, one push after their repair. Teeth wall time, 51
+seconds for fifteen cases by step timestamps, joins the series on its
+one basis, each figure under its own conditions, no cause claimed:
+42.249 seconds for nine cases local, 30 for nine on a runner, 28 for
+eleven, 26 for thirteen, 34 for thirteen, 31 for fifteen, 48 for
+fifteen local, 51 for fifteen. The `ci` run built the run screen for
+the simulator with zero `warning:` or `error:` lines. The visibility
+tripwire printed its public line; `pull-request-body` skipped, still
+waiting for the first pull request. This run is the CI half of
+acceptance item 3's discharge, and unit 04's record owes nothing
+further.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
