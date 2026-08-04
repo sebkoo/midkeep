@@ -1863,6 +1863,41 @@ the hook's first live firing is that push, and this entry predicts it
 prints `pre-push: teeth green; the push proceeds` after teeth's own
 summary line.
 
+**2026-08-04 — the streaming capability measured end to end on a
+simulator; the phone run stopped at the lock screen and was refused
+correctly.** Unit 05, the simulator half of acceptance item 4's
+pattern, instruments named. Built with `xcodebuild` for an iPhone 16
+Pro simulator, iOS 18.0 runtime, zero `warning:` or `error:` lines.
+The control run, polled directly in the app container at 50 ms: first
+streamed byte 9.44 s after `simctl launch` — presentation pacing
+dominates by design, four unitary steps at 2 s each precede the
+stream — and the run complete at 17.35 s, the stream artifact at the
+measured 218 bytes. The measured run: killed at +12.7 s by
+`simctl terminate`; the journal then held steps 0–3 completed, 28
+chunk records carrying 82 answer bytes, no completion for the
+streaming step, and the stream artifact held exactly 82 bytes —
+record and effect in step at the kill, caught live. The plain
+relaunch finished the job and six checks passed: the run completed,
+the post-kill journal a byte-prefix of the final one, exactly one
+`streamResumed(fromOffset: 82)`, contiguous offsets after it with no
+re-emitted byte, the final stream artifact byte-equal to the control
+run's, and the journalled product equal to the artifact. 62 chunk
+records total — 28 before the kill, 34 after. Screenshots taken
+mid-stream (the partial answer through 97 on screen under the honest
+words) and after the resume. The kill channel and its boundary, per
+unit 04's rule: `simctl terminate` is process death as the simulator
+delivers it, which is not the phone; the phone measurement alone
+flips the row.
+
+The phone run was attempted the same hour and exited 2 at the control
+launch: the device was locked —
+`FBSOpenApplicationErrorDomain error 7, Locked`, quoted from the log
+the rig kept — which is could-not-measure, not capability failure,
+and the rig refusing rather than judging is the contract working.
+The run condition stands as unit 04 wrote it: screen on and unlocked
+for the whole run. The phone measurement remains owed, and only it
+flips the ladder row.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
