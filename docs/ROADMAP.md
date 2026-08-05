@@ -1999,6 +1999,31 @@ on the runner, its wall time joining the series on the stated basis;
 public line; `pull-request-body` still waits for the first pull
 request.
 
+**Measured, 2026-08-04 (UTC), runs 30960327678 (`gates`) and
+30960327568 (`ci`) — the push carrying `f9e51ef`, unit 05's close and
+the whole unit with it, pushed by the owner.** Both green, every
+prediction that is readable from here held. The gates run printed
+`gate-hostpath: INV-14 over 21 files in scope` and `gate-address:
+INV-15 over 23 files in scope` — the counts the close predicted,
+resolving the opening prediction's letter-versus-meaning split exactly
+as recorded — then `all.sh: 0 — every gate ran and found nothing`, and
+teeth closed `plant cases 14, contract cases 1, failures 0`: the
+streaming-era tree's first teeth run on a hosted runner, 58 seconds
+for fifteen cases by the step's own start and end timestamps. The
+series on its one basis, each figure under its own conditions, no
+cause claimed: 42.249 seconds for nine cases local, 30 for nine on a
+runner, 28 for eleven, 26 for thirteen, 34 for thirteen, 31 for
+fifteen, 48 for fifteen local, 51 for fifteen, 58 for fifteen. The
+`ci` run built the streaming screen for the simulator with zero
+`warning:` or `error:` lines. The visibility tripwire printed its
+public line; `pull-request-body` skipped, still waiting for the first
+pull request. One prediction is readable only in the owner's
+terminal: the pre-push hook's first live firing — the push proceeded,
+which is consistent with teeth green there, and the printed line is
+the owner's to confirm; it is not claimed here. This run is the CI
+half of acceptance items 1 and 3, and unit 05's record owes nothing
+further from this side.
+
 ## Known holes
 
 Three kinds, labelled: an invariant with no gate, a gate with no plant, and a
