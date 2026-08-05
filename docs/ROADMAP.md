@@ -2020,9 +2020,31 @@ public line; `pull-request-body` skipped, still waiting for the first
 pull request. One prediction is readable only in the owner's
 terminal: the pre-push hook's first live firing — the push proceeded,
 which is consistent with teeth green there, and the printed line is
-the owner's to confirm; it is not claimed here. This run is the CI
-half of acceptance items 1 and 3, and unit 05's record owes nothing
-further from this side.
+the owner's to confirm; it is not claimed here.
+
+**Confirmed, 2026-08-04, against the pasted terminal as the primary
+artifact.** The hook's first live firing held in letter and in
+meaning: the terminal paste reads, in order, `plant cases 14,
+contract cases 1, failures 0`, then `pre-push: teeth green; the push
+proceeds`, then `Enumerating objects` — the predicted line, verbatim,
+after teeth's summary, exactly as filed. No `--no-verify` was used,
+and the full hook output was read by the owner and by the reviewer in
+the relayed terminal, so the bypass the hook's header names is on the
+record as not taken.
+
+One near-miss inside this confirmation is kept, because the first
+draft of this very annotation committed the failure it now records.
+The reviewer's testimony said the line printed "above" the summary;
+an annotation was drafted against that prose, marking the
+prediction's ordering clause falsified and attaching a buffering
+conjecture to explain an inversion that never happened. The paste
+refuted the preposition: the falsification was of the testimony, not
+the prediction, and the conjecture goes with it. Caught before the
+annotation was committed, by measuring against the paste instead of
+the description of it. The lesson is unit 01's, one layer up:
+testimony about output is a rendering, the paste is the artifact.
+This run is the CI half of acceptance items 1 and 3, and unit 05's
+record owes nothing further from this side.
 
 ## Known holes
 
